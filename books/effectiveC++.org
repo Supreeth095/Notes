@@ -1,0 +1,4526 @@
+
+* Chapter 1: Accustoming yourself to C++
+- C++ is a powerful language w/ an enormous range of features, but before you 
+  can harness that power and make effective use of those features, you have to 
+  accustom yourself to C++'s way of doing things
+** Item 1: View C++ as federation of languages
+- C++ = start as C w/ classes, but as the language matured, it grew bolder and
+  more adventurous, adopting ideas, features, and programming strategies 
+  different from those C w/ classes
+  + Exceptions required different approaches to structuring functions
+  + Templates gave rise to new ways of thinking about design
+  + STL defined an approach to extensibility
+- C++ is a multiparadigm language, one supporting a combination of *procedural*,
+  *object-oriented*, *functional*, *generic*, and *metaprogramming*
+- The easies way is to view C++ as a federation of related languages. To make 
+  sense of C++, you have to recognize its primary sublanguages:
+  + C
+  + Object-Oriented C++: classes, encapsulationg, inheritance, polymorphism,
+    virtual functions (dynamic binding) 
+  + Template C++
+  + the STL
+- *Things to Remember*
+  Rules for effective C++ programming vary, depending on the part of C++ you are
+  using
+
+** Item 2: Prefer consts, enums, and inlines to #defines
+- "prefer to compiler to the preprocessor" item
+- when we do something like: 
+  #define ASPECT_RATIO 1.653
+  the symbolic name ASPECT_RATIO may never be seen by compilers; as a result the
+  name ASPECT_RATIO may not get entered into the symbol table. This can be 
+  confusing if you get an error during compilation involving the use of the const,
+  because the error message may refer to 1.653, not ASPECT_RATIO. 
+- solution: replace the macro w/ a constant
+  const double AspectRatio = 1.653
+  > AspectRatio is definitely seen by compilers -> enter symbol tables
+  > use of the constant may yield smaller code than using #define
+- 2 special cases are worth mentioning when replacing #defines w/ constants
+  + defining constant pointer
+    const char * const authorName = "Scott Meyers"
+    const std::string authorName("Scott Meyers")
+  + class-specific constants
+    class GamePlayer {
+    private:
+        /static const int NumTurns = 5;/   // constant declaration
+        int scores[NumTurns];            // use of constant
+    }
+- enum hacks
+  class GamePlayer {
+  private:
+     /enum { NumTurns = 5 };/
+     int scores[NumTurns];
+  }
+  + enum hack behaves like a #define than const
+  + enum never result in that kind of unnecessary memory allocation
+  + purely pragmatic. It's a fundamental technique of template metaprogramming
+- common misuse of the #define directive is using it to implement macros that 
+  look like functions:
+  /#define CALL_WITH_MAX(a, b) f((a) > (b) ? (a) : (b))/
+  we can get all the efficiency of a macro plus all the predictable behavior and
+  type safety of a regular function by using a template for an inline function
+  template<typename T>
+  inline void callWithMax(const T& a, const T& b)
+  {
+    f(a > b ? a : b);
+  }
+- given the availability of consts, enums and inlines, our need for the 
+  preprocessor is reduced
+
+- *Things to Remember*
+  + For simple constants, prefer *const* objects or *enums* to #defines
+  + For function-like macros, prefer inline functions to #defines
+
+** Item 3: Use const whenever possible                            :important:
+- The wonderful thing about const is that it allows you to specify a sementic
+  constraint - a particular obj should not be modified
+- the *const* keyword is remarkably versatile
+  + use it for constant at global or namespace scope, as well as for objs 
+    declared *static* at file, function, or block scope
+  + inside classes, you can use it for both static and non-static data members
+- For pointers, we can specify:
+  + the pointer itself is *const*
+  + the data it points to is *const*
+  + both
+- if the word *const* appears to the left of the asterisk, what's pointed to is
+  constant; if the word *const* appears to the right of the asterisk, the pointer
+  itself is constant; if const appears on both sides, both are constant 
+- 2 same declaration:
+  void f1(const Widget *pw);
+  void f2(Widget const *pw);
+- STL iterators are modeled on pointers, so an iterator acts much like a T* 
+  pointer -> declaring an iterator const is like declaring a pointer const:
+  the iterator isn't allowed to point to something different, but the thing it
+  points to may be modified. if you want an iterator that points to something 
+  that can't be modified, you want a *const_iterator*
+- powerful uses of *const* stem from its application to function declaration. w/i
+  a function declaration, const can refer to:
+  + the function's return value
+  + individual parameters
+  + member functions
+  + function as a whole
+*** const Member functions
+- the purpose of const on member functions is to identify which member function
+  may be invoked on const objs. Such member functions are important for 2 
+  reasons:
+  + they make the interface of a class easier to understand
+  + they make it possible to work w/ const obj
+- what does it mean for a member function to be *const*? 2 prevailing notions:
+  + bitwise constness: function doesn't modify any of the object's data members
+  + logical constness: const member function might modify some of the bits in
+    the obj on which it's invoked, but only in ways that clients cannot detect
+*** Avoiding Duplication in const and non-const member functions
+
+*** Things to Remember
+- Declaring something const helps compilers detect usage errors. const can be 
+  applied to object at any scope, to function parameters and return types, and
+  to member functions as a whole
+- Compilers enforce bitwise constness, but you should program using conceptual
+  constness
+- when const and non-const member functions have essentially identical impl, 
+  code duplication can be avoided by having the non-const version call the const
+  version
+
+** Item 4: Make sure that objs are initialized before they're used
+- C++ can seem rather fickle about initializing the values of objects
+- the best way to deal w/ indeterminate state of affairs is to always initialize
+  your objs before you use them
+  + non-member objs of built-in types: manually
+  + constructors initialize everything in the object
+- difference between initialization and assignment -> it's better to initialize
+  everything via member initialization.
+- the order of initialization of non-local static objects defined in different
+  translation units:
+  + /static object/ is one that exists from the time it's constructed until the
+    end of the program
+  + A /translation unit/ is the source code giving rise to a single obj file
+  -> if initialization of a non-local obj in one translation unit uses a 
+  non-local static obj in a different translation unit, the object it uses could
+  be uninitialized, because the relative order of initialization of non-local 
+  static objects defined in different translation units is undefined
+- *Things to Remember*
+  + manually initialize objects of built-in type, because C++ only sometimes 
+    initializes them itself
+  + in a constructor, prefer use of the member initialization list to assignment
+    inside the body of the constructor. List data members in the initialization
+    list in the same order they're declared in the calss
+  + avoid initialization order problems across translation units by replacing 
+    non-local static objects with local static objects
+
+* Chapter 2: Constructors, Destructors and Assignment Operators
+** Item 5: Know what functions C++ silently writes and calls
+- compilers will declare their own versions of a copy constructor, a copy assignment op,
+  and an destructor if you don't declare them. 
+- generated destructor is non-virtual unless it's for a class inheriting from a base 
+  class that itself declares a virtual destructor
+** Item 6: explicitly disallow the use of compiler-generated functions you do not want
+- the key to the solution of preventing copying is that all the compiler generated funcs
+  are public -> declare the copy constructor and the copy assignment operator /private/ &
+  deliberately not implementing them.
+- apply the trick:
+  class HomeForSale {
+  public:
+    ...
+  private:
+    HomeForSale(const HomeForSale&);
+    HomeForSale& operator=(const HomeForSale&);
+  }
+
+  or utilizing private inheritance of uncopyable class:
+  class Uncopyable {
+  protected:
+    Uncopyable() {};
+    ~Uncopyable() {};
+  private:
+    Uncopyable(const Uncopyable&);
+    Uncopyable& operator=(const Uncopyable&);
+  }
+
+  to keep HomeForSale objs from being copied, all we have to do now is inherit from
+  Uncopyable
+
+  class HomeForSale: private Uncopyable {
+  }
+
+- *Things to Remember*
+  + to disallow functionality automatically provided by compilers, declare the 
+    corresponding member functions private and give no impl.
+  + Useing a base class like Uncopyable is one way to do this
+
+
+** Item 7: Declare destructors virtual in polymorphic base classes
+- Item 13 explains that relying on clients to perform the deletion is 
+  error-prone. Item 18 explains how the interface to the factory function can be
+  modified to prevent common client errors
+- The problem is that getTimeKeeper returns a pointer o a derived class obj,
+  that obj is being deleted via a base class pointer, and base class has a 
+  non-virtual destructor -> recipe for disaster, because C++ specifies that when
+  a derived class obj is deleted through a pointer to a base class w/ a 
+  non-virtual destructor, results are undefined
+- Eliminating the problem is simple: give the base class a virtual destructor
+- if a class contains virtual functions, it should almost certainly have a 
+  virtual destructor. If a class does not contain virtual functions, that often
+  indicates it is not meant to be used as a base class. when a class isn't
+  intended to be a base class, making the destructor virtual is usually a bad
+  idea
+- the way destructor work is that the most derived class's destructor is called
+  first, then the destructor of each base class is called.
+- The rule for giving base classes virtual destructors applies only to 
+  polymorphic base classes - to base classes designed to allow the manipulation
+  of derived class types through base class interfaces
+- Not all base classes are designed to be used polymorphically
+
+- *Things to Remember*
+  + Polymorphic base classes should declare virtual destructors. If a class has
+    any virtual functions, it should have a virtual destructor
+  + Classes not designed to be base classes or not designed to be used 
+    polymorphically should not declare virtual destructors
+
+
+** Item 8: Prevent exceptions from leaving destructors
+- C++ doesn't prohibit destructors from emitting exceptions, but it certainly
+  discourages the practices.
+- 2 simultaneously active exceptions are too many for C++. Depending on the 
+  precise conditions under which such pairs of simultaneously active exceptions
+  arise, program execution either terminates or yields undefined behavior
+- there are 2 primary ways to avoid the trouble
+  + *Terminate the program* is close throws, typically by calling abort
+  + *Swallow the exception* arising from the call to close
+- A better strategy is to design DBConn's interface so that its client have an
+  opportunity to react to problems that may arise.
+- If an operation may fail by throwing an exception and there may be a need to 
+  handle that exception, the exception /has to come from some non-destructor/
+  function. That's because destructors that emit exception are dangerous, always
+  running the risk of premature program termination or undefined behavior
+- *Things to Remember*
+  + Destructors should never emit exception. If functions called in a destructor
+    may throw, the destructor should catch any exceptions, then swallow them or
+    terminate the program
+  + If class clients need to be able to react to exceptions thrown during an 
+    operation, the class should provide a regular function that performs the op
+
+
+** Item 9: Never call virtual functions during construction or destruction
+- you shouldn't call virtual functions during construction or destruction, bcuz
+  the calls won't do what you think and if they did, you'd still be unhappy
+- base class parts of derived class objs are constructed before derived class 
+  parts are. During base class construction, virtual functions never go down
+  into derived classes -> An obj doesn't become a derived class obj until 
+  execution of a derived class constructor begins
+- The same reasoning applies during destruction
+- *Things to Remember*
+  + Don't call virtual functions during construction or destruction, because
+    such calls will never go to a more derived class than that of the currently
+    executing constructor or destructor.
+** Item 10: Have assignment operators return a reference to *this
+- One of the interesting things about assignments is that you can chain them 
+  together:
+  int x, y, z;
+  x = y = z = 15;
+- Assignment is right-associative -> x = (y = (z = 15))
+  The way this is implemented is that assignment returns a reference to its left
+  handed argument, and that's the convention you should follow when you implement
+  assignment operators for your classes
+- Sample code:
+
+  class Widget {
+  public:
+     Widget& operator=(const Widget& rhs) 
+     {
+        ...
+        return *this;
+     }
+  };
+
+  class Widget {
+  public:
+     ...
+     Widget& operator+=(const Widget& rhs)
+     {
+        ...
+        return *this;
+     }
+     Widget& operator=(int rhs)
+     {
+        ...
+        return *this;
+     }
+  };
+
+- *Things to Remember*
+  + Have assignment operators return a reference to *this
+
+
+** Item 11: Handle assignment to self in operator=
+- An assignment to self occurs when an obj is assigned to itself. Sometimes it's
+  less obvious:
+  a[i] = a[j] when i = j
+  *px = *py when px & py happen to point to the same thing
+- these less obvious assignment to self are the result of /aliasing/: having
+  more than one way to refer to an obj.
+- If you try to manage resources yourself, u can fall into the trap of 
+  accidentally releasing a resource before u're done using it.
+- Example:
+  class Bitmap {...};
+  class Widget {
+     ...
+  private:
+     Bitmap *pb;
+  }
+
+  Widget& Widget::operator=(const Widget& rhs)   // unsafe impl of operator=
+  {
+     delete pb;
+     pb = new Bitmap(*rhs.pb);
+     return *this;
+  }
+- the self-assignment problem: *this and rhs could be the same obj
+  -> if (this == &rhs) return *this
+
+- this version continues to have exception trouble. In particular, if the new
+  Bitmap expression yields an exception, the Widget will end up holding a pointer
+  to a deleted Bitmap. Such pointers are toxic:
+  + you can't safely delete them
+  + you can't even safely read them
+- exception safe code:
+  Widget& Widget::operator=(const Widget& rhs)
+  {
+     Bitmap *pOrig = pb;
+     pb = new Bitmap(*rhs.pb);
+     delete pOrig;
+
+     return *this;
+  }
+- another technique: "swap and copy"
+- *Things to Remember*
+  + Make sure operator= is well-behaved when an obj is assigned to itself. 
+    Techniques include comparing addresses of source and target objs, careful
+    statement ordering, and copy-and-swap
+  + Make sure that any function operating on more than one obj behaves correctly
+    if two or more of the objs are the same
+
+** Item 12: Copy all parts of an object
+- In well-designed obj-oriented systems that encapsulate the internal parts of 
+  objects, only 2 functions copy objects (/copying functions/)
+  + aptly named copy constructor
+  + copy assignment operator
+- add date to existed class -> update copying functions
+- derived class has no way to access its base class's member variables and 
+  initializes those variables -> derived class copying functions must invoke 
+  their corresponding base class functions
+- The meaning of "copy all parts" in this Item's title should now be clear. When
+  u're writing a copying function, be sure to:
+  + copy all local data members
+  + invoke the appropriate copying function in all base classes
+- *Things to Remember*
+  + Copying functions should be sure to copy all of an obj's data members and
+    all of its base class parts
+  + Don't try to implement one of the copying functions in terms of the other. 
+    Instead, put common functionality in a third function that both call
+
+* Chapter 3: Resource Management
+** Item 13: Use objects to manage resources
+- Suppose we're working w/ a library for modeling investments, where the various
+  investment types inherit from a root class Investment
+  class Investment { ... };
+- Further suppose that the way the library provides us w/ specific Investment
+  objs is through a factory function:
+  Investment* createInvestment();
+- callers of createInvestment are responsible for deleting the obj that func 
+  returns when they are done w/ it.
+  void f()
+  {
+     Investment *pInv = createInvestment();
+     ...
+     delete pInv;
+  }
+- there are several ways f could fail to delete the investment obj:
+  + there might be a premature *return* statement somewhere inside the "..." 
+  + the loop is prematurely existed by a continue or goto
+  + some statement inside the ".." might throw an exception
+-> we'd leak resource and investment obj
+- To make sure that the resource returned by createInvestment is always released
+  we need to put that resource inside an obj whose destructor will automatically
+  release the resource when control leaves f.
+  + by putting resources inside objs, we can rely on C++'s automatic destructor
+    invocation to make sure that the resources are released.
+- Many resources are dynamically allocated on the heap, are used only w/i a sgl
+  block or func, and should be released when control leaves that blk or func. 
+  The standard library's *auto_ptr* is a pointer (smart pointer) like obj, whose
+  destructor automatically calls *delete* on what it points to
+  usage:
+  void f()
+  {
+     std::auto_ptr<Investment> pInv(createInvestment());
+     ...
+  }
+- 2 critical aspects of using objs to manage resources:
+  + *Resc are acquired and immediately turned over to resource-managing obj*
+  + *Resc-managing objs use their destructors to ensure that resc are released*
+- It's important that there never be more than one *auto_ptr* pointing to an obj
+  To prevent such probs, *auto_ptr* have an unusual characteristic:
+  + copying them (via copy constructor or copy assignment op)
+  + sets them to null
+  + copying pointer assumes sole ownership of the resource
+- *auto_ptr* aren't allowed in STL containers. 
+- An alternative to auto_ptr is a /reference-counting smart pointer/ (RCSP). An
+  RCSP is a smart pointer that keeps track of how many objs point to a 
+  particular resource and automatically deletes the resource when nobody is 
+  pointing to it any longer.
+- *Things to Remember*
+  + to prevent resource leaks, use RAII objs that acquire resc in their ctors &
+    release them in their destructors
+  + 2 commonly useful RAII classes: TR1::shared_ptr and auto_ptr. 
+    tr1::shared_ptr is usually a better choice, because its behavior when copied
+    is intuitive. Copy an auto_ptr sets it to null
+
+** Item 14: Think carefully about copying behavior in resource-managing classes
+- Not all resources are heap-based -> smart pointers are impropriate as resc
+  handlers
+- Example: u're using C API to manipulate mutex objs of type Mutex offering func
+  lock and unlock
+  void lock(Mutex *pm);
+  void unlock(Mutex *pm);
+- to make sure that u never forget to unlock a Mutex u've locked, u'd like to
+  crt a class to manage locks. The basic structure such a class is dictated by
+  the RAII principle that ressources are acquired during construction and 
+  released during destruction
+  
+  class Lock
+  {
+  public:
+     explicit Lock(Mutex *pm) : mutexPtr(pm)
+     {
+        lock(mutexPtr);
+     }
+     ~Lock() { unlock(mutexPtr); }
+  private:
+    Mutex  mutexPtr;
+  };
+
+- Clients use Lock in the conventional RAII fashion
+  Mutex m;
+  ...
+  {
+    Lock m1(&m);
+    ...
+  }
+- RAII question: what should happen when an RAII obj is copied
+  + *Prohibit copying*
+  + *Reference-count the underlying resource*
+  + *Copy the underlying resource*
+  + *Transfer ownership of the underlying resource*
+- *Things to Remember*
+  + copying an RAII obj entails copying the resource it manages, so the copying
+    behavior of the resource determines the copying behavior of the RAII obj
+  + Common RAII class copying behaviors are disallowing copying and performing 
+    reference couting, but other behaviors are possible.
+
+
+** Item 15: Provide access to raw resources in resource-managing classes
+- Resource-managing classes are wonderful
+  + bulwark against resource leaks
+  + fundamental characteristics of well-designed systems
+- Many APIs refer to resource directly -> u'll have to bypass resource-managing
+  objs and deal w/ raw resources from time to time.
+  example:
+  /std::tr1::shared_ptr<Investment> pInv(createInvestment());/
+  suppose that a func u'd like to use when working w/ Investment objs is this:
+  /int daysHeld(const Investment *pi);/
+  u'd like to call it like this:
+  /int days = daysHeld(pInv);/
+  -> the code won't compile
+- we need a way to convert an obj of the RAII class into the raw resource it 
+  contains
+  + explicit conversion
+    tr1::shared_ptr and auto_ptr both offer a *get* member func to perform an
+    explicit conversion, to return a copy of the raw pointer inside the smart 
+    pointer object
+    int days = daysHeld(pInv.get());
+  + implicit conversion:
+
+- *Things to Remember*
+  + APIs often require access to raw resources, so each RAII class should offer
+    a way to get at the resource it manages
+  + Access may be via explicit conversion or implicit conversion. In general, 
+    explicit conversion is safer, but implicit conversion is more convenient for
+    clients
+
+
+** Item 16: Use the same form in corresponding uses of new and delete
+- What's wrong w/ this picture
+  /std::string *stringArray = new std::string[100]/;
+  ...
+  delete stringArray;
+- when you employ a /new/ expression:
+  + memory is allocated
+  + one or more constructors are called for that memory
+- when you employ a /delete/ expression:
+  + one or more destructors are called for the memory
+  + the memory is deallocated
+- big question for /detele/:
+    + how many objs reside in the memory being deleted
+    + the answer to that determines how many destructors must be called
+- *Things to Remember*
+  + If you use [] in a new expression, you must use [] in the corresponding 
+    delete expression. If you don't use [] in new expression, you mustn't use []
+    in the corresponding delete expression
+** Item 17: Store newed objs in smart pointers in standalone statements
+- suppose we have a func to reveal our priority and a second func to do some 
+  proc on a dynamically allocated Widget
+  int priority();
+  void processWidget(std::tr1::shared_ptr<Widget> pw, int priority);
+- Consider now a call to processWidget:
+  processWidget(new Widget, priority());
+- the above code won't compile. tr1::shared_ptr's constructor taking a raw 
+  pointer is /explicit/, so there's no implicit comversion from the raw pointer
+  returned by the expression "new Widget" to the TR1::shared_ptr required by 
+  processWidget. The following code will compile:
+  *processWidget(std::tr1::shared_ptr<Widget>(new Widget), priority());*
+- the above code may leak resources:
+  + before compilers can generate a call to processWidget, they have to evaluate
+    the arguments being passed as its parameters. The first argument consists of
+    2 parts:
+    > Execution of the expression "new Widget"
+    > A call to the TR1::shared_ptr constructor
+  + C++ compilers are grated considerable latitude in determining the order in 
+    which these things are to be done. Therefore, compiler can choose to perform
+    1. execute "new Widget"
+    2. call priority
+    3. call the tr1::shared_ptr constructor
+  + if priority yeilds an exception -> pointer to new Widget is lost
+- the way to avoid problems like this is simple: use a separate statement to crt
+  the Widget and store it in a smart pointer, then pass the smart pointer to
+  processWidget:
+  std::tr1::shared_ptr<Widget> pw(new Widget);
+  processWidget(pw, priority());
+- *Things to Remember*
+  + store newed objs in smart pointers in standalone statements. Failure to do 
+    this can lead to subtle resource leaks when exceptions are thrown.
+
+
+* Chapter 4: Designs and Declarations
+- In this chapter, we attack the problem of designing and declaring good C++
+  interfaces
+- the most important guideline about designing interfaces of any kind: 
+  that should be easy to use correctly and hard to use incorrectly.
+- a number of more specific guidelines addressing a wide range of topics
+  + correctness
+  + efficiency
+  + encapsulationg
+  + maintianability
+  + extensibility
+  + conformance to convention
+
+** Item 18: Make Interfaces easy to use correctly and hard to use incorrectly
+- C++ is awash in interfaces:
+  + function interfaces
+  + class interfaces
+  + template interfaces
+- the type system is our primary ally in preventing undesirable code from compiling
+- another way to prevent likely client errors is to restrict what can be done w/ a type. A
+  common way to impose restrictions is to add /const/
+- Any interface that requires that clients remember to do something is prone to incorrect 
+  use
+- To void resource leaks, a better interface decision would be to preempt the problem by
+  having the factory func return the smart pointer in the first place
+- tr1::shared_ptr is it automatically uses its per-pointer deleter to eliminate another 
+  potential client error, the "cross-DLL problem"
+- *Things to Remember*
+  + Good interfaces are easy to use correctly and hard to use incorrectly. You should strive
+    for these characteristics in all your interfaces.
+  + Ways to facilitate correct use include consistency in interfaces and behavioral 
+    compatibility w/ built-in types.
+  + Ways to prevent errors include creating new types, restricting operating on types, 
+    constraining obj values, and eliminating client resource management responsibilities
+  + TR1::shared_ptr supports custom deleters. This prevents the cross-DLL problem, can be
+    used to automatically unlock mutexes, etc
+
+** Item 19: Treat class design as type design
+- In C++, defining a new class defines a new type -> class designer == type designer
+  + overloading func & operators
+  + controlling memory allocation and deallocation
+  + defining obj initialization and finalization
+- Good types have a natural syntax, intuitive semantics, and one or more efficient impls
+- To design effective classes:
+  + must understand the issues you face
+  + every class requires that you confront the following questions:
+    > *How should objs of your new type be created and destroyed*
+    > *How should obj initialization differ from obj assignment*
+    > *What does it mean for objs of your new type to be passed by value*
+    > *What are the restriction on legal values for your new type*
+    > *Does your new type fit into an inheritance graph*
+    > *What kind of type conversion are allowed for your new type*
+    > *What operators and functions make sense for the new type*
+    > *What standard funcs should be disallowed?*
+    > *Who should have access to the members of your new types*
+    > *What is the "undeclared interface" of your new type?*
+    > *How general is your new type?*
+    > *Is a new type really what you need?*
+- *Things to Remember*
+  + class design is type design. Before defining a new type, be sure to consider all the 
+    issues discussed in this item
+
+** Item 20: Prefer pass-by-reference-to-const to pass-by-value
+- you want all your objs to be reliably initialized and destroyed. It would be nice if
+  there were a way to bypass all those constructions and destructions.
+- passing parameters by reference also avoids the /slicing problem/
+- under the hood of a C++ compiler, references are typically implemented as pointers, so 
+  passing something by reference usually means really passing a pointer.
+- In general, the only types for which you can reasonably assume that pass-by-value is 
+  inexpensive are built-in types and STL iterators, and function obj types. For everything 
+  else, follow the advice of this Item and prefer pass-by-reference-to-const over 
+  pass-by-value
+- *Things to Remember*
+  + Prefer pass-by-reference-to-const over pass-by-value. It's typically more efficient and
+    it avoids the slicing problem
+  + the rule doesn't apply to built-in types and STL iterator and func obj types. For them,
+    pass-by-value is usually appropriate
+
+** Item 21: Don't try to return a reference when you must return an object
+- pass by reference to obj that don't exist -> not a good thing.
+- consider a class:
+  class Rational
+  {
+  public:
+     Rational(int numerator = 0, int denominator = 1);
+     ...
+  private:
+     int n, d;
+     friend const Rational operator*(const Rational& lhs, 
+                                     const Rational& rhs);
+  }
+- the right way to write a func that must return a new obj is to have that func
+  return a new obj.
+- It all boils down to this: when deciding between returning a reference & 
+  returning an obj, your job is to make the choice that offers correct behavior.
+  Let your compiler vendors wrestle w/ figuring out how to make that choice as
+  inexpensive as possible
+- *Things to rembember*
+  + Never return a pointer or reference to a local stack obj, a reference to a 
+    heap-allocated obj, or a pointer or reference to a local static obj if there
+    is a chance that more than one such obj will be needed.
+
+** Item 22: Declare data members private
+- why not public data members:
+  + syntactic consistency
+  + give u much more precise control over the accessibility of data members.
+    Rarely does every data member need a getter & setter
+    > public
+    > read-write access
+    > read-only access
+  + encapsulation: hiding data members behind functional interfaces can offer
+    all kinds of implementation flexibility
+  + protected data members are syntactic consistency and fine-grained access 
+    control but they aren't more encapsulated than public ones
+- From an encapsulationg point of view, there are really only 2 access levels:
+  /private/ and everything else
+- *Things to Remember*
+  + Declare data members /private/. It gives clients syntactically uniform 
+    access to data, affords fine-grained access control, allows invariants to be
+    enforced, and offers class authors implementation flexibility
+  + /protected/ is no more encapsulated than /public/
+
+** Item 23: Prefer non-member non-friend functions to member functions
+- Imagine a class for representing web browsers. A class might offer clear cache
+  function, clear the history and remove all cookies
+  class WebBrowsers
+  {
+  public:
+    ...
+    void clearCache();
+    void clearHistory();
+    void removeCookies();
+    ...
+  }
+- many users want to perform all these funcs together, so WebBrowser might also 
+  offer a func to do that:
+  class WebBrowsers
+  {
+  public:
+    ...
+    void clearEverything();
+  }
+- This functionality could also be provided by a non-member func
+  void clearBrowser(WebBrosers& wb)
+  {
+     wb.clearCache();
+     wb.clearHistory();
+     wb.removeCookies();
+  }
+- So which is better: member func clearEverything() or non-member func 
+  clearBrowser()
+- OOP priciples dictate the data and the funcs that operate on them should be 
+  bundle together, and that suggests that the member func is the better choice
+  -> incorrect
+  + OOP dictates that data should be /encapsulated/
+  + member func yields less encapsulationg than non-member ufunc
+  + non-member func allows 
+    > greater packaging flexibility
+    > yelds fewer compilationg dependencies
+    > increase in WebBroswer extensibility
+- 2 things are worth noting:
+  + this reasoning applies only to non-member non-friend function
+  + non-member of one class doesn't mean it can't be a member of another class
+- in C++, a more natural approach would be to make clearBrowser a non-member 
+  func in the same namespace as WebBroswer
+- Putting all convenience funcs in multiple header files - but one namespace - 
+  also means that clients can easily extend the set of convenience functions
+- *Things to Remember*
+  + Prefer non-member non-friend functions to member functions. Doing so 
+    increases encapsulationg, packaging flexibility.
+
+** Item 24: Declare non-member functions when type conversions should apply to all parameters
+- having classes support implicit type conversions is generally a bad idea but
+  not unreasonable.
+- Example
+  class Rational 
+  {
+  public:
+     Rational(int numerator = 0, int denominator = 1);
+     int numerator() const;
+     int denominator() const;
+  private:
+     ...
+  }
+- We're unsure whether we should implement operations like addition, 
+  multiplication etc via member functions, non-member functions, or non-member
+  funcs that are friends.
+- you'd like to support mixed-mode arithmetic -> make operator* a non-member 
+  func
+- Whenever you can avoid friend funcs, you should because in real life, friends
+  are often more trouble than they're worth.
+- *Things to Remember*
+  + If you need type conversions on all parameters to a func (including the one
+    pointed by the this pointer), the function must be a non-member.
+
+** Item 25: Consider support for a non-throwing swap
+- swap is an interesting func. Along w/ its singular importance comes a set of 
+  singular complications
+- For such types, the default swap puts you on the fast track to the slow lane.
+  Foremost among such types are those consisting primarily of a pointer to 
+  another type that contains the real data.
+  class WidgetImpl {
+  public:
+     ...
+  private:
+     int a, b, c;
+     std::vector<double> v;   // expansive to copy
+     ...
+  };
+
+  class Widget {
+  public:
+     Widget(const Widget& rhs);
+     Widget& operator=(const Widget& rhs)
+     {
+        ...
+        *pImpl = *(rhs.pImpl);
+        ...
+     }
+  private:
+     WidgetImpl *pImpl;
+  }
+
+- to swap the value of 2 Widget objs, all we really need to do is swap their 
+  pImpl pointers, but the default swap algorithm has no way to know that. The 
+  basic idea:
+  namespace std {
+     template<>
+     void swap<Widget>(Widget& a, Widget &b)
+     {
+        swap(a.pImpl, b.pImpl);
+     }
+  }
+
+- The /template<>/ at the beginning of this func says that this is a total 
+  template specialization for std::swap
+- Summarize the situation:
+  + If the default implementation of swap offers acceptable efficiency for your
+    class or class template -> don't need to do anything
+  + if the default impl of swap isn't efficient enough
+    > offer a public swap member func that efficiently swaps the value of 2 objs
+    of your type. This func should never throw an exception
+    > offer a non-member swap in the same namespace as your class or template.
+    Have it call your /swap/ member func
+    > if you're writing a class, specialize std::swap for your class
+- *Things to Remember*
+  + Provide a /swap/ member func when std::swap would be inefficient for your 
+    type. Make sure your /swap/ doesn't throw exceptions
+  + If you offer a member swap, also offer a non-member /swap/ that calls the 
+    member. For classes (not templates), specialize std::swap, too
+  + When calling /swap/, employ a using declaration for std::swap, then call 
+    swap w/o namespace qualification
+  + It's fine to totally specialize std templates for user-defined types, but 
+    never try to add something completely new to std:
+
+* Chapter 5: Implementations
+- This chapter explains implementing problems and how to avoid them
+  + defining variables cause a drag on performance
+  + Overuse of casts can lead to code that's slow, hard to maintain, infected w/
+    subtle bugs.
+  + Returning handles to an obj's internals can defeat encapsulation and leave
+    clients w/ dangling handles.
+  + Failure to consider the impact of exceptions can lead to leaked resources &
+    corrupted data structures
+  + Overzealous inlining can cause code bloat
+  + Excessive coupling can result in unacceptably long build times
+
+** Item 26: Posepone variable definitions as long as possible
+- Cost when define a new variable:
+  + cost of construction when control reaches the variable's definition
+  + cost of destruction when the variable goes out of scope
+- "as long as possible"'s meaning:
+  + postpone a variable's definition until right before you have to use the var
+  + postpone the definition until you have initialization argument for it
+- loops: 2 approaches
+  (A)
+  Widget w
+  for(int i = 0; i < n; i++) {
+     w = some value dependent on i;
+  }
+
+  (B)
+  for(int i = 0; i < n; i++) {
+     Widget w(some value dependent on i);
+  }
+
+  which is better?
+  + assignment cost < constructor-destructor pair -> A is more efficient
+  + else B is more better
+  + B is is more comprehensible and maintanable
+  -> + unless you know that assignment is less expensive than a ctor-dtor pair
+       default use B
+- *Things to Remember*
+  + Postpone variable definitions as long as possible. It increases program 
+    clarity and improves program efficiency
+** Item 27: Minimize casting
+- rules of C++: type errors are impossible. But casts subvert the type system
+- casting in C++ is dangerous, but it's also a feature you want to approach w/
+  great respect
+- C style cast: (T) expression // cast expression to be of type T
+- Function-style casts use this syntax:
+  T (expression) // cast expression to be of type T
+- C++ offers 4 new cast forms (C++ style)
+  + const_cast<T>(expression): used to cast away the constness of objs
+  + dynamic_cast<T>(expression): used to perform safe downcasting
+  + reinterpret_cast<T>(expression): low-level casts that yeild implementation
+    dependent results
+  + static_cast<T>(expression): force implicit conversions
+- new style is preferable because+
+  + easier to identify in code
+  + simplifying the process of finding places in the code
+- if you find yourself wanting to cast, it's a sign that you could be approach 
+  things the wrong way.
+- implementation of *dynamic_cast* is slow. The need for /dynamic_cast/ arises
+  because you want to perform derived class operations on what you believe to be
+  derived class object, but you have only a pointer - or reference to base thru
+  which to manipulate the object. there are 2 general ways to avoid this problem
+  + use containers that store pointers (smart pointers)
+  + define virtual functions in the base class, offering a default impl that 
+    does nothing
+- Good C++ uses very few casts
+
+- *Things to Remember*
+  + Avoid casts whenever practical, especially /dynamic_cast/ in 
+    performance-sensitive code. If a design requires casting, try to dev a cast
+    free alternative
+  + When casting is necessary, try to hide it inside a func. Cliens can then 
+    call the func instead of putting casts in their own code
+  + Prefer C++-style casts to old-style casts. They are easier to see, and they
+    are more specific about what they do.
+** Item 28: Avoid returning "handles" to object internals
+- References, pointers, and iterators are all /handles/, and returning a handle 
+  to an obj's internal always run a risk of compromising an obj's encapsulation
+- data members and member functions that are inaccessible to the general public
+  are part of an obj's internals -> You should never have a member function 
+  return a pionter to a less accessible member function.
+- /dangling handles/: handles that refer to parts of objs that don't exist any
+  longer
+- *Things to Remember*
+  + Avoid returning handles (references, pointers, or iterators) to obj internal
+    It increases encapsulation, helps const member functions act /const/, and
+    minimizes the creation of dangling handles
+
+** Item 29: Strive for exception-safe code
+- Exception safety is sort of like pregnancy
+  class PrettyMenu {
+  public:
+    ...
+    void changeBackground(std::istream& imgSrc);
+    ...
+  private:
+    Mutex mutex;            // mutex for this object
+    image *bgImage;         // current background image
+    int imageChanges;       // of times image has been changed
+  };
+
+  void PrettyMenu::changeBackground(std::istream& imgSrc)
+  {
+     lock(&mutex);
+     
+     delete bgImage;
+     ++imageChanges;
+     bgImage = new Image(imgSrc);
+     
+     unlock(&mutex);
+  }
+
+  From the perspective of exception safety, this function is bad because it 
+  satisfies neither of 2 requirements
+- When an exception is thrown, exception-safe functions:
+  + *Leak no resources*
+  + *Don't allow data structures to become corrupted*
+- Exception-safe functions offer one of three guarantees:
+  + Functions offering *the basic guarantee* promise that if an exception is 
+    thrown, everything in the program remains in a valid state
+  + Functions offering *the strong guarantee* promise that if an exception is
+    thrown, the state of the program is unchanged
+  + Functions offering *the nothrow guarantee* promise never to throw exceptions
+    because they always do what they promise to do
+- Copy and swap technique: make a copy of the obj and make all needed changes to
+  the copy. If any of the modifying operations throws an exception, the original
+  obj remains unchanged
+- If functions operate only on local state, it's relative easy to offer the 
+  strong guarantee. When functions have side effects on non-local data, it's 
+  much harder. Another issue is efficiency
+- *Things to Remember*
+  + Exception-safe functions leak no resources and allow no data structures to 
+    become corrupted, even when exceptions are thrown. Such functions offer the
+    basic, strong, or nothrow guarantees
+  + The strong guarantee can often be implemented via copy-and-swap, but the 
+    strong guarantee is not practical for all functions
+  + A function can usually offer a guarantee no stronger than the weakest 
+    guarantee of the functions it calls
+
+** Item 30: Understand the ins and outs of inlining
+- inline functions: what a wonderful idea! When you inline a function:
+  + you avoid the cost of func call 
+  + enable compilers to perform context-specific optimizations
+- However, using inline func 
+  + give rise to programs that are too big for the available space
+  + lead to additional paging, a reduced instruction cache hit rate
+  + performance penalties
+- Bear in mind that /inline/ is a /request/ to compilers, not a command. The 
+  request can be given implicitly or explicitly. 
+  + The implicit way is to define a function inside a class definition.
+  + The explicit way is to precede its definition w/ the /inline/ keyword
+- Inline functions must typically be in header files, because most build env do
+  inlining during compilation
+- Templates are typically in header files, because compilers need to know what a
+  template looks like in order to instantiate it when it's used
+- Library designers must evaluate the impact of declaring function /inline/, 
+  because it's impossible to provide binary upgrades to the client visible 
+  inline functions in a library.
+- empirically determined rule of 80-20: typical program spends 80% of its time 
+  executing only 20% of its code. It's important rule, bcauz it reminds you that
+  your goal as a software developer is to identify the 20% of your code that can
+  increase your program's overall performance
+- *Things to Remember*
+  + Limit most inlining to small, frequently called functions. This facilitates 
+    debugging and binary upgradability, minimizes potential code bloat, and 
+    maximizes the chances of greater program speed
+  + Don't declare function templates /inline/ just bcauz they appear in header
+    files
+
+** Item 31: Minimize compilation dependencies between files
+- C++ doesn't do a very good job of separating interfaces from implementations. 
+  A class definition specifies not only a class interface but also a fair number
+  of implementation details.
+
+  class Person {
+  public:
+     Person(const std::string& name, const Date& birthday, 
+            const Address& addr);
+     std::string name() const;
+     std::string birthDate() const;
+     std::string address(); const;
+     ...
+  private:
+     std::string theName;     // implementation detail
+     Date theBirthDate;       // implementation detail
+     Address theAddress;
+  };
+
+- Person can't be compiled w/o access to definitions for the classes the Person
+  implementation uses -> #include <string> #include "date.h" 
+  #include "address.h"
+  -> this sets up a compilation dependency between the file defining Person and 
+  these header files -> recompile everything which use Person
+
+- Forward-declaring has 2 problems also:
+  + class like /string/ is not a class, it's a typedef for *basic_string<char>*
+  + difficulty w/ forward-declaring everything has to do w/ the need for 
+    compilers to know the size of objs during compilation. Consider
+    
+    int main()
+    {
+       int x;
+       Person p(params);
+       ...
+    }
+
+    the compilers see the definition for x, they know they must allocate enough
+    space to hold an int. When compilers see the definition for p, they know 
+    they have to allocate enough space for a Person, but how are they supposed
+    to know how big a /Person/ obj is?
+
+    In Java / Smalltalk the above code is transformed into:
+    
+    int main()
+    {
+       int x;
+       
+       Person *p;
+    }
+
+    One way to do that for Person is to separate it into 2 classes, one offering
+    only an interface, the other implementing that interface. If the
+    implementation class is named PersonImpl, Person would be defined like this:
+    
+    #include <string>   // standard library components
+                        // shouldn't be forward-declared
+    #include <memory>   // for tr1::shared_ptr
+
+    class PersonImpl;
+
+    class Date;
+
+    class Address;
+
+    class Person {
+    public:
+       Person(const std::string& name, const Date& birthday, 
+              const Address& addr);
+              
+       std::string name() const;
+       std::string birthDate() const;
+       std::string address() const;
+       ...
+
+    private:
+       std::tr1::shared_ptr<PersonImpl> pImpl;
+    }
+
+    such a design is often said to be using the /pimpl idiom/
+
+- The key to this separation is replacement of dependencies on /definitions/ w/
+  dependencies on /declarations/
+  + *Avoid using objects when object references and pointers will do*
+  + *Depend on class declaration instead of class definitions whenever you can*
+  + *Provide separate header files for declarations and definitions*
+
+- Decouple interfaces from implementations, thereby costs you some speed at 
+  runtime, plus some additional memory per object
+  + In the case of Handle classes, member functions have to go through the impl
+    pointer to get to the obj's data. That add one level of indirection per 
+    access
+  + the impl pointer has to be initialized -> incur the overhead inherent in 
+    dynamic memory allocation 
+  + For interface classes, every func call is virtual, so you pay the cost of an
+    indirect jump each time you make a func call. Obj derived from the Interface
+    class must contain a *virtual table pointer*. This pointer may increase the
+    amount of memory needed to store an obj
+- *Things to Remember*
+  + The general idea behind minimizing compilation dependencies is to depend on 
+    declarations instead of definitions. Two approaches based on this idea are 
+    Handle classes and Inteface classes
+  + Library header files should exist in full and declaration-only forms. This
+    applies regardless of whether templates are involved
+
+
+
+    
+* Chapter 6: Inheritance and Object-Oriented Design
+- OOP in C++ is probably a bit different from what you've used to.
+  + Inheritance can be single or multiple
+  + each inheritance link can be public, protected, or private
+  + each link can also be virtual or non-virtual
+  + member function options: virtual, non-virtual, pure virtual
+  + the interactions w/ other language features: 
+    > how do default parameter values interact w/ virtual functions
+    > how does inheritance affect C++'s name lookup rules
+    > What about design options
+    > if a class's behavior needs to be modifiable, is a virtual function the 
+    best way to do that
+
+** Item 32: Make sure public inheritance models "is-a"
+- The single most important rule in oop w/ c++ is: 
+  *public inheritance means is-a*
+- *private inheritance means something entirely different*
+- that's a simple reflection of the fact that there is no ideal design for all
+  software
+- *Things to Remember*
+  + public inheritance means "is-a". Everything that applies to base classes 
+    must also apply to derived classes, because every derived calss obj is a 
+    base class object
+
+
+** Item 33: Avoid hiding inherited names
+- name hiding prevents you from accidentally inheriting overloads from distant 
+  base classes when you create a new derived class in a library or application 
+  framework. 
+- If you want to inherite the overloads, so that you don't violate the is-a 
+  relationship between base and derived classes -> /using/
+- in private inheritance, we use /forwarding function/ technique to inherit the 
+  functions we want
+- *Things to Remember*
+  + Names in derived classes hide names in base classes. Under public 
+    inheritance, this is never desirable
+  + To make hidden names visible again, employ using declarations or forwarding 
+    function
+** Item 34: Differentiate between inheritance of interface and inheritance of Impl
+- public inheritance composed of 2 separable parts:
+  + inheritance of function interfaces
+  + inheritance of function implementations
+- Example:
+  class Shape {
+  public:
+     virtual void draw() const = 0;
+
+     virtual void error(const std::string& msg);
+
+     int objectID() const;
+
+     ...
+  };
+
+  class Rectangle: public Shape { ... };
+  
+  class Ellipse: public Shape { ... };
+  
+- Shape exerts a strong influence on all classes that inherit from it
+  + member func /interfaces are always inherited/
+- what are the implications of pure virtual, impure virtual and non-virtual?
+  + The most salient of pure virtual functions are they must redeclared by any 
+    concrete class that inherits them
+    > the purpose of declaring a pure virtual function is to have derived 
+    classes inherit a function /interface only/
+  + The purpose of declaring a simple virtual function is to have derived 
+    classes inherit a function /interfaces as well as a default implementation/
+
+    class Airport { ... };
+
+    class Airplane {
+    public:
+       virtual void fly(const Airport& destination);
+
+       ...
+    };
+
+    void Airplane::fly(const Airport& destination)
+    {
+       default code for flying an airplane to the given destination
+    }
+
+    class ModelA: public Airplane { ... };
+    class ModelB: public Airplane { ... };
+    
+    > To avoid writing identical code in the ModelA and ModelB classes, the 
+    default flying behavior is provided as the body of Airplane::fly, which both
+    ModelA and ModelB inherit
+    > classic object-oriented design: 2 classes share a common feature, so the 
+    common feature is moved into a base class -> makes common features explicit,
+    avoid code-duplication, facilitates future enhancements, eases long-term 
+    maintenance
+
+    However
+    class ModelC: public Airplane {
+       ...
+    };
+
+    because ModelC has its own behavior -> disaster. Fortunately, it's easy to 
+    offer default behavior to derived classes but not give it to them unless 
+    they ask. The trick is to serve the connection between the /interface/ of 
+    the virtual function and its default /implementation/
+
+    class Airplane {
+    public:
+       virtual void fly(const Airport& destination) = 0;
+       ...
+    protected:
+       void defaultFly(const Airport& destination);
+    }
+
+    void Airplane::defaultFly(const Airport& destination)
+    {
+       default code for flying an airplane to the given destination
+    }
+
+    Airplane::fly has been turned into a /pure virtual function/. The default 
+    implementation is also present in the Airplane class, but now it's in the 
+    form of an independent function /defaultFly/. Classes like ModelA and ModelB
+    that want to use the default behavior simply make an inline call to 
+    /defaultFly/ inside their body of fly.
+
+    class ModelA: public Airplane {
+    public:
+       virtual void fly(const Airport& destination)
+       {
+          defaultFly(destination);
+       }
+    }
+
+    class ModelC: public Airplane {
+    public:
+       virtual void fly(const Airport& destination) {
+          ...
+       }
+    }
+- foolproof of the above design:
+  + it pollutes the class namespace w/ a proliferation of closely related 
+    function names
+- By taking advantage of the fact that pure virtual fucntions must be redeclared
+  in concrete derived classes, but they may also have implementations of their 
+  own. Here's how the Airplane hierarchy could take advantage of the ability to
+  define a pure virtual function
+  
+  class Airplane {
+  public:
+     virtual void fly(const Airport& destination) = 0; // pure virtual function
+     
+     ...
+  };
+
+  void Airplane::fly(const Airport& destination)
+  {
+     default code for flying an airplane to 
+     the given destination
+  }
+
+  class ModelA: public Airplane {
+  public:
+     virtual void fly(const Airport& destination)
+     {
+        Airplane::fly(destination);
+     }
+  }
+
+- Airplane::fly has been broken into its 2 fundamental components 
+  + its declaration specifies its interface
+  + its definition specifies its default behavior
+
+- Finally, we come to Shape's non-virtual function objectID
+  + The purpose of declaring a non-virtual function is to have derived classes
+    inherit a function interface as well as a mandatory implementation
+  + non-virtual function identifies an /invariant/ over specialization, it should
+    never be redefined in a derived class
+
+- The differences in declarations for pure virtual, simple virtual, and 
+  non-virtual functions allow you to specify with precision what you want 
+  derived classes to inherit:
+  + interface only
+  + interface and a default implementation
+  + interface and a mandatory implementation
+- You may choose carefully among them when you declare your member functions, to
+  avoid 2 common mistakes
+  + declare all functions non-virtual. 
+    > 80-20 rule: 80% of the runtime will be spent executing just 20% of the 
+    code
+  + declare all member functions virtual. It serves no one to pretend that your 
+    class can be all things to all people if they'll just take the time to redef
+    all your functions. If you have invariant over specialization, don't be 
+    afraid to say so!
+
+- *Things to Remember*
+  + Inheritance of interface is different from inheritance of implementation. 
+    Under public inheritance, derived classes always inherit base class 
+    interfaces
+  + Pure virtual functions specify inheritance of interface only
+  + Simple (impure) virtual functions specify inheritance of interface plus 
+    inheritance of a default implementation
+  + Non-virtual functions specify inheritance of interface plus inheritance of a
+    mandatory implementation
+
+** Item 35: Consider alternatives to virtual functions
+*** The Template Method Pattern via the Non-Virtual interface Idiom
+- An interesting school of thought that argues that virtual functions should 
+  almost always be private
+
+  class GameCharacter {
+  public:
+     int healthValue() const
+     {
+        ...
+        int retVal = doHealthValue();  // do the real work
+        ...
+        return retVal;
+     }
+  private:
+     virtual int doHealthValue() const  // derived classes may redef this
+     {
+        ... 
+     }
+  };
+
+- This basic design - having clients call private virtual functions indirectly
+  through public non-virtual member functions - is known as the non-virtual 
+  interface (NVI) idiom. It's a particular manifestation of the more general 
+  design pattern called *Template Method*. Non-virtual function the virtual's func
+  /wrapper/
+
+*** The Strategy Pattern via Function Pointers
+- calculating a character's health is independent of the character's type - that
+  such calculations need not be part of the character at all
+
+  class GameCharacter;  // forward declaration
+
+  // function for the default health calculation algorithm
+  int defaultHealthCalc(const GameCharacter& gc);
+
+  class GameCharacter {
+  public:
+     typedef int (*HealthCalcFunc)(const GameCharacter&);
+
+     explicit GameCharacter(HealthCalcFunc hcf = defaultHealthCalc)
+     : healthFunc(hcf)
+     {}
+
+     int healthValue() const
+     {
+        return healthFunc(*this);
+     }
+
+     ...
+
+  private:
+     HealthCalcFunc healthFunc;
+  };
+
+- This approach is a simple application of another common design pattern, 
+  Strategy. This approach offers some interesting flexibility:
+  + Different instances of the same character type can have different health
+    calculation functions
+  + Health calculation functions for a particular character may be changed at 
+    runtime
+
+*** The Strategy Pattern via tr1::function
+
+*** The "Classic" Strategy Pattern
+
+*** Summary
+- Consider alternatives to virtual functions when searching for a design for the
+  problem you're trying to solve
+  + Use the *non-virtual interface idiom* (NVI idiom), a form of the Template 
+    Method design pattern that wraps public non-virtual member functions around
+    less accessible virtual functions
+  + Replace virtual functions with *function pointer data members*, a stripped
+    down manifestation of the Strategy design pattern
+  + Replace virtual functions with *tr1::function data members*, thus allowing 
+    use of any callable entity with a signature compatible with what you need. 
+    This too is a form of the Strategy pattern
+  + Replace virtual functions in one hierarchy with *virtual functions in another
+    herarchy*
+
+- *Things to Remember*
+  + Alternatives to virtual functions include the NVI idiom and various forms of
+    the Strategy design pattern. The NVI idiom is itself an example of the 
+    Template Method design pattenr
+  + A disadvantage of moving functionality from a member function to a function 
+    outside the class is that the non-member function lacks access to the class
+    non-public members
+  + tr1::function objects act like generalized funciton pointers. Such objects
+    support all callable entities compatible with a given target signature.
+
+** Item 36: Never redefine an inherited non-virtual function
+- Class layout
+  class B {
+  public:
+     void mf();
+     ...
+  };
+
+  class D: public B { ... };
+
+  D x
+- surprise: 2 below func call behave differently
+  B *pB = &x;
+  pB->mf();
+  
+  D *pD = &x;
+  pD->mf();
+- the reason: 
+  + non-virtual functions like B::mf and D::mf are statically bound. 
+  + virtual functions are dynamically bound. If mf were a virtual function, a 
+    call to mf through either pB or pD would result in an invocation of D::mf
+- If you are writing class D and you redefine a non-virtual function mf that you
+  inherit from class B, D objects will likely exhibit inconsistent behavior
+- *Things to Remember*
+  + Never redefine an inherited non-virtual function
+
+** Item 37: Never redefine a function's inherited default parameter value
+- Virtual functions are dynamically bound, but default parameter values are 
+  statically bound
+  -> invoke a virtual function defined in a /derived class/ but using a default 
+  parameter value from a /base class/
+- When you're having trouble making a virtual function behave the way you'd like
+  it's wise to consider alternative designs. One of the alternatives is the NVI
+  idiom
+- *Things to Remember*
+  + Never redefine an inherited default parameter value, because default 
+    parameter values are statically bound, while virtual functions - the only 
+    functions you should be overriding - are dynamically bound
+
+** Item 38: Model "has-a" or "is-implemented-in-terms-of" through composition
+- /Composition/ is the relationship between types that arises when objs of one
+  type contain objs of another type
+
+  class Address { ... };
+  class PhoneNumber { ... };
+  
+  class Person {
+  public:
+     ...
+  private:
+     std::string name;
+     Address address;
+     PhoneNumber voiceNumber;
+     PhoneNumber faxNumber;
+  };
+
+-> Person objects are composed of /string/, /Address/, and /PhoneNumber/
+- Composition hsa 2 meanings (because of different domains in softwares)
+  + has-a
+  + is-implemented-in-terms-of
+
+- Some objs correspond to things in the world you are modeling -> /app domain/
+- Objecs are purely implementation artifacts: buffers, mutexes, search trees
+  -> /impl domain/
+- Example (wrong way to use list for Set)
+
+  template<typename T>
+  class Set: public std::list<T> { ... };
+
+  + Because the relationship between these 2 classes isn't is-a, public 
+    inheritance is the wrong way to model that relationship. The right way is to
+    realize that a Set object can be /implemented in terms of a list/ object
+    
+    template<class T>
+    class Set {
+    public:
+       bool member(const T& item) const;
+
+       void insert(const T& item);
+       void remove(const T& item);
+
+       std::size_t size() const;
+
+    private:
+       std::list<T> rep;
+    };
+- *Things to Remember*
+  + Composition has meanings completely different from that of public interface
+  + In the application domain, composition means has-a. In the implementation 
+    domain, it means is-implemented-in-terms-of
+
+** Item 39: Use private inheritance judiciously
+   class Person { ... };
+   class Student: private Person { ... };
+
+   void eat(const Person& p);       // anyone can eat
+   void study(const Student& s);    // only students study
+   
+   Person p;
+   Student s;
+   
+   eat(p);   // fine
+   eat(s);   // error!
+- Clearly, private inheritance doesn't mean is-a
+- How does private inheritance behave?
+  + compilers will generally not convert a derived class obj into a base class 
+    obj if the inheritance relationship between the classes is private
+  + members inherited from a private base class become private members of the 
+    derived class, even if they were protected or public in the base class
+  -> private inheritance means is-implemented-in-terms-of
+- Use composition whenever you can, use private inheritance whenever you must
+
+  class HoldsAnInt: private Empty {
+  private: 
+     int x;
+  };
+
+  -> sizeof(HoldsAnInt) == sizeof(int). This is known as the empty base 
+  optimization
+- *Things to Remember*
+  + Private inheritance means is-implemented-in-terms-of. It's usually inferior
+    to composition, but it makes sense when a derived class needs access to 
+    protected base class members or needs to redefine inherited virtual function
+  + Unlike composition, private inheritance can enable the empty base 
+    optimization. This can be important for library developers who strive to 
+    minimize object sizes
+
+
+** Item 40: Use multiple inheritance judiciously
+- Anytime you have an inheritance hierarchy w/ more than one path between a base
+  class and a derived class, you must confront a question of whether you want the
+  data members in the base class to be replicated for each of the paths
+- C++ supports replication and not, though its default is to perform the 
+  replication. If it's not what you want, you must make the class w/ the data a
+  /virtual base class/. To do that, you have all classes that immediately inherit
+  from it use /virtual inheritance/
+- virtual inheritance costs:
+  + objs created from classes using virtual inheritance are generally are larger
+  + access to data members in virtual base classes is slower
+  + classes derived from virtual bases that require initialization must be aware
+    of their virtual bases
+  + When a new derived class is added to the hierarchy, it must assume 
+    initialization responsibilities for its virtual bases
+- *advices*:
+  + Don't use virtual base unless you need to
+  + If you must use virtual base classes, try to avoid putting data in them
+
+- C++ interface class for modeling persons:
+  
+  class IPerson {
+  public:
+     virtual ~IPerson();
+     
+     virtual std::string name() const = 0;
+     virtual std::string birthDate() const = 0;
+  };
+
+  + IPerson clients must program in terms of IPerson pointers and references, 
+    because abstract classes cannot be instantiated. To create object that can 
+    be manipulated as IPerson objects, clients of IPerson use factory functions 
+    to initiate concrete classes derived from IPerson
+
+    std::tr1::shared_ptr<IPerson> makePerson(DatabaseID personIdentifier);
+
+- Suppose a old database-specific class PersonInfo offers the essence of what 
+  CPerson needs:
+
+  class PersonInfo {
+  public:
+     explicit PersonInfo(DatabaseID pid);
+     virtual ~PersonInfo();
+
+     virtual const char * theName() const;
+     virtual const char * theBirthDate() const;
+
+     ...
+  private:
+     virtual const char * valueDelimOpen() const;
+     virtual const char * valueDelimClose() const;
+  };
+
+- If CPerson wants a name w/o deliminate it can use IPerson and PersonInfo like
+  
+  class CPerson: public IPerson, private PersonInfo {
+  };
+
+- *Things to Remember*
+  + Multiple inheritance is more complex than single inheritance. It can lead to
+    new ambiguity issues and to the need of virtual inheritance
+  + Virtual inheritance imposes costs in size, speed, and complexity of 
+    initialization and assignment. It's most practical when virtual base classes
+    have no data
+  + Multiple inheritance does have legitimate uses. One scenario involves 
+    combining public inheritance from an interface class with private 
+    inheritance from a class that helps with implementation
+
+
+* Chapter 7: Templates and Generic Programming
+- The initial motivation for C++ templates:
+  + make it possible to create type-safe containters like vector, list
+- The more people worked with templates, however, the wider the variety of 
+  things they found they could do with them
+- C++ template mechanism is itself Turing-complete -> it can be used to compute 
+  any computable value
+- This chapter focuses on core ideas underlie all template-based programming
+
+** Item 41: Understand implicit interfaces and compile-time polymorphism
+- The world of object-oriented programming resolves around
+  + /explicit/ interfaces
+  + /runtime/ polymorphism
+- In the world of templates and generic programming:
+  + explicit interfaces and compile-runtime polymorphism are less important
+  + /implicit interfaces/ and /compile-runtime polymorphism/ move to the fore
+- Example:
+  
+  template<typename T>
+  void doProcessing(T& w)
+  {
+     if(w.size() > 10 && w != someNastyWidget) {
+        T temp(w);
+        temp.normalize();
+        temp.swap(w);
+     }
+  }
+
+- What can we say about w?
+  + The interface that w must support is determined by the operations performed
+    on w in the template: size, normalize, swap, comparison for inequality.
+    What's important is that the set of expressions that must be valid in order
+    for the template to compile is /implicit interface/ that T must support
+  + The calls to functions involving w such as operator> and operator!= may 
+    involve instantiating templates to make these calls succeed. Such instantiation
+    occurs during compilation
+- /implicit interface/ is not based on function signatures. Rather it consists
+  of valid /expression/
+
+- void doProcessing(T& w)
+  {
+     if (w.size() > 10 && w != someNastyWidget) {
+     ...
+     }
+  }
+- The implicit interface for T appears to have these constraints:
+  + It must offer a member function named *size* that returns an integral value
+  + It must support an operator!=
+- Thanks to the possibility of operator overloading, neither of these 
+  constraints need be satisfied
+  + T must support *size* but that function can be inherited from a base class
+  + It only needs to return an object of some type X such that there is an 
+    operator>  that can be called with an object type X and int
+  + operator> need not take the parameter of type X, but type Y and it would be
+    okay as long as there were an implicit conversion from objects of type X to 
+    objs of type Y
+- *Things to Remember*
+  + Both classes and templates support interfaces and polymorphism
+  + For classes, interfaces are explicit and centered on function signatures. 
+    Polymorphism occurs at runtime through virtual functions
+  + For template parameters, interfaces are implicit and based on valid 
+    expression. Polymorphism occurs during compilation through template 
+    instantiation and function overloading resolution.
+
+** Item 42: Understand the two meanings of typename
+- Question: what is the difference between /class/ and /typename/ in the 
+  following template declarations
+  + template<class T> class Widget;
+  + template<typename T> class Widget;
+- From C++'s point of view, class and typename means exactly the same thing
+- Example
+
+  template<typename C>
+  void print2nd(const C& container)
+  {
+     if (container.size() >= 2) {
+        C::const_iterator iter(container.begin());
+        ++iter;
+        int value = *iter;
+        std::cout << value;
+     }
+  }
+
+- The type of iter is C::const_iterator, a type that depends on the template 
+  param C. Names in a template that are dependent on a template parameter are 
+  called /dependent names/
+- Nested dependent names can lead to parsing difficulties
+
+  template<typename C>
+  void print2nd(const C& container)
+  {
+     C::const_iterator * x;
+  }
+
+- C++ has a rule to to resolve this ambiguity: if the parser encounters a nested dependent name in a template, it assumes that the name is not a type unless you tell it otherwise. 
+- The general rule is simple: anytime you refer to a nested dependent type name
+  in a template, you must immediately precede it by the word *typename*
+
+- *Things to Remember*
+  + When declaring template parameters, class and typename are interchangeable
+  + Use typename to identify nested dependent type names, except in base class 
+    lists or as a base class identifier in a member initialization list
+
+
+** Item 43: Know how to access names in templatized base classes
+- When we cross from Object-oriented C++ to Template C++
+- There are 3 ways to disable C++'s "don't look in templatized base classes"
+  + Preface calls to base class functions with "this->"
+  + Employ a *using* declaration
+  + Explicitly specify that the function being called is in the base class. This
+    is generally the least desirable way to solve the problem, because if the 
+    func is being called is virtual, explicit qualification turns off the 
+    virtual binding behavior
+- *Things to Remember*
+  + In derived class templates, refer to names in base class templates via a 
+    "this->" prefix, via *using* declarations, or via an explicit base class 
+    qualification
+** Item 44: Factor parameter-independent code out of templates
+- Templates are a wonderful way to save time and avoid code replication. 
+  Function template are similarly appealing. If you're not careful, using 
+  templates can lead to /code bloat/
+- The result: source code that looks fit and trim, yet object code that's fat 
+  and flabby.
+- Your primary tool:
+  + commonality
+  + variability analysis
+
+- Example: write a template for fixed-size square matrices that, among other 
+  things, support matrix inversion
+
+  template<typename T, std::size_t n>
+  class SquareMatrix {
+  public:
+     ...
+     void invert();
+  };
+
+  usage:
+  SquareMatrix<double, 5> sm1;
+  sm1.invert();
+  SquareMatrix<double, 10> sm2;
+  sm2.invert();
+
+ - 2 versions of invert is totally the same, except for the use of 5 in one ver
+   and 10 in other ver.
+
+-> refactoring:
+   
+   template<typename T>
+   class SquareMatrixBase {
+   protected:
+      void invert(std::size_t matrixSize);
+   };
+
+   template<typename T, std::size_t n>
+   class SquareMatrix: private SquareMatrixBase<T> {
+   private:
+      using SquareMatrixBase<T>::invert;  // avoid hiding base version of invert
+   public:
+      void invert() { this->invert(n) };  // make inline call to base class
+   };
+
+- SquareMatrixBase::invert is intended to be a way for derived classes to avoid 
+  code replication -> protected instead of being public.
+- The additional code of calling it should be zero, because derived classes' 
+  /invert/ call the base class version using inline functions
+
+- The sticky issue we haven't addressed yet. How does SquareMatrixBase::invert 
+  know what data to operate on? 
+  -> have SquareMatrixBase store a pointer to the memory for the matrix values. 
+  The resulting design looks like this:
+
+  template<typename T>
+  class SquareMatrixBase {
+  protected:
+     SquareMatrixBase(std::size_t n, T *pMem) : size(n), pData(pMem) {}
+
+     void setDataPtr(T *ptr) { pData = ptr; }
+
+     ... 
+  private:
+     std::size_t size;
+     T *pData;
+  };
+
+- *Things to Remember*
+  + Templates generate multiple classes and multiple fucntions, so any template
+    code not dependent on a template parameter causes bloat
+  + Bloat due to non-type template parameters can often be eliminated by 
+    replacing template parameters with function parameters or class data members
+  + Bloat due to type parameters can be reduced by sharing implementations for
+    instantiation types with identical binary representations
+
+** Item 45: Use member function templates to accept "all compatible types"
+- /Smart pointers/ are objects that act much like pointers but add functionality
+  pointers don't provide
+  + /auto_ptr/ and tr1::shared_ptr can be used to automatically delete heapbased
+    resources at run time.
+- Real pointers do well is: support implicit conversions
+  + derived class pointers implicitly convert into base class pointers
+  + pointers to non-const objects convert into pointers to const objects
+
+  class Top { ... };
+  class Middle: public Top { ... };
+  class Bottom: public Middle { ... };
+  Top *pt1 = new Middle;      // convert Middle* -> Top*
+  Top *pt2 = new Bottom;      // convert Bottom* -> Top*
+  const Top *pct2 = pt1;      // convert Top* -> const Top*
+
+
+- Emulating such conversion in user-defined smart pointer classes is tricky
+  We need to below code to compile
+  
+  template<typename T>
+  class SmartPtr {
+  public:
+     explicit SmartPtr(T *realPtr);     // smart pointers are typically
+     ...                                // initialized by built-in pointers
+  };
+
+  SmartPtr<Top> pt1 = SmartPtr<Middle>(new Middle);
+  SmartPtr<Top> pt2 = SmartPtr<Middle>(new Bottom);
+  SmartPtr<const Top> pct2 = pt1
+
+- To get the conversions among SmartPtr classes that we want, we have to program
+  them explicitly
+
+- In principle, the number of constructors we need is unlimited. Since a 
+  template can be instantiated to generate an unlimited number of functions, it
+  seems that we don't need a constructor function for SmartPtr, we need a ctr 
+  /template/. Such templates are examples of /member function templates/
+
+  template<typename T>
+  class SmartPtr {
+  public:
+     template<typename U>                     // member template
+     SmartPtr(const SmartPtr<U>& other);      // for a "generalized copy 
+     ...                                      // copy constructor"
+  };
+  
+- For every type T and every type U, a SmartPtr<T> can be created from a
+  SmartPtr<U>, because SmartPtr<T> has a constructor that takes a SmartPtr<U>
+  parameter. Constructors lke this are sometimes known as 
+  /generalized copy constructors/
+- Assuming that SmartPtr follows the lead of *auto_ptr* and *TR1::shared_ptr* by
+  offering a *get* member function that returns a copy of the built-in pointer
+  held by the smart pointer object. We can use the implementation of the ctr
+  template to restrict the conversions to those we want: 
+
+  template<typename T>
+  class SmartPtr {
+  public:
+     template<typename U>
+     SmartPtr(const SmartPtr<U>& other) : heldPtr(other.get()) {...};     
+     
+     T* get() const { return heldPtr; }
+     ...
+  private:
+     T *heldPtr;
+  };
+
+- We use the member initialization list to initialize SmartPtr<T>'s data member
+  of type T* with the pointer of type U* held by the SmartPtr<U>. This will 
+  compile only if there is an implicit conversion from a U* pointer to a T* 
+  pointer
+
+- The utility of member function templates isn't limited to constructors. 
+  Another common role for them is in support for assignment.
+
+- Declaring a generalized copy constructor (a member template) in a class 
+  doesn't keep compilers from generating their own copy constructor 
+  (a non-template), so if you want to control all aspects of copy construction, 
+  you must declare both a generalized copy constructor as well as the "normal"
+  copy constructor
+
+- *Things to Remember*
+  + Use member function templates to generate functions that accept all 
+    compatible types
+  + If you declare member templates for generalized copy construction or 
+    generalized assignment, you'll still need to declare the normal copy 
+    constructor and copy assignment operator, too.
+
+** Item 46: Define non-member functions inside templates when type conversions are desired
+ - a seem innocuous modification to Item24's example: it templatizes both 
+   Rational and operator*
+
+   template<typename T>
+   class Rational {
+   public:
+      Rational(const T& numerator = 0,          // see Item 20 for why params
+               const T& denominator = 1);       // are now passed by references
+
+      const T numerator() const;          // see Item 28 for why return
+      const T denominator() const;        // values are still passed by value
+      ...
+   };
+
+   template<typename T>
+   const Rational<T> operator* (const Rational<T>& lhs,
+                                const Rational<T>& rhs)
+   { ... }
+
+   Rational<int> oneHalf(1, 2);
+   
+   Rational<int> result = oneHalf * 2  // error! won't compile
+
+- compilers know what function we're trying to call, but here, compilers do not
+  know which function we want to call. Instead, they're trying to /figure out/
+  what function to instantiate from the template named /operator*/. In order to 
+  to do the instantiation, they have to figure out what T is
+- implicit type conversion functions are never considered during template 
+  argument deduction.
+- implicit type conversion via constructor calls is not considered during 
+  template argument deduction.
+
+- the fact that a /friend/ declaration in a template class can refer to a 
+  specific function. That means the class *Rational<T>* can declare operator* 
+  for Rational<T> as a friend function.
+
+  template<typename T>
+  class Rational {
+  public:
+     ...
+  friend
+     const Rational operator*(const Rational& lhs, const Rational& rhs);
+  };
+
+  template<typename T>
+  const Rational<T> operator*(const Rational& lhs, const Rational& rhs)
+  { ... }
+
+- Inside a class template, the name of the template can be used as shorthand for
+  the template and its parameters
+
+- The code above is successful compiled but it has the linking problem. The mixed
+  mode code compiles. Our intent is to have the operator* template outside the
+  class provide that definition, but things don't work that way. The simplest 
+  thing that could possibly work is to merge the body of operator* into its 
+  declaration
+
+  template<typename T>
+  class Rational {
+  public:
+     ...
+
+  friend const Rational operator*(const Rational& rhs, const Rational& lhs)
+  {
+     return Rational(lhs.numerator() * rhs.numerator(),
+                     lhs.denominator() * rhs.denominator());
+  }
+  };
+
+- Interesting observation about this technique is that the use of friendship has
+  nothing to do with a need to access non-public parts of the class
+  + In order to make type conversions possible on all argument, we need a 
+    non-member function (Item 24 - applies)
+  + In order to have the proper function automatically instantiated, we need to 
+    declare the function inside the class. The only way to declare a non-member
+    function inside a class is to make it a friend
+  + defined inside a class are implicitly declared /inline/, and that includes
+    friend functions like operator*. You can minimize the impact of such inline
+    declarations by having operator* do nothing but call a helper function def
+    outside of the class. It's worth taking a look at the "have the friend call
+    a helper" approach
+
+    template<typename T> class Rational;
+
+    template<typename T> const Rational<T> doMultiply(const Rational<T> & lhs,
+                                                      const Rational<T> & rhs);
+
+    template<typename T>
+    class Rational {
+    public:
+       ...
+
+    friend
+       const Rational<T> operator* (const Rational& lhs, const Rational& rhs)
+       {
+           return doMultiply(lhs, rhs);
+       }
+    };
+
+- Operator* does support mixed-mode operations. In essence, the function 
+  operator* supports whatever type conversions are necessary to ensure that two
+  Rational objects are being multiplied
+
+- *Things to Remember*
+  + When writing a class template that offers functions related to the template
+    that support implicit type conversions on all parameters, define those funcs
+    as friends inside the class template
+** Item 47: Use traits classes for information about types
+- The STL is primarily made up of templates for
+  + containers
+  + iterators
+  + algorithms
+  + a few utility templates
+- *advance* moves a specified iterator a specified distance  
+  template<typename IterT, typename DistT>
+  void advance(IterT& iter, Dist d);
+- There are 5 categories of iterators
+  + /Input iterators/: move only forward, move only one step at a time, only 
+    read what corresponding to the operations. The C++ library's istream_iterator
+    are representative of this category
+  + /Output iterators/ are analogous
+  + /Forward iterators/
+  + /Bidirectional iterators/
+  + /Random access iterators/
+- For each of the fie iterator categories, C++ has a "tag struct" in the 
+  standard library that serves to identify it
+
+  struct input_iterator_tag {};
+  struct output_iterator_tag {};
+  struct forward_iterator_tag: public input_iterator_tag {};
+  struct bidirectional_iterator_tag: public forward_iterator_tag {};
+  struct random_access_iterator_tag: public bidirectional_iterator_tag {};
+
+- What we really want to do is implement *advance* essentially like this:
+  template<typename IterT, typename DistT>
+  void advance(IterT& iter, DistT d)
+  {
+     if(iter is a random access iterator) {
+        iter += d;
+     } else {
+        if (d >= 0) { while (d--) ++iter; }
+        else {while (d++) --iter; }
+     }
+  }
+- This requires being able to determine whether iter is a random access iterator
+  *Traits* allow you to get information about a type during compilation
+- Traits has to work as well for built-in types as it does for user-defined 
+  types. The fact that traits must work w/ built-in types means that things like
+  nesting information inside types won't do, because there's no way to nest info
+  inside pointers -> the traits information for a type, then, must be external 
+  to the type. The standard technique is to put it into a template and one or
+  more specializations of that template. For iterators, the template in the 
+  standard library is named *iterator_traits*
+
+  template<typename IterT>       // template for information about
+  struct iterator_traits;        // iterator types
+- *iterator_traits* is a struct. By convention
+  + traits are always implemented as structs. 
+  + structs used to implement traits are known as *traits classes*
+- The way iterator_traits works is that for each type IterT, a typedef named 
+  iterator_category is declared in the struct iterator_traits<IterT>
+- iterator_traits implements this in 2 parts
+  + any user defined iterator type must contain a nested typedef named 
+    iterator_category that identifies the appropriate tag struct
+
+    template< ... >
+    class deque {
+    public:
+       class iterator {
+       public:
+          typedef random_access_iterator_tag iterator_category;
+          ...
+       };
+       ...
+    };
+
+  + iterator_traits just parrots back the iterator class's nested typedef
+    template<typename IterT>
+    struct iterator_traits {
+       typedef typename Iter::iterator_category iterator_category;
+    };
+  + to support pointer, iterator_traits offers a /partial template 
+    specialization/ for pointer types
+    template<typename IterT>              // partial template specialization
+    struct iterator_traits<IterT*>        // for built-in pointer types
+    {
+       typedef random_access_iterator_tag iterator_category;
+       ...
+    };
+
+- You know how to design and implement a traits class:
+  + identify some information about types you'd like to make available
+  + choose a name to identify that information
+  + provide a template and set of specializations that contain the information 
+    for the types you want to support
+- What we really want is a conditional construct for types that is evaluated 
+  during compilation. As it happens, C++ already has a way to get that behavior.
+  It's called overloading
+- To get /advance/ to behave the way we want, all we have to do is create 2 vers
+  of an overloaded function containing the "guts" of advance, declaring each to
+  take a different type of *iterator_category* object
+
+  template<typename IterT, typename DistT>
+  void doAdvance(IterT& iter, DistT d, std::random_access_iterator_tag)
+  {
+     iter += d;
+  }
+
+  template<typename IterT, typename DistT>
+  void doAdvance(IterT& iter, DistT d, std::bidirectional_iterator_tag)
+  {
+     if (d >= 0) { while (d--) ++iter; }
+     else { while (d++) --iter; }
+  }
+
+  template<typename IterT, typename DistT>
+  void doAdvance(IterT& iter, DistT d, std::input_iterator_tag)
+  {
+     if (d < 0) {
+        throw std::out_of_range("Negative distance");        
+     }
+     while (d--) ++iter;
+  }
+
+  template<typename IterT, typename DistT>
+  void advance(IterT& iter, DistT d)
+  {
+     doAdvance(
+        iter, d,
+        typename
+           std::iterator_traits<IterT>::iterator_category()
+     );
+  }
+
+- How to use traits class:
+  + Create a set of overloaded worker functions or function templates that differ
+    in a traits parameter. Implement each function in accord with the traits 
+    information passed
+  + Create a "master" function or function template that calles the worker, 
+    passing information provided by a traits clsas
+- TR1 introduces a slew of new traits classes that give information about types
+  (over 50 traits classes to standard C++)
+  + is_fundamental<T>
+  + is_array<T>
+  + is_base_of<T1, T2>
+- *Things to Remember*
+  + Traits classes make information about types available during compilation. 
+    They're implemented using templates and template specializations
+  + In conjunction with overloading, traits classes make it possible to perform
+    compile-time if...else test on types
+
+** Item 48: Be aware of template metaprogramming
+- Template metaprogramming (TMP) is the process of writing template-based C++ 
+  programs that execute during compilation
+- TMP was discovered in the early 1990. It has 2 great strengths
+  + It makes something easy that otherwise be hard or impossible
+  + shift work from runtime to compile-time
+  + C++ program making use of TMP can be more efficient in just about every way
+    ~ smaller executables
+    ~ shorter runtimes
+    ~ lesser memory requirements
+- template<unsigned n>
+  struct Factorial {
+     value = n * Factorial<n-1>::value };
+  };
+
+  template<>
+  struct Factorial<0> {
+     enum { value = 1; };
+  };
+
+- What a TMP can accomplish:
+  + *Ensuring dimensional unit correctness*    
+  + *Optimizing matrix operations*
+  + *Generating custom design pattern implementations*
+
+- *Things to Remember*
+  + Template metaprogramming can shift work from runtime to compile-time, thus 
+    enabling earlier error detection and higher runtime performance
+  + TMP can be used to generate custome code based on combinations of policy 
+    choices, and it can also be used to avoid generating code inappropriate for
+    particular types
+
+
+* Chapter 8: Customizing new and delete
+- 2 primary players in the game are the allocation and deallocation routines, w/
+  a supporting role played by the new-handler - the function called when ops new
+  can't satisfy a request for memory
+- Memory management in a multithreaded environment poses challenges not present
+  in a single-threaded system, because the heap is a modifiable global resource, 
+  thus rife w/ oppurtunities for the race conditions that bedevil access to all
+  such resources in threaded systems
+- W/o the proper synchronization
+  + the use of lock-free algorithms
+  + careful design to prevent concurrent access
+  + calls to memory routines
+  -> corrupted heap management
+
+** Item 49: Understand the behavior of the new-handler
+- *operator_new* throws an exception in response to an unsatisfiable request for
+  memory, it calls a client-specifiable error-handling function called a 
+  /new-handler/. To specify the out-of-memory-handling function, clients call
+  /set_new_handler/, a standard library function declared in <new>:
+  
+  namespace std {
+     typedef void (*new_handler)();
+     new_handler set_new_handler(new_handler p) throw();
+  }
+
+  // function to call if operator new can't allocate enough memory
+  void outOfMem()
+  {
+     std::cerr << "Unable to satisfy request for memory\n";
+     std::abort();
+  }
+
+  int main()
+  {
+     std::set_new_handler(outOfMem);
+     int *pBigDataArray = new int[100000000L];
+     ...
+  }
+
+- When operator_new is unable to fulfill a memory request, it calls the 
+  new-handler function repeatedly until it can find enough memory. a well 
+  designed new-handler function must do one of the following:
+  + *Make more memory available*
+  + *Install a different new-handler*
+  + *Deinstall the new-handler*
+  + *Throw an exception* of type bad_alloc, such exceptions will not be caught
+    by operator new, so they will propagate to the site originating the request
+    for memory
+  + *Not return*: typically by calling abort or exit
+
+- C++ has no support for class-specific new-handlers, but it doesn't need any.
+  You can implement this behavior by yourself. The class's operator new ensures
+  that the class-specific new-handler is used in place of the global new-handler
+  when memory for class object is allocated.
+
+  class Widget {
+  public:
+     static std::new_handler set_new_handler(std::new_handler p) throw();
+     static void* operator new(std::size_t size) throw(std::bad_alloc);
+  private:
+     static std::new_handler currentHandler;
+  };
+
+  static class members must be defined outside the class definition, so:
+  std::new_handler Widget::currentHandler = 0;
+
+- the set_new_handler function in Widget will save whatever pointer is passed to
+  it, and it will return whatever pointer had been saved prior to the call. This
+  is what the standard version of set_new_handler does:
+  
+  std::new_handler Widget::set_new_handler(std::new_handler p) throw()
+  {
+     std::new_handler oldHandler = currentHandler;
+     currentHandler = p;
+     return oldHandler;
+  }
+
+- Finally, Widget's operator new will do the following:
+  1. call the standard set_new_handler with Widget's error-handling function.
+     This install Widget's new_handler as the global new_handler
+  2. Call the global operator_new to perform the actual memory allocation. If 
+     allocation fails, the global operator new invokes Widget's new_handler, 
+     because that function was just installed as the global new_handler. If the
+     global operator new is ultimately unable to allocate the memory, it throws
+     a bad_alloc exception.
+  3. If the global operator new was able to allocate enough memory for a Widget
+     object, Widget's operator new returns a pointer to the allocated memory.
+
+  class NewHandlerHolder {
+  public:
+     explicit NewHandlerHolder(std::new_handler nh) : handler(nh) {};
+     ~NewHandlerHolder()
+     { std::set_new_handler(handler); }
+  private:
+     std::new_handler handler;
+     NewHandlerHolder(const NewHandlerHolder&);    // prevent copying
+     NewHandlerHolder& operator=(const NewHandlerHolder&);
+  };
+
+  void * Widget::operator new(std::size_t size) throw(std::bad_alloc)
+  {
+     NewHandlerHolder h(std::set_new_handler(currentHandler));
+     return ::operator new(size);
+  }
+
+- *Things to Remember*
+  + set_new_handler allows you to specify a function to be called when memory 
+    allocation requests cannot be satisfied
+  + nothrow new is of limited utility, because it applies only to memory alloc;
+    subsequent constructor calls may still throw exceptions.
+
+** Item 50: Understand when it makes sense to replace new and delete
+- Why would anybody want to replace the compiler-provided versions of operator
+  new or operator delete in the first place? These are 3 of the most common 
+  reasons:
+  + *To detect usage errors*: 
+  + *To improve efficiency*: operator new and operator delete that ship with 
+    compilers take a middle-of-the-road strategy. They work reasonably well for
+    everybody, but optimally for nobody.
+  + *To collect usage statistics*:
+
+  static const int signature = 0xDEADBEEF;
+  typedef usigned char Byte;
+
+  // this code has several flaws
+  void* operator new(std::size_t size) throw(std::bad_alloc)
+  {
+      using namespace std;
+      
+      size_t realSize = size + 2*sizeof(int); 
+
+      void *pMem = malloc(realSize);   // call malloc to get the actual memory
+      if (!pMem) throw bad_alloc();
+
+      // write signature into first and last parts of the memory
+      *(static_cast<int*>(pMem)) = signature;
+      *(reinterpret_cast<int*>(static_cast<Byte*>(pMem) + realSize - 
+          sizeof(int)) = signature;
+
+      // return a pointer to the memory just past the first signature
+      return static_cast<Byte*>(pMem) + sizeof(int);
+  }
+
+- a subtle issue: /alignment/
+  + on the Intel x86 architecture, doubles may be aligned on any byte boundary,
+    but access to them is a lot faster if they are eight-byte aligned.
+  + writing a custom memory manager that almost works is pretty easy. Writing 
+    one that works well is a lot harder.
+- The topic of this item is knowing when it can make sense to replace the 
+  default versions of new and delete, either globally or on a perclass basis.
+  + *To detect usage errors*
+  + *To collect statistics about the use of dynamically allocated memory*
+  + *To increase the speed of allocation and deallocation*
+    ~ general-purpose allocators are often a lot slower than custom versions,
+    especially if the custom versions are designed for obj of a particular type
+    ~ if your application is single-thread, but your compiler's default memory
+    management routines are thread-safe, you may be able to win measurable speed
+    improvements by writing thread-unsafe allocators
+  + *To reduce the space overhead of default memory management*
+    ~ general-purpose memory managers are often use more memory
+  + *To compensate for suboptimal alightment in the default allocator*
+  + *To cluster related objects near one another*: If you know that particular 
+    data structures are generally used together and you'd like to minimize the 
+    frequency of page faults when working on the data, it can make sense to 
+    create a separate heap for the data structures so they are clustered together
+    on as few pages as possible.
+  + *To obtain unconventional behavior*
+
+- *Things to Remember*
+  + There are many valid reasons for writing custom versions of new and delete, 
+    including improving performance, debugging heap usage errors, and collecting
+    heap usage information
+
+** Item 51: Adhere to convention when writing new and delete
+- The rule aren't hard to follow, but some of them are unintuitive, so it's 
+  important to know what they are.
+- operator new
+  + having the right return value
+    ~ if you can supply the requested memory, you return a pointer to it
+    ~ if you can't follow the rule described in Item 49 and throw an exception
+      of type bad_alloc
+  + calling the new handling function when insufficient memory is available, 
+    being prepared to cope with requests for no memory
+  + avoid inadvertently hiding the normal form of new
+
+  void * operator new(std::size_t size) throw(std::bad_alloc)
+  {
+      using namespace std;
+
+      if (size == 0) {
+          size = 1;
+      }
+
+      while (true) {
+          attempt to allocate size bytes;
+          if (the allocation was successful)
+              return (a pointer to the memory);
+
+          // allocation was unsuccessful; find out what the
+          // current new-handling function is (see below)
+          new_handler globalHandler = set_new_handler(0);
+          set_new_handler(globalHandler);
+
+          if (globalHandler) (*globalHandler)();
+          else throw std::bad_alloc();
+      }
+  }
+
+- new-handling function pointer is set to null, then promptly reset to what it
+  was originally. In a multithreaded environment, you'll probably need some kind
+  of lock to safely manipulate the (global) data structures behind the new-
+  handling function
+- operator new member functions are inherited by derived classes
+
+  class Base {
+  public:
+     static void * operator new(std::size_t size) throw(std::bad_alloc);
+     ...
+  };
+
+  class Derived: public Base   // Derived doesn't declare
+  { ... };                     // operator new
+
+  Derived *p = new Derived;   // calls Base::operator new
+
+- operator delete: C++ guarantees that it's always safe to delete the null 
+  pointer, so you need to honor that guarantee
+  
+  void operator delete(void *rawMemory) throw()
+  {
+     if (rawMemory == 0) return;
+
+     deallocate the memory pointed to by rawMemory;
+  }
+- The size_t value C++ passes to operator delete may be incorrect if the object 
+  being deleted was derived from a base class lacking a virtual destructor
+
+- *Things to Remember*
+  + operator new should contain an infinite loop trying to allocate memory, 
+    should call the new-handler if it can't satisfy a memory request and should
+    handle requests for zero bytes. Class-specific versions should handle reqs
+    for larger blocks than expected
+  + operator delete should do nothing if passed a pointer that is null. Class
+    specific versions should handle blocks that are larger than expected
+** Item 52: Write placement delete if you write placement new
+   
+   Widget *pw = new Widget;
+
+- 2 functions are called: operator new to allocate memory, Widget's default constructor
+- suppose the first call succeeds, but the second call results in an exception being 
+  thrown. Client code can't deallocate the memory, because if the Widget constructor throws
+  an exception, pw is never assigned. The responsibility for undoing step 1 must therefore
+  fall on the C++ runtime system.
+- The system is happy to call the /operator delete/ that corresponds to the version of 
+  /operator new/
+- Suppose you design a class:
+  
+  class Widget {
+  public:
+     ...
+     static void* operator new(std::size_t size, 
+                               std::ostream& logStream) throw(std::bad_alloc);
+
+     static void operator delete(void *pMemory, std::size_t size) throw();
+     ...
+  };
+
+- The rule: if an /operator new/ with extra parameters isn't matched by an /operator delete/
+  with the same extra parameters, no /operator delete/ will be called if a memory allocation
+  by the new needs to be undone.
+
+- *Things to Remember*
+  + When you write a placement version of /operator new/, be sure to write the corresponding
+    placement version of /operator delete/. If you don't, your program may experience 
+    subtle, intermittent memory leaks.
+  + when you declare placement versions of new and delete, be sure not to unintentionally 
+    hide the normal versions of those functions
+
+
+
+* Chapter 9: Miscellany
+
+** Item 53: Pay attention to compiler warnings
+- *Things to Remember*
+  + Take compiler warnings seriously, and strive to compile warning-free at the maximum 
+    warning level supported by your compilers
+  + Don't become dependent on compiler warnings, because different compilers warn about 
+    different things. Porting to a new compiler may eliminate warning messages you've 
+    come to rely on.
+
+** Item 54: Familiarize yourself with the standard library, including TR1
+- For all intents and purposes, TR1 heralds the beginning of a new release of 
+  C++ - what we might call standard C++ 1.1. You can't be effective C++ coder, 
+  w/o being familiar with TR1 functionality, because that functionality is a 
+  boon to virtually every kind of library and application
+- standard C++ library specified by C++98
+  + The Standard Template Library (STL): containers, iterators, algorithms, func
+    objects
+  + Iostreams: support for user-defined buffering, 
+  + Support for internationalization
+  + Support for numeric processing: including for complex numbers (complex) and 
+    arrays of pure values (valarray)
+  + An exception hierarchy: base class exception, its derived classes logic_error
+    and runtime_error
+  + C89's standard library
+- TR1 specifies 14 new components. All are in the std namespace, more precisely
+  in the nested namespace tr1. THe full name of the TR1 component shared_ptr is 
+  thus std::tr1::shared_ptr
+- Examples of the TR1 components in this book:
+  + *Smart pointer*
+  + *tr1::function*: makes it possible to represent any /callable entity/ whose
+    signature is consistent with a target signature
+  + *tr1::bind* which does everything the STL binders bind1st and bind2nd do.
+
+- The remaining TR1 components into 2 sets. THe first group offers fairly 
+  discrete standalone functionality
+  + *Hash tables*
+  + *Regular expression*
+  + *Tuples*
+  + *tr1::array*
+  + *tr1::mem_fn*
+  + *tr1::reference_wrapper*
+  + *Random number generation*
+  + *Mathematical special functions*
+  + *C99 compatibility extensions*
+- The second set of TR1 components consists of support technology for more 
+  sophisticated template programming techniques, including template metaprog
+  + *Type traits*: a set of traits classes to provide compile-time information 
+    about types
+  + *tr1::result_of*: a template to deduce the return types of function calls
+
+- *Things to Remember*
+  + The primary standard C++ library functionality consists of the STL, iostreams
+    and locales. 
+  + TR1 adds support for smart pointers, generalized function pointers, 
+    hash-based containers, regular expressions and 10 other components
+  + TR1 itself is only a specification. To take advantage of TR1, you need an 
+    implementation. One source for implementations of Tr1 components is Boost.
+
+** Item 55: Familiarize yourself with Boost
+- Boost:
+  + collection of high-quality, open source, platform- and compiler independent libraries
+  + a community of ambitious, talented C++ developers working on state-of-the-art library
+    design and implementation.
+  + want a glimpse of what C++ might look like in the future
+- Boost's categories:
+  + *String and text processing*: tokenizing and parsing, type-safe printf, regex
+  + *Containers*
+  + *Function objects and higher-order programming*
+  + *Generic programming*: an extensive set of traits classes
+  + *Template metaprogramming*
+  + *Math and numerics*
+  + *Correctness and testing*: libraries for formalizing implicit template interfaces and
+    for facilitating test-first programming
+  + *Data structure*: type-safe unions, tuple library
+  + *Inter-language support*
+  + *Memory*: Pool library, smart_ptr
+  + *Miscellaneous*
+- *Things to Remember*
+  + Boost is a community and web site for the development of free, open source, peer 
+    reviewed C++ libraries. Boost plays an influential role in C++ standardization
+  + Boost offers implementations of many TR1 components, but it also offers many other 
+    libraries too.
+
+
+/--- More effective C++ ---/
+
+
+
+* Chapter 1: Basics
+** Item 1: Distinguish between pointers and references
+- No null reference. A reference must always refer to some object
+  + a variable whose purpose is to reer to another object, but it is possible that there
+    might not be an object to refer to -> the variable is pointer
+  + If the variable must always refer to an object, the variable is a reference
+- There's no need to test the validity of a reference before using it:
+  
+  void printDouble(const double& rd) {
+      cout << rd;
+  }
+
+- pointers should generally be tested against null:
+
+  void printDouble(const double *pd) {
+      if (pd) {   // check for null pointer
+          cout << *pd;
+      }
+  }
+
+- Important difference between pointers and references:
+  + pointers may be reassigned to refer to different objects
+  + a reference always refers to the object with which it is initialized
+
+- If we implement operator[] to return pointer, we need to write *v[5] = 10;
+  vector<int> v(10);
+  v[5] = 10;
+
+- References are the feature of choice when you 
+  + know you have something to refer to
+  + you'll never want to refer to anything else.
+  + implementing operators whose syntactic requirements make the use of pointers 
+    undesirable
+** Item 2: Prefer C++-style casts
+- Casts are especially necessary when worse comes to worst and push comes to shove
+- C++ addresses the shortcomings of C-style casts by introducing 4 new cast operators:
+  + *(type) expression* <=> static_cast<type>(expression) : can't remove constness from 
+    an expression
+  + *const_cast*: is used to cast away the constness or volatileness of an expression. 
+    The most common use of const_cast is to cast away the constness of an object
+  + *dynamic_cast*: is used to perform /safe casts/ down to across an inheritance 
+    hierarchy. You use /dynamic_cast/ to cast pointers or references to base class objects 
+    into pointers or references to derived or sibling base class objects in such a way 
+    that you can determine whether the casts succeeded. Failed casts are indicated by a 
+    null pointer (when casting pointers) or an exception (when casting references)
+  + *reinterpret_cast*: the most common use is to cast between function pointer types
+    typedef void (*FuncPtr)();
+    FuncPtr funcPtrArray[10];
+    int doSomething();
+
+    funcPtrArray[0] = &doSomething;
+
+    funcPtrArray[0] = reinterpret_cast<FuncPtr>(&doSomething);
+
+- new casts:
+  + precision of meaning
+  + easy recognizability
+  + easier to parse
+  + allow compilers to diagnose casting errors that would otherwise go undetected
+
+** Item 3: Never treat arrays polymorphically
+- One of the most important features of inheritance is that you can manipulate derived
+  class objects through pointers and references to base class objects
+- The language specification says the result of deleting an array of derived class objects
+  through a base class pointer is undefined; executing the code is almost certain to lead
+  to grief
+- Designing your software so that concrete classes never inherit from one another has 
+  many benefits
+** Item 4: Avoid gratuitous default constructors
+- A default constructor is the C++ way of saying you can get something for nothing
+- Consider a class for company equipment in which the corporate ID number is a mandatory 
+  constructor argument:
+  
+  class EquipmentPiece {
+  public:
+     EquipmentPiece(int IDNumber);
+     ...
+  };
+
+- Because EquipmentPiece lacks a default constructor, its use may be problematic in 3 
+  contexts:
+  + the creation of arrays
+    
+    EquipmentPiece bestPieces[10]; // error
+    EquipmentPiece *bestPieces = new EquipmentPiece[10]; // error
+
+    ~ a more general approach is to use an array of pointers:
+    typedef EquipmentPiece* PEP;
+    PEP bestPieces[10];
+    PEP *bestPieces = new PEP[10];
+
+    for(int i=p;i<10;i++) bestPieces[i] = new EquipmentPiece(ID Number);
+
+    ~ Disadvantages:
+    > remember to delete all the objects pointed to by the array
+    > the total amount of memory increases, because you need the space for the pointers and 
+    the space for the EquipmentPiece objects
+    -> use raw memory 
+    void *rawMemory = operator new[](10*sizeof(EquipmentPiece));
+    
+    EquipmentPiece *bestPieces = static_cast<EquipmentPiece*>(rawMemory);
+    
+    for(int i=0;i<10;i++) 
+       new (&bestPieces[i]) EquipmentPiece(ID Number);
+
+       the downside:
+       > manually call dtors on the objects in the array
+       > manually deallocate the raw memory by calling operator delete[]
+
+  + ineligible for use with many template-based container classes. It's a common requirement
+    for such templates that the type to instantiate the template provide a default ctor
+  + to-provide-a-default-ctor-or-not-to-provide-a-default-ctor dilemma has to do with 
+    virtual base classes. Virtual base classes lacking default ctors are a pain to work with
+
+
+* Chapter 2: Operators
+** Item 5: Be wary of user-defined conversion functions
+- C++ allows compilers to perform implicit conversions between types
+- 2 kinds of functions allow compilers to perform implicit conversions:
+  + single-argument constructors
+    ~ the *explicit* keyword: constructor can be declared *explicit*, and if they are, compilers are prohibited from invoking them for purposes of implicit type conversion. Explicit conversions are still legal
+
+    template<class T>
+    class Array {
+    public:
+       ...
+       explicit Array(int size);  
+       ...
+    };
+
+    Array<int> a(10);
+    Array<int> b(10);
+    if (a == b[i] ... // error, no way to implicitly convert int to Array
+    
+
+  + implicit type conversion operators: a member function with a strange-looking name: the word /operator/ followed by a type specification
+    ~ to allow Rational objects to be implicitly converted to doubles, you might define 
+    class Rational like this:
+    
+    class Rational {
+    public:
+       ...
+       operator double() const;
+    };
+
+    ~ This is bad because such functions often end up being called when you neither want nor expect them to be. The result can be incorrect and unintuitive program behavior that is maddeningly difficult to diagnose
+
+- Granting compilers licence to perform implicit type conversions usually leads to more harm than good, so don't provide conversion functions unless you're /sure/ you want them
+
+** Item 6: Distinguish between prefix and postfix forms of increment and decrement operators
+- postfix forms take an int argument, and compilers silently pass 0 as that int when those
+  functions are called:
+
+  class UPInt {
+  public:
+     UPInt& operator++();
+     const UPInt operator++(int);
+     
+     UPInt& operator--();
+     const UPINt operator--(int);
+     
+     UPInt& operator+=(int);
+  };
+
+  UPInt& UPInt::operator++() 
+  {
+     *this += 1;       // increment
+     return *this;     // fetch
+  }
+
+  const UPInt UPInt::operator++(int) 
+  {
+     UPInt oldValue = *this;   // fetch
+     ++(*this);                // increment
+     return oldValue;
+  }
+
+- why postfix return a const Object? Imagine that if did not. Then the following would be
+  legal
+  UPInt i;
+  i++++;
+
+- When dealing with user-defined types, prefix increment should be used whenever possible,
+  because it's inherently more efficient
+
+** Item 7: Never overload &&, ||, or ,.
+- function call semantics differ from short-circuit semantics in 2 crucial ways:
+  + when a function call is made, all parameters must be evaluated
+  + the language specification leaves undefined the order of evaluation of parameters to a 
+    function call, so there is no way of knowing whether expression1 or expression2 will be
+    evaluated first
+- As a result, if you overload && or ||, there is no way to offer programmers the behavior 
+  they both expect and have come to depend on. So don't overload && or ||
+- If you don't have a good reason for overloading an operator, don't overload it. In the 
+  case of &&, ||, and , it's difficult to have a good reason
+
+** Item 8: Understand the different meanings of new and delete
+- WHen you write code like this:
+
+  string *ps = new string("Memory Management");
+
+  the new you are using is the /new/ operator
+  + it allocates enough memory to hold an object of the type requested
+  + it calls a constructor to initialize an object in the memory that was allocated
+
+- The operator new function is usually declared like this:
+  
+  void * operator new(size_t size);
+
+- The return type is void*, because this function returns a pointer to raw, uninitialized 
+  memory. You'll probably never want to call operator new directly, but you'll call it just
+  like any other function
+
+  void *rawMemory = operator new(sizeof(string));
+
+- *Placement new*:
+  + a special version of operator new allows you to construct an obj in the allocated mem
+
+    class Widget {
+    public:
+       widget(itn widgetSize);
+       ...
+    };
+
+    Widget * constructWidgetInBuffer(void *buffer, int widgetSize)
+    {
+       return new (buffer) Widget(widgetSize);
+    }
+
+- *Deletion and Memory Deallocation*
+  + 
+
+* Chapter 3: Exceptions
+- The addition of exceptions to C++ changes things: profoundly, radically, uncomfortably
+  + the use of raw, unadorned pointers becomes risky
+  + more difficult to write constructors and destructors that behave the way we want
+  + special cares must be taken to prevent program execution from abruptly halting
+  + executables + libraries increase in size and decrease in speed
+
+** Item 9: Use destructors to prevent resource leaks
+- Say good-bye to pointers that are used to manipulate /local resources/
+  class AlA {
+  public:
+     virtual void processAdoption() = 0;
+     ...
+  };
+
+  class Puppy: public ALA {
+  public:
+     virtual void processAdoption();
+     ...
+  };
+
+  class Kitten: public ALA {
+  public:
+     virtual void processAdoption();
+     ...
+  };
+
+- You'll need a function that can read information from a file and produce either a Puppy object or a Kitten object, depending on information in the file
+
+  void processAdoption(istream& dataSource) 
+  {
+     while(dataSource) {
+        ALA *pa = readALA(dataSource);
+        pa->processAdoption();
+        delete pa;
+     }
+  }
+
+- if processAdoption() threw an exception processAdoptions() fails to catch exceptions
+- We can handle the exception by moving the cleanup code that must always be executed into the destructor for an object local to processAdoptions()
+- *The solution*: replace the pointer pa with an object that /acts/ like a pointer
+- Use auto_ptr object instead of a raw pointer, processAdoptions() looks like this:
+  
+  void processAdoptions(istream& dataSource)
+  {
+     while (dataSource) {
+        auto_ptr<ALA> pa(readALA(dataSource));
+        pa->processAdoption();
+     }
+  }
+
+- The same in GUI programming. We create a WindowHandle to auto acquire and release the resource
+
+  class WindowHandle 
+  {
+  public:
+     WindowHandle(WINDOW_HANDLE handle): w(handle) {}
+     ~WindowHandle() { destroyWindow(w); }
+
+     operator WINDOW_HANDLE() { return w; }
+  private:
+     WINDOW_HANDLE w;
+     
+     // The following functions are declared private to prevent
+     // multiple copies of a WINDOW_HANDLE from being created
+     WindowHandle(const WindowHandle&);
+     WindowHandle& operator=(const WindowHandle&);
+  };
+
+- By adhering to the rule that resources should be encapsulated inside objects, you can usually avoid resource leaks in the presence of exceptions
+
+** Item 10: Prevent resource leaks in constructors
+- C++ won't clean up after objects that throw exceptions during construction, you must design your constructors so that they clean up after themselves
+
+- A solution is to adopt the advice of Item 9 and treat object pointers as resources to be managed by local objects
+
+  class BookEntry 
+  {
+  public:
+     ...
+  private:
+     ...
+     const auto_ptr<Image> theImage;
+     const auto_ptr<AudioClip> theAudioClip;
+  };
+- In this design, if an exception is thrown during initialization of theAudioClip, theImage is already a fully constructoed object, so it will automatically be destroyed. There's no need to manually delete what they point to. Thay simplifies BookEntry's destructor considerably:
+  BookEntry::~BookEntry()
+  {}
+
+- If you replace pointer class members with their corresponding auto_ptr objects
+  + you fortify your constructors against resource leaks in the presence of exceptions
+  + eliminate the need to manually deallocate resource in destructors
+  + allow /const/ member pointers to be handled in the same graceful fashion as non-const members
+
+- Dealing with the possibility of exceptions during construction can be tricky, but /auto_ptr/ can eliminate most of the drudery
+
+** Item 11: Prevent exceptions from leaving destructors
+- 2 situations in which a destructor is called:
+  + when an object is destroyed under normal conditions: goes out of scope or is explicitly /deleted/
+  + when an object is destroyed by the exception-handling mechanism during the stack-unwinding part of exception propagation
+- That being the case: an exception may or may not be active when a destructor is invoked. There is no way to distinguish between these conditions from inside a destructor -> if control leaves a destructor due to an exception while another exception is active, C++ calls the /terminate/ function
+
+- Consider a /Session/ class
+
+  class Session
+  {
+  public:
+     Session();
+     ~Session();
+     ...
+  private:
+     static void logCreation(Session *objAddr);
+     static void logDestruction(Session *objAddr);
+  };
+
+  the functions logCreation and logDestruction are used to record object creations and destructions
+
+  Session::~Session()
+  {
+     logDestruction(this);
+  }
+
+- if logDestruction throws an exception, The exception would not be caught in Session's destructor, so it would propagated to the caller of that destructor. But if the destructor was itself being called because some other exception had been thrown, the /terminate/ function would automatically be invoked. 
+
+  Session::~Session()
+  {
+     try {
+       logDestruction(this);
+     }
+     catch (...) {}
+  }
+
+- There is a second reason why it's bad practice to allow exceptions to propagate out of destructors. If an exception is thrown from a destructor and is not caught there, that destructor won't run to completion
+
+- 2 good reasons for keeping exceptions from propagating out of destructors
+  + it prevents /terminate/ from being called during the stack-unwinding part of exception propagation
+  + it helps ensure that destructor always accomplish everything they are supposed to accomplish
+
+** Item 12: Understand how throwing an exception differs from passing a parameter or calling a virtual function
+- Passing an exception from a throw site to a catch clause is basically the same as passing an argument from a function call site to the function's parameter
+- Similarity:
+  + pass both function parameters and exceptions by value, by reference, or by pointer
+- Difference: when you call a function, control eventually returns to the call site (unless the function fails to return), but when you throw an exception, control does not return to the /throw/ site
+
+- Consider a function that both passes a Widget as a parameter and throws a Widget as an exception:
+  
+  istream operator>> (istream& s, Widget& w);
+
+  void passAndThrowWidget()
+  {
+     Widget localWidget;
+     cin >> localWidget;
+     throw localWidget;
+  }
+
+- Regardless of whether the exception is caught by value or by reference, a copy of localWidget will be made, and it is /copy/ that is passed to the /catch/ clause
+  + localWidget will go out of scope, its destructor will be called. If /localWidget/ itself were passed to a catch clause, the clause would receive a destructed Widget, an ex-widget
+  + even if the exception is caught by reference, it is not possible for the /catch/ block to modify localWidget
+
+- When an object is copied for use as an exception, the copying is performed by the object's copy constructor. This copy constructor is the one in the class corresponding to the object's *static type* not its *dynamic type*
+
+  class Widget { ... };
+  class SpecialWidget: public Widget {...};
+
+  void passAndThrowWidget()
+  {
+     SpecialWidget localSpecialWidget;
+     ...
+     Widget& rw = localSpecialWidget;
+     
+     throw rw;   // this throws an exception of type Widget
+  }
+
+- The fact that exceptions are copies of other objects has an impact on how you propagate exceptions from a /catch/ block. Consider 2 /catch/ blocks
+
+  catch (Widget& w)
+  {
+     ...
+     throw;
+  }
+
+  catch (Widget& w)
+  {
+     ...
+     throw w;
+  }
+
+  The only difference between these blocks is that the first one rethrows the current exception, while the second one throws a new copy of the current exception.
+
+- 3 kinds of /catch/ clauses that could catch the Widget exception thrown by passAndThrowWidget. They are:
+  
+  catch (Widget w) ... : expect to pay for the creation of 2 copies of the thrown object
+
+  catch (Widget& w) ...
+ 
+  catch (const Widget& w) ... : we still expect to pay for the creation of a copy of the exception
+
+- no type conversions are applied in exception 
+
+- 2 kinds of conversions are applied when matching exceptions to /catch/ clause:
+  + inheritance-based conversions
+  + from a typed to an untyped pointer
+
+- catch clauses are always tried in the /order of their appearance/
+** Item 13: Catch exceptions by reference
+- When you write a catch clause, you must specify how exception objects are to be passed. You have 3 choices:
+  + by pointer
+  + by value
+  + by reference
+
+- code
+  
+  class exception {...};
+  
+  void someFunction()
+  {
+     static exception ex;   // exception object
+     ...
+
+     throw &ex;
+     ...
+  }
+
+  void doSomething()
+  {
+     try {
+        someFunction();     // may throw an exception*
+     } 
+     catch (exception *ex) { // catches the exception*
+     }
+  }
+- it's not quite as well-kept as it appears:
+  + programmers must define exception objects in a way that guarantee the objects exist after control leaves the functions throwing pointers to them
+  + if someFunction is written like this:
+    void someFunction() 
+    {
+       ...
+       throw new exception // hope new doesn't itself throw an exception
+       ...
+    }
+    authors of /catch/ clauses confront a nasty question: should they delete the pointer they receive? If the object was allocated on the heap, they must, otherwise they suffer a resource leak. If the exception object wasn't allocated on the heap, they mustn't, otherwise they suffer undefined program behavior.
+
+  + catch-by-pointer runs contrary to the convention established by the language itself. 4 standard exceptions:
+    ~ bad_alloc (thrown when /operator new/ can't satisfy a memory request)
+    ~ bad_cast (thrown when a /dynamic_cast/ to a reference fails)
+    ~ bad_typeid (thrown when /dynamic_cast/ is applied to a null pointer)
+    ~ bad_exception (available for unexpected exceptions)
+  are all objects, not pointers to objects, so you have to catch them by value or by reference anyway
+
+- Catch-by-value eliminates questions about exception deletion and works with the standard exception types. However, it requires that exception objects be copied /twice/ each time they're thrown -> give rise to the specter of the /slicing problem/
+
+- Catch-by-reference suffers from none of the problems we have dicussed so catch exceptions by reference!
+** Item 14: Use exception specifications judiciously
+- Exception specifications have appeal. If a function throws an exception not listed in its exception specification, that fault is detected at runtime, and the special function /unexpected/ is automatically invoked
+- The default behavior for /unexpected/ is to call /terminate/, and the default behavior for /terminate/ is to call /abort/
+
+  extern void f1(); // might throw anything
+  void f2() throw(int);
+
+  void f2() throw(int)
+  {
+    ...
+    f1();   // legal even though f1 might throw smt besides an int
+    ...
+  }
+- This kind of flexibility is essential if new code with exception specifications is to be integrated w/ older code lacking such specifications
+
+- It's important to write your software in such a way that these kinds of inconsistencies are minimized. A good way to start is to avoid putting exception specifications on templates that take type arguments.
+
+- Avoid putting exception specifications on tempates that take type arguments. A more general problem: there is no way to know /anything/ about the exceptions thrown by a template's type parameters
+  -> templates and exception specification don't mix
+
+- a second technique you can use to avoid calls to /unexpected/ is to omit exception specifications on functions making calls to functions that themselves lack exception specifications. There is one case that is easy to forget. That's when allowing users to register callback functions
+
+  // Function pointer type for a window system callback
+  // when a window system event occurs
+  typedef void (*CallBackPtr)(int eventXLocation,
+                              int eventYLocation,
+                              void *dataToPassBack);
+
+  // Window system clsas for holding onto callback
+  // functions registered by window system clients
+  class CallBack {
+  public:
+     CallBack(CallBackPtr fPtr, void *dataToPassBack): 
+     func(fPtr), data(dataToPassBack) {}
+     
+     void makeCallBack(int eventXLocation, int eventYLocation) const throw();
+
+  private: 
+     CallBackPtr func; // function to call when callback is made
+     void *data; 
+  };
+
+  void CallBack::makeCallBack(int eventXLocation, 
+                              int eventYLocation) const throw()
+  {
+     func(eventXLocation, eventYLocation, data);
+  }                              
+
+- Here the call to /func/ in /makeCallBack/ runs the risk of a violated exception specification, because there is no way of knowing what exceptions func might throw.
+
+- This problem can be eliminated by tightening the exception specification in the CallBackPtr typedef
+
+  typedef void (*CallBackPtr) (int eventXLocation,
+                               int eventYLocation,
+                               void *dataToPassBack) throw();
+
+- A third technique you can use to avoid calls to /unexpected/ is to handle exceptions "the system" may throw. Of these exceptions, the most common is /bad_alloc/. 
+
+- If preventing unexpected exceptions isn't practical, you can exploit the fact that C++ allows you to replace unexpected exceptions with exceptions of a different type.
+
+- Exception specification can be a lot of trouble. It's important to keep a balanced view of exception specifications. They provide excellent documentation on the kinds of exceptions a function is expected to throw
+
+** Item 15: Understand the costs of exception handling
+- To handle exception at runtime, programs must do a fair amount of bookkeeping
+  + identify the objects that require destruction if an exception is thrown; they must make note of each entry to and exit from a try block
+  + for each try block, they must keep track of the associated catch clauses and types of exceptions those clauses can handle.
+
+- Things you pay for even if you never use any exception-handling features
+  + space used by the data structures need to keep track of which objects are fully constructed
+  + the time needed to keep these data structures up to date
+
+- Programs compiled w/o support for exceptions are typically both faster and smaller than their counterpairts compiled with support for exceptions
+- overall code size to increase by 5-10% and your runtime to go up by a similar amount if you use try blocks. To minimize this cost, you should avoid unnecessary try blocks
+- Compared to a normal function return, returning from a function by throwing an exception may be as much as /three orders of magnitude/ slower
+
+- Whatever the cost of exception handling, you don't want to pay any more than you have to. To minimize your exception-related costs, compile w/o support for exceptions when that is feasible; limit your use of /try/ blocks and exception specifications to those locations where you honestly need them; throw exceptions only under conditions that are truly exceptional
+
+
+* Chapter 4: Efficiency
+** Item 16: Remember the 80-20 rule
+- The 80-20 rule states that: "
+  + 80 percent of a program's resources are used by about 20 percent of the code
+  + 80 percent of the runtime is spent in approximately 20 percent of the code
+  + 80 percent of the memory is used by some 20 percent of the code
+  + 80 percent of the disk accesses are performed for about 20 percent of the code
+  + 80 percent of the maintenance effort is devoted to around 20 percent of the code
+
+- Whatever the precise numbers, the fundamental point is this: the overall performance of your software is almost always determined by a small part of its constituent code
+
+- As a programmer striving to maximize your software's performance, the 80-20 rule both simplifies and complicates your life
+  + most of the time you can produce code whose performance is, frankly, rather mediocre, because 80 percent of the time its efficiency doesn't affect the overall performance of the system you're working on
+  + your software has a performance problem, you've got a tough job ahead of you
+  + the more troublesome is generally locating the bottlenecks
+
+- The way most people locate bottlenecks is to guess, using experience, intuition, tarot cards and Ouija boards, rumors or worse.
+- What will work is to empirically identify the 20 percent of your program that is causing you heartache, and the way to identify that horrid 20 percent is to use a program profiler. Knowing how often statements are executed or functions are called can sometimes yeild insight into what your software is doing. Profile your software using as many data sets as possible
+
+** Item 17: Consider using lazy evaluation
+- From the perspective of efficiency, the best computations are those you never perform at all. *The key is to be lazy*
+- lazy evaluation is applicable in an enormous variety of application areas
+
+*** Reference Counting
+  class String { .. };
+  String s1 = "Hello";
+  String s2 = s1; // call String copy ctor
+- a common implementation for the String copy constructor would result in s1 and s2 each having its own copy of "Hello" after s2 is initialized with s1. Such a copy constructor would incur a relative large expense
+- There has been no real /need/ for s2 to have a copy of the value, because s2 hasn't been used yet. /eager evaluation/ is unnecessary
+- The lazy approach is a lot less work. Instead of giving s2 a copy of s1's value, we have s2 /share/ s1's value. All we have to do is a little bookkeeping so we know who's sharing what, and in return we save the cost of a call to /new/ and the expense of copying anything. The fact that s1 and s2 are sharing a data structure is transparent to clients, and it certainly makes no difference in statements like the following, because they only read values, they don't write them:
+
+  cout << s1;          // read s1's value
+  cout << s1 + s2;     // read s1's and s2's values
+
+- In fact, the only time the sharing of values makes a difference is when one or the other string is /modified/. 
+
+  s2.convertToUpperCase();
+
+- Don't bother to make a copy of something until you really need one. Instead, be lazy -- use someone else's copy as long as you can get away with it. In some application areas, you can often get away with it forever
+
+*** Distinguishing Reads from Writes
+
+    String s  = "Homer's Iliad";
+    ...
+    cout << s[3];   // call operator[] to read s[3]
+    s[3] = 'x';     // call operator[] to write s[3]
+
+- We'd like to be able to distinguish the read call from the write, because reading a reference-counted string is cheap, but writing to such a string may require splitting off a new copy of the string's value prior to the write
+- By using lazy evaluation and proxy classes, we can defer the decision on whether to take read actions or write actions until we can determine which is correct
+
+*** Lazy Fetching
+- We got a program that uses large objects
+
+  class LargeObject {
+  public:
+     LargeObject(ObjectID id);
+     const string& field1() const;
+     int field2() const;
+     double field3() const;
+     const string& field4() const;
+     const string& field5() const;
+     ...
+  };
+    
+- Now consider the cost of restoring a LargeObject from disk:
+  
+  void restoreAndProcessObject(ObjectID id)
+  {
+     LargeObject object(id); // restore object
+     ...
+  }
+
+- LargeObject instances are big, getting all the data for such an object might be a costly database operation, especially if the data must be retrieved from a remote database and pushed across a network. In some cases, the cost of reading all that data would be unnecessary
+
+  void restoreAndProcessObject(ObjectID id) 
+  {
+     LargeObject object(id);
+     
+     if (object.field2() == 0) {
+        cout << "Object " << id << ": null field2.\n";
+     }
+  }
+
+- The lazy approach to this problem is to read no data from disk when a LargeObject object is created. 
+- When implementing lazy fetching, you must confront the problem that null pointers may need to be initialized to point to real data from inside any member function, including /const/ member function like field1
+- When implementing lazy fetching, you must confront the problem that null pointers may need to be initialized to point to real data from inside any member function, including /const/ membre function like field1. However compilers get cranky when you try to modify data members inside /const/ member functions so you've got to find a way to say, "It's ok, I know what I'm doing". The best wy to say that is to declare the pointer fields /mutable/, which means they can be modified inside any member function, even inside /const/ member functions
+
+*** Lazy Expression Evaluation
+  template<class T>
+  class Matrix { ... } 
+  Matrix<int> m1(1000, 1000);
+  Matrix<int> m2(1000, 1000);
+
+  Matrix<int> m3 = m1 + m2;
+
+- The lazy evaluation strategy says that's way too much work. Instead, it sets up data structure inside m3 that indicates that m3's value is the sum of m1 and m2. Such a data structure might consist of nothing more than a pointer to each of m1 and m2, plus an enum indicating that the operation on them is addition.
+- Suppose that later in the program, before m3 has been used, this code is executed
+  Matrix<int> m4(1000, 1000);
+  ...
+  m3 = m4 * m1;
+
+- we can forget all about m3 being the sum of m1 and m2, and in its place we can start remembering that m3 is the product of m4 and m1.
+- *No good programmer would deliberately compute a value that's not needed, but during maintenance it's not uncommon for a programmer to modify the paths through a program in such a way that formerly useful computation becomes unnecessary.
+
+*** Summary
+- Lazy evaluation can be useful in a variety of domains:
+  + avoid unnecessary copying of objects
+  + distinguish reads from writes using operator[]
+  + avoid unnecessary reads from database
+  + avoid unnecessary numerical computations
+- Lazy evaluation is only useful when there's a reasonable chance your software will be asked to perform computations that can be avoided
+** Item 18: Amortize the cost of expected computations
+- /Over-eager evaluation/: doing things before you're aksed to do thmem
+- template<class NumericalType>
+  class DataCollection {
+  public:
+     NumericalType min() const;
+     NumericalType max() const;
+     NumericalType avg() const;
+     ...
+  };
+- Using lazy evaluation, we'd have the functions return data structures that could be used to determine the appropriate value whenever the functions' return values were actually used. 
+- Using over-eager evaluation, we'd keep track of the running minimum, maximum, and average values of the collection, so when /min/, /max/, or /avg/ was called, we'd be able to return the correct value immediately.
+
+- The idea behind over-eager evaluation is that if you expect a computation to be requested frequently, you can lower the average cost per request by designing your data structures to handle the requests especially efficiently.
+
+- One of the simplest ways to do this is by caching values that have already been computed
+- Prefetching is another
+
+- amortize the cost of anticipated computations through over-eager strategies like caching and prefetching is not contradictory to the advice on lazy evaluation. 
+  + Lazy evaluation is a technique for improving the efficiency of programs when you must support operations whose results are not always needed.
+  + over-eager evaluations is a technique for improving the efficiency of programs when you must support operations whose results are /almost always/ needed
+
+** Item 19: Understand the origin of temporary objects
+   
+   template<class T>
+   void swap(T& object1, T& object2)
+   {
+      T temp = object1;
+      object1 = object2;
+      object2 = temp;
+   }
+- temp is not temporary at all. It's an object local to a function
+- True temporary objects in C++ are invisible -- They arise whenever a non-heap object is created but not named. Such /unnamed/ objects usually arise in one of two situations:
+  + when implicit type conversions are applied to make function calls succeed
+  + when functions return objects
+- It's important to understand how and why these temporary objects are created and destroyed, because the attendant costs of their construction and destruction can have a noticeable impact on the performance of your programs
+
+- The case in which temporary objects are created to make function calls succeed
+
+  size_t countChar(const string& str, char ch);
+  
+  char buffer[MAX_STRING_LEN];
+  char c;
+  
+  cin >> c >> setw(MAX_STRING_LEN) >> buffer;
+  
+  cout << "There are " << countChar(buffer, c)
+       << " occurrences of the character " << c
+       << " in " << buffer << endl;
+
+- compilers eliminiate the type mismatch by creating a temporary object of type string. That temporary object is initialized by calling the string constructor with buffer as its arguments. The str parameter of countChar is then bound to this temporary string object. When countChar returns, the temporary object is automatically destroyed
+- These conversions occur only when passing objects by value or when passing to a reference-to-const parameter. They do not occur when passing an object to a reference-to-non-const parameter
+
+  void uppercasify(string& str);
+
+  char subtleBookPlug[] = "Effective C++";
+  uppercasify(subtleBookPlug); // error!
+
+
+  const Number operator+ (const Number& lhs, const Number& rhs);
+
+- The return value of this function is a temporary, because it has no name. There's no way to avoid the construction and destruction of the return value conceptually. In reality, there's an /optimization/, called /return value optimization/
+
+- train yourself to look for places where temporary objects may be created:
+  + reference-to-const
+  + function returning an object
+Learn to look for such constructs and your insight into the cost of "behind the scenes" compiler actions will markedly improve
+** Item 20: Facilitate the return value optimization
+- Consider
+
+  class Rational 
+  {
+  public:
+     Rational(int numerator=0, int denominator=1);
+     ...
+     int numerator() const;
+     int denominator() const;
+  };
+
+  const Rational operator*(const Rational& rhs, const Rational& lhs);
+- The code must return an object. A function that returns an object is frustrating to efficiency afcionados, because the by-value return, including the constructor and destructor calls it implies, cannot be eliminated
+- C++ programmers have nevertheless expanded Herculean efforts in a search for the legendary elimination of the by-value return
+  + return pointers -> syntactic travesty. It also raises a question: should the caller delete the pointer returned by the function
+
+    const Rational * operator*(const Rational& lhs, const Rational& rhs);
+
+    Rational a = 10;
+    Rational b(1,2);
+    Rational c = *(a * b);  // look natural?
+
+  + return references. That yields an acceptable syntax, but can't be implemented in a way that behaves correctly
+
+    const Rational& operator*(const Rational& lhs, const Rational& rhs);
+
+    Rational a = 10;
+    Rational b(1, 2);
+
+    Rational c = a * b;   // looks perfectly reasonable
+
+    const Rational& operator*(const Rational& lhs, const Rational& rhs)
+    {
+       Rational result(lhs.numerator() * rhs.numerator(),
+                       lhs.denominator() * rhs.denominator());
+       return result;
+    }
+- This function returns a reference to an object that no longer exists. Returning a reference to an object that's been destroyed is hardly useful.
+
+- From an efficiency point of view, you shouldn't care that a function returns an object, you should only care about the /cost/ of that object. It is frequently possible to write functions that return objects in such a way that compilers can eliminate the cost of the temporaries. The trick is to return /constructor arguments/ instead of objects.
+
+  // an efficient and correct way to implement a 
+  // function that returns an object
+  const Rational operator*(const Rational& lhs, const Rational& rhs)
+  {
+      return Rational(lhs.numerator() * rhs.numerator(),
+                      lhs.denominator() * rhs.denominator(),
+  }
+- you gained something. The rules for C++ allow compilers to optimize temporary objects out of existence.
+  
+  Rational a = 10;
+  Rational b(1, 2);
+  Rational c = a * b;
+
+- compilers are allowed to eliminate both the temporary inside operator* and the temporary returned by /operator*/. They can construct the object defined by the return expression /inside the memory allotted for the object c/. If your compilers do this, the total cost of temporary objects as a result of your calling /operator*/ is zero: no temporaries are created.
+- You can eliminate the overhead of the call to operator* by declaring that function /inline/
+
+  inline const Rational operator*(const Rational& lhs, const Rational& rhs)
+  {
+      return Rational(lhs.numerator() * rhs.numerator(), 
+                      lhs.denominator() * rhs.denominator());
+  }
+- This particular optimization -- eliminating a local temporary by using a function's return location -- is both well-known and commonly implemented. It has a name: the /return value optimization/
+
+** Item 21: Overload to avoid implicit type conversions
+
+   class UPInt {
+   public:
+      UPInt();
+      UPInt(int value);
+      ...      
+   };
+
+   const UPInt operator+(const UPInt& lhs, const UPInt& rhs);
+
+   UPInt upi1, upi2;
+   UPInt upi3 = upi1 + upi2;
+
+   upi3 = upi1 + 10;
+   upi3 = 10 + upi1;
+
+- These statements succeed through the creation of temporary objects to convert the integer 10 into UPInts
+- It's convenient to have compilers perform these kinds of conversions. Most C++ programmers want implicit type conversions without incurring any cost for temporaries. But without the computational equivalent of deficit spending. We do it by declaring /several/ functions, each with a different set of parameter types:
+  
+  const UPInt operator+(const UPInt& lhs, const UPInt& rhs);
+
+  const UPInt operator+(const UPInt& lhs, int rhs);
+
+  const UPInt operator+(int lhs, const UPInt& rhs);
+
+- C++ game: every overloaded operator must take at least one argument of a user-defined type. 
+- Overloading to avoid temporaries isn't limited to operator functions. In most programs, you'll want to allow a string object everywhere a char* is acceptable.
+
+- Still it's important to keep the 80-20 rule in mind. There is no point in implementing a slew of overloaded functions unless you have good reason to believe that it will make a noticable improvement in the overall efficiency of the programs that use them.
+
+** Item 22: Consider using op= instead of stand-alone op
+- A good way to ensure that the natural relationship between the assignment version of an operator and the stand-alone version exists is to implement the latter in terms of the former.
+
+  class Rational 
+  {
+  public:
+      ...
+      Rational& operator+=(const Rational& rhs);
+      Rational& operator-=(const Rational& rhs);
+  };
+
+  const Rational operator+(const Rational& lhs, const Rational& rhs);
+  {
+     return Rational(lhs) += rhs;
+  }
+
+  const Rational operator-(const Rational& lhs, const Rational& rhs);
+  {
+     return Rational(lhs) -= rhs;
+  }
+
+- operator+= and -= are implemented from scratch, and operator+ and operator- call them to provide their own functionality. With this design, only the assignment version of these operators need to be maintained.
+
+- If you don't mind putting all stand-alone operators at global scope, you can use templates to eliminate the need to write the stand-alone functions:
+
+  template<class T>
+  const T operator+(const T& lhs, const T& rhs)
+  {
+     return T(lhs) += rhs;
+  }
+
+  template<class T>
+  const T operator-(const T& lhs, const T& rhs)
+  {
+     return T(lhs) -= rhs;
+  }
+- 3 aspects of efficiency are worth noting here:
+  + assignment versions of operators are more efficient than stand-alone versions
+  + by offering assignment versions of operators as well as stand-alone versions, you allow /clients/ of your classes to make the difficult trade-off between efficiency and convenience
+  + template<class T>
+    const T operator+(const T& lhs, const T& rhs)
+    {
+       return T(lhs) += rhs;
+    }
+
+    const T operator+(const T& lhs, const T& rhs)
+    {
+       T result(lhs);
+       return result += rhs;
+    }
+
+    the second version contains a named object, result. The first implementation has always been eligible for the return value optimization
+
+- All this talk of named objects, unnamed objects, and compiler optimizations is interesting. The big picture is that assignment versions of operators tend to be more efficient than stand-alone versions of those operators
+
+
+** Item 23: Consider alternative libraries
+- Library design is an exercise in compromise. The ideal library is
+  + small
+  + fast
+  + powerful
+  + flexible
+  + extensible
+  + intuitive
+  + universally available
+  + well supported
+  + free of use restrictions
+  + bug-free
+  + nonexistent
+- different libraries offering similar functionality often feature different performance trade-offs, so once you've identified the bottlenecks in your software (via profiling), you should see if it's possible to remove those bottlenecks by replacing one library with another
+
+** Item 24: Understand the costs of virtual functions, multiple inheritance, virtual base classes and RTTI
+- virtual function
+  + the code executed must correspond to the /dynamic type/ of the object on which the function is invoked
+  + the type of the pointer or reference to the object is immaterial
+- Most compilers user /virtual tables/ (*vtbls*) and /virtual table pointers/ (*vptrs*). Each class in a program that declares or inherits virtual functions has its own vtbl, and the entries in a class's vtbl are pointers to the implementations of the virtual functions for that class
+- vtbl is usually an array of pointers to functions. Each class in a program that declares or inherits virtual functions has its own vtbl, and the entries in a class's vtbl are pointers to the implementations of the virtual functions for that class
+- For each class that contains virtual functions, you have to set aside space for a virtual table. If you have a large number of classes or a large number of virtual functions in each class, you may find that the vtbls take a significant bite out of your address space
+- *Where to put the copy of a class's vtbl*?
+  + for vendors who provide an integrated environment containing both compiler and linker, a brute force strategy is to generate a copy of the vtbl in each object file that might need it. The linker then strips out duplicate copies, leaving only a single instance of each vtbl in the final executable or library
+  + employ heuristic to determine which object file should contain the vtbl for a class. Usually this heuristic is as follows: a class's vtbl is generated in the object file containing the definition of the first non-inline non-pure virtual function in that class
+    ~ if all virtual functions in a class are declared inline, the heuristic fails and most heuristic-based implementations then generate a copy of the class's vtbl in /every object file/ that uses it
+
+- Each object whose class declares virtual functions carries with a hidden data member that points to the virtual table for that class. This hidden data member - the vptr - is added by compilers to a location in the object known only to the compilers
+  -> *second cost of virtual functions*: you have to pay for an extra pointer inside each object that is of a class containing virtual functions
+  ~ number of objects you can create is reduced
+  ~ performance of your software decreases, because larger objects mean fewer fit on each cache or virtual memory page, and that means your paging activity will probably increase
+
+- Consider a program fragment:
+  void makeACall(C1 *pC1)
+  {
+     pC1->f1();
+  }
+
+- pC1 can point to C1 object to to a C2 object. They ensure that the correct functoin is called by generating code to do the following:
+  + Follow the object's vptr to its vtbl. This costs only an offset adjustment and a pointer indirection
+  + Find the pointer in the vtbl that corresponds to the function being called (f1 in this example)
+  + Invoke the function pointed to by the pointer located in step 2
+
+- the code generated for the statement pC1->f1() is (*pC1->vptr[i])(pC1);
+
+- The cost of virtual functions is that it makes our classes larger in size
+
+- *RTTI (Runtime Type Identification)* lets us discover information about objects and classes at runtime. The information is stored  in an object of type /type_info/, and you can access the type_info object for a class by using the /typeid/ operator. 
+- The language specification states that we're guaranteed accurate information on an object's dynamic type only if that type has at least one virtual function. This makes RTTI data sound a lot like a virtual function table
+
+| Feature           | Inc Size of Obj | Inc Per-Class Data | Reduces Inlining |
+|-------------------+-----------------+--------------------+------------------|
+| Virtual Functions | Yes             | Yes                | Yes              |
+| Mul Inheritance   | Yes             | Yes                | No               |
+| Virtual base cls  | Often           | Sometimes          | No               |
+| RTTI              | No              | Yes                | No               |
+
+- It's important to understand the costs of virtual functions, multiple inheritance, virtual base classes, and RTTI, but it is equally important to understand that if you need the functionality these features offer, you /will/ pay for it. From the point of view of efficiency, however, you are unlikely to do better than the compiler-generated implementations by coding these features yourself
+* Chapter 5: Techniques
+** Item 25: Virtualizing constructors and non-member functions
+- You call a virtual function to achieve type-specific behavior when you have a pointer or reference to an object but you don't know what the real type of the object is. You call a constructor only when you don't yet have an object but you know exactly what type you'd like to have
+- /What is a virtual contructor?/
+- For example you write an application for working with newsletters, where a newsletter consists of components that are textual or graphical
+
+  class NLComponent {  // abstract base class. 
+  ...                  //Contains at least one pure virtual function
+  };
+
+  class TextBlock: public NLComponent {
+  ...                  // contains no pure virtual functions
+  };
+
+  class GraphicalBlock: public NLComponent {
+  ...                  // contains no pure virtual functions
+  };
+
+  class NewsLetter {
+  public:
+  ...
+  private:
+     list<NLComponent*> components;
+  };
+
+- To support the creation of Newsletter from its on-disk representation, it would be convenient to give Newsletter a constructor that takes an istream
+
+  class Newsletter {
+  public:
+     Newsletter(istream& str);
+     ...
+  };
+
+  Newsletter::Newsletter(istream& str) {
+     while (str) {
+        read the next component object from str;
+        
+        add the object to the list of this newsletter's components
+     }
+  }
+
+  Newsletter::Newsletter(istream& str) {
+     while (str) {
+        components.push_back(readComponent(str));
+     }
+  }
+
+- what readComponent does: it creates a new object, either a TextBlock or a Graphic -> /virtual constructor/
+
+- /virtual copy constructor/ is also widely useful. A virtual copy constructor returns a pointer to a new copy of the object invoking the function.
+
+  class NLComponent {
+  public:
+     // declaration of virtual copy constructor
+     virtual NLComponent * clone() const = 0;
+     ...
+  };
+
+  class TextBlock: public NLComponent {
+  public:
+     virtual TextBlock * clone() const
+     { return new TextBlock(*this); }
+     ...
+  };
+
+  class Graphic: public NLComponent {
+  public:
+     virtual Graphic * clone() const
+     { return new Graphic(*this); }
+     ...
+  };
+
+- The above implementation takes advantage of a relaxation in the rules for virtual function return types that was adopted relatively recently:
+  + no longer must derived class's redefinition of a base class's virtual function declare the same return type. Instead if the function's return type is a pointer to a base class, the derived class's function may return a pointer to a class derived from that base class
+
+- *Making non-member functions act virtual*:
+  + It makes sense to conceive of non-member functions whose behavior depends on the *dynamic types* of their parameters. For example: the output operator<<
+  + What we want is a non-member function called operator<< that exhibits the behavior or a virtual funciton like print
+
+    class NLComponent {
+    public:
+       virtual ostream& print(ostream& s) const = 0;
+       ...
+    };
+
+    class TextBlock: public NLComponent {
+    public:
+       virtual ostream& print(ostream& s) const;
+       ...
+       };
+
+    class Graphic: public NLComponent {
+    public:
+       virtual ostream& print(ostream& s) const;
+       ...
+       };
+
+       inline
+       ostream& operator<<(ostream& s, const NLComponent& c)
+       {
+           return c.print(s);
+       }
+
+- 
+** Item 26: Limiting the number of objects of a class
+- How do you prevent objects from being instantiated?
+*** Allowing Zero or One Objects
+- The easiest way to prevent objects of a particular class from being created is to declare the constructors of that class private
+  class CantBeInstantiated {
+  private:
+      CantBeInstantiated();
+      CantBeInstantiated(const CantBeInstantiated&);
+      ...
+  };
+
+- We can encapsulate the printer object inside a function:
+  
+  class PrintJob;
+  
+  class Printer {
+  public:
+     void submitJob(const PrintJob& job);
+     void reset();
+     void performSelfTest();
+     ...
+
+     friend Printer& thePrinter();
+  private:
+     Printer();
+     Printer(const Printer& rhs);
+     ...
+  };
+
+  Printer& thePrinter()
+  {
+     static Printer p;
+     return p;
+  }
+
+- There are 3 separate components to this design:
+  + the constructors of the Printer class are private
+  + the global function thePrinter is declared a friend of the class
+  + thePrinter contains a /static/ Printer object
+
+- 2 subtleties in the implementation of thePrinter:
+  + Printer object is static in a /function/. An object that's static in a class is /always/ constructed. In contrast, an object that7s static in a function is created the first time through the function
+    One of the philosophical pillars on which C++ was built in the idea that you shouldn't pay for things you don't use
+  + Why wasn't thePrinter declared inline?
+    inline == /internal linkage/. functions with internal linkage may be duplicated within a program -> more than one copy of the static object -> don't create inline non-member functions that contain local static data
+
+    class Printer {
+    public:
+       class TooManyObjects{};
+
+       Printer();
+       ~Printer();
+       ...
+    private:
+       static size_t numObjects;
+       Printer(const Printer& rhs);
+    };
+
+    size_t Printer::numObjects = 0;
+    
+    Printer::Printer() 
+    {
+       if (numObjects >= 1) {
+          throw TooManyObjects();
+       }
+
+       proceed with normal construction here;
+       ++numObjects;
+    }
+
+    Printer::~Printer()
+    {
+       perform normal destruction here;
+       --numObjects;
+    }
+
+*** Contexts for Object construction
+- We can actually come up with a way to encapsulate the whole counting kit and kaboodle
+
+    class ColorPrinter: public Printer {
+       ...
+    };
+
+    Printer p;
+    ColorPrinter cp;
+
+- 2 objects: one for p and one for the Printer part of cp
+
+  class CPFmachine {
+  private:
+     Printer p;
+     FaxMachine f;
+     CopyMachine c;
+     ...
+  };
+
+  CPFMachine m1;
+  CPFMachine m2;
+
+- The problem is that Printer objects can exist in three different contexts:
+  + on their own
+  + base class parts of more derived objects
+  + embedded inside larger objects
+
+    -> make constructor private limited the context in which the object was created
+
+    class FSA {
+    public:
+       static FSA * makeFSA();
+       static FSA * makeFSA(const FSA& rhs);
+       ...
+    private:
+       FSA();
+       FSA(const FSA& rhs);
+       ...
+    };
+
+    FSA * FSA::makeFSA()
+    { return new FSA(); }
+    
+    FSA * FSA::makeFSA(const FSA& rhs)
+    { return new FSA(rhs); }
+
+- each makeFSA pseudo-constructor returns a pointer to a unique object. The caller must remember to call delete (or use auto_ptr)
+
+  auto_ptr<FSA> pfsa1(FSA::makeFSA());
+  auto_ptr<FSA> pfsa2(FSA::makeFSA(*pfsa1));
+
+*** Allowing objects to come and go
+*** An Object-Counting Base Class
+- Isn't there a way to encapsulate the notion of counting instances and bundle it into a class?
+
+  template<class BeingCounted>
+  class Counted {
+  public:
+     class TooManyObjects{};
+
+     static int objectCount() { return numObjects; }
+
+  protected:
+     Counted();
+     Counted(const Counted& rhs);
+     ~Counted() { --numObjects; }
+  private:
+     static int numObjects;
+     static const size_t maxObjects;
+     
+     void init();
+  };
+
+  template<clas BeingCounted>
+  Counted<BeingCounted>::Counted()
+  { init(); }
+
+  template<clas BeingCounted>
+  Counted<BeingCounted>::Counted(const Counted<BeingCounted>&)
+  { init(); }
+
+  template<clas BeingCounted>
+  Counted<BeingCounted>::init()
+  { 
+     if (numObjects >= maxObjects) throw TooManyObjects();
+     ++numObjects;
+  }
+
+  class Printer::private Counted<Printer> {
+  public:
+     // pseudo-constructors
+     static Printer * makePrinter();
+     static Printer * makePrinter(const Printer& rhs);
+     
+     ~Printer();
+     
+     void submitJob(const PrintJob& job);
+     void reset();
+     void performSelfTest();
+     ...
+     using Counted<Printer>::objectCount;     // make this func public for cl
+     using Counted<Printer>::TooManyObjects;
+  };
+
+- The fact that Printer uses the COunted template to keep track of how many Printer objects exist is the business of author of Printer -> private inherit
+- 
+** Item 27: Requiring or prohibiting heap-based objects
+*** Requiring Heap-Based Objects
+- Declare the destructor private and the constructors public
+- If we want to ensure that objects representing unlimited precision numbers are created only on the heap, we can do it like this:
+  
+  class UPNumber {
+  public:
+     UPNumber();
+     UPNumber(int initValue);
+     UPNumber(double initValue);
+     UPNumber(const UPNumber& rhs);
+
+     // pseudo destructor (a const member function, because
+     // even const objects may be destroyed)
+     void destroy() const { delete this; }
+     ...
+  private:
+     ~UPNumber();
+  };
+
+- If we want to inherit UPNumber, we can make UPNumber's destructor protected
+
+*** Determining whether an Object is On the Heap
+- Static objects are not on the stack or the heap. There's no way to determine whether the object is on the heap or not -> better off trying redesign the software
+- It's safe to delete a pointer than to determine whether a pointer points to something on the heap, because we need to answer the former question is a collection of addresses that have been returned by /operator new/
+
+  void *operator new(size_t size)
+  {
+     void *p = getMemory(size);  // call some function to allocate memory
+     
+     add p to the collection of allocated addresses
+     return p;
+  }
+
+  void operator delete(void *ptr)
+  {
+     releaseMemory(ptr);   // return memory to free store
+     remove ptr from the collection of allocated addresses;
+  }
+
+  bool isSafeToDelete(const void* address)
+  {
+     return whether address is in collection of allocated addresses
+  }
+
+*** Prohibiting Heap-Based Objects
+- declare operator new/delete private
+  -> prevent UPNumber objects from being instantiated as base class parts of heap-based derived class objects
+** Item 28: Smart pointers
+- objects that are designed to look, act, and feel like built-in pointers, but to offer greater functionality
+- when you use smart pointers, you gain control over the following aspects of pointer behavior
+  + *Construction and destruction*: you determine what happens when a smart pointer is created and destroyed
+  + *Copying and assignment*: you control what happens when a smart pointer is copied or is involved in an assignment
+  + *Dereferencing*: what should happen when a client refers to the object pointed to by a smart pointer
+
+- Smart pointers are generated from templates because they must be strongly typed; the template parameter specifies the type of object pointed to
+
+  template<class T>
+  class SmartPtr {
+  public:
+     SmartPtr(T* realPtr = 0);
+
+     SmartPtr(const SmartPtr& rhs);
+     
+     ~ SmartPtr();
+
+     // make an assignment to a smart ptr
+     SmartPtr& operator=(const SmartPtr& rhs);
+     T* operator->() const;
+     
+     T& operator*() const;
+
+  private:
+     T *pointee;
+  };
+
+*** Construction, Assignment, and Destruction of Smart Pointers
+- Construction of a smart pointer: locate an object to point to, then make the smart pointer's internal dumb pointer point there
+
+- Implementing a smart pointer's copy constructor, assignment operator(s) and destructor is complicated by the issue of /ownership/
+
+  auto_ptr<TreeNode> ptn1(new TreeNode);
+  
+  auto_ptr<TreeNode> ptn2 = ptn1;
+  
+  auto_ptr<TreeNode> ptn3;
+  ptn3 = ptn2;
+
+  --> 2 auto_ptr pointing to the same object. 
+
+- The problems would vanish if auto_ptr prohibited copying and assignment, but a more flexible solution was adopted for the auto_ptr classes: object ownership is transfered when an auto_ptr is copied or assigned
+
+*** Implementing the Dereferencing Operators
+    template<class T>
+    T& SmartPtr<T>::operator*() const
+    {
+       perform "smart pointer" processing;
+       
+       return *pointee;
+    }
+
+- operator-> returns 2 things:
+  + a dumb pointer to an object 
+  + another smart pointer object
+
+
+    template<class T>
+    T* SmartPtr<T>::operator->() const
+    {
+       perform "smart pointer" processing;
+       return pointee;
+    }
+
+
+*** Testing Smart Pointers for Nullness
+- One of the things we cannot do (serious limitation)
+  SmartPtr<TreeNode> ptn;
+  if (ptn == 0) ... 
+  if (ptn)
+  if (!ptn)
+
+- an approach: provide an implicit conversion operator that allows the tests above to compile. The conversion traditionally employed for this purpose is to void*:
+
+  template<class T>
+  class SmartPtr {
+  public:
+     ...
+     operator void*();
+     ...
+  };
+
+  SmartPtr<TreeNode> ptn;
+
+- This one has the drawback of letting functions call succeed that most programmers would expect to fail
+
+  SmartPtr<Apple> pa;
+  SmartPtr<Orange> po;
+  if (pa==po) ...
+
+  this compiles because both smart pointers can be implicitly converted into void* pointers
+
+*** Converting Smart Pointers to Dumb Pointers
+- Sometimes you'd like to add smart pointers to an application or library that already uses dumb pointers
+  class Tuple { ... };
+  void normalize(Tuple *pt);
+
+  DBPtr<Tuple> pt;
+  normalize(pt);   // error!
+
+- The call can be made to succeed by adding to the smart pointer-to-T template an implicit conversion operator to a dumb pointer-to-T
+
+  template<class T>
+  class SmartPtr {
+  public:
+      ...
+      operator T*() { return pointee; }
+  };
+
+*** Smart Pointers and Inheritance-Based Type Conversions
+    class MusicProduct {
+    public:
+       MusicProduct(const string& title);
+       virtual void play() const = 0;
+       virtual void displayTitle() const = 0;
+    ...
+    };
+
+    class Cassette: public MusicProduct {
+    public:
+       Cassette(const string& title);
+       virtual void play() const;
+       virtual void displayTitle() const;
+    ...
+    };
+
+    class CD: public MusicProduct {
+    public:
+       CD(const string& title);
+       virtual void play() const;
+       virtual void displayTitle() const;
+    ...
+    };
+
+    void displayAndPlay(const MusicProduct* pmp, int numTimes)
+    {
+        for (int i = 1; i <= numTimes; ++i) {
+        pmp->displayTitle();
+        pmp->play();
+    }
+
+--> displayAndPlay can't be called for smart pointer arguments
+
+- using: /member function template/
+  
+  template<class T>
+  class SmartPtr {
+  public:
+     SmartPtr(T* realPtr = 0);
+     T* operator->() const;
+     T& operator*() const;
+     
+     template<class newType>
+     operator SmartPtr<newType>()
+     {
+        return SmartPtr<newType>(pointee);
+     }
+     
+     ...
+  };
+
+*** Smart Pointers and const
+** Item 29: Reference Counting
+- is a technique that allows multiple objects with the same value to share a single representation of that value
+- 2 common motivations for the technique
+  + to simplify bookkeeping surrounding heap objects
+    reference counting eliminates the burden of tracking object ownership, because when an object employs reference counting, it owns itself. When nobody is using it any longer, it destroys itself automatically. Thus, reference counting constitutes a simple form of garbage collection
+  + simple common sense. it's better to let all the objects with the same value share its representation. Doing so not only saves memory, it also leads to faster-running programs, because there's no need to construct and destruct redundant copies of the same object value.
+- The need to store information on the number of objects currently sharing - referring to - a value means our ideal picture must be modified somewhat to take into account the existence to a /reference count/
+
+*** Implementing Reference Counting
+- it's important to recognize that we need a place to store the reference count for each String value, not one reference count per string object. This implies a coupling between values and reference counts, so we'll create a class to store reference counts and the values they track. We'll call this class StringValue, and because its only raison detre is to help implement the String class. 
+- It will be convenient to give all the member functions of String full access to the StringValue data structure, so we'll declare StringValue to be a struct.
+  *trick*: nesting a struct in the private part of a class is a convenient way to give access to the struct to all the members of the class, but to deny access to everybody else
+
+  class String 
+  {
+  public:
+     ...
+  private:
+     struct StringValue { ... };
+     StringValue *value;
+  };
+
+*** Copy-on-Write
+- This idea - that of sharing a value with other objects until we have to write on our own copy of the value - has a long and distinguished history in Computer Science. The technique is common enough to have a name: copy-on-write. It's a specific example of a more general approach to efficiency, that of lazy evaluation.
+
+*** Pointers, References, and Copy-on-Write
+- This implementation of copy-on-write allows us to preserve both efficiency and correctness - almost. There is one lingering problem
+  
+  String s1 = "Hello";
+  char *p = &s1[1];
+  String s2 = s1;
+  *p = 'x' --> modify 2 strings
+- 3 ways of dealing with this problem:
+  + ignore it
+  + define out of existence
+  + implement a solution: the solution can reduce the amount of value sharing between objects. Its essence is this: add a flag to each StringValue object indicating whether that object is shareable. Turn the flag on initially (the object is shareable), but turn it off whenever the non-const operator[] is invoked on the value represented by that object. Once the flag is set to false, it stays that way forever.
+- If you use the proxy class technique of Item 30, to distinguish read usage from write usage in operator[], you can usually reduce the number of StringValue objects that must be marked unshareable.
+
+*** A Reference-Counting Base Class
+- Any class in which different objects may have values in common is a legitimate candidate for reference counting. Wouldn't it be nice if we could somehow write the reference counting code in a context-independent manner, then just graft it onto classes when needed. In a curious twist of fate, there's a way to do it.
+- The first step is to create a base class, RCObject, for reference-counted objects. Any class wishing to take advantage of automatic reference counting must inherit from this class.
+- RCObject encapsulates 
+  + the reference count itself
+  + functions for incrementing and decrementing that count
+  + code for destroying a value when it is no longer in use
+  + a field that keeps track of whether this value is shareable
+
+    class RCObject
+    {
+    public:
+        RCObject();
+        RCObject(const RCObject& rhs);
+        RCObject& operator=(const RCObject& rhs);
+        virtual ~RCObject() = 0;
+        
+        void addReference();
+        void removeReference();
+        
+        void markUnshareable();
+        bool isShareable() const;
+        
+        bool isShared() const;
+    private:
+        int refCount;
+        bool shareable;
+    };
+
+    RCObject::RCObject() : refCount(0), shareable(true) {}
+    
+    RCObject::RCObject(const RCObject&) : refCount(0), shareable(true) {}
+    
+    RCObject& RCObject::operator=(const RCObject&) { return *this; }
+
+    RCObject::~RCObject() {}
+
+    void RCObject::addReference() { ++refCount; }
+    void RCObject::removeReference() 
+    { if (--refCount == 0) delete this; }
+    
+    void RCObject::markUnshareable()
+    { shareable = false; }
+    
+    bool RCObject::isShareable() const
+    { return shareable; }
+    
+    bool RCObject::isShared() const
+    { return refCount > 1; }
+
+--> StringValue is modified to inherit its reference counting capabilities form RCObject:
+    class String
+    {
+    private:
+        struct StringValue: public RCObject {
+            char *data;
+            StringValue(const char *initValue);
+            ~StringValue();
+        };
+        ...
+    };
+
+    StringValue::StringValue::StringValue(const char *initValue)
+    {
+        data = new char[strlen(initValue) + 1];
+        strcpy(data, initValue);
+    }
+
+    String::StringValue::~StringValue()
+    {
+        delete [] data;
+    }
+
+    
+*** Automating Reference Count Manipulations
+- Pointers are rather dense creatures, and the chances of them detecting anything, much less automatically reacting to things they detect, are pretty slim. Fortunately, there's a way to smarten them up: replace them with objects that act like pointers, but that do more.
+- a template for objects that act as smart pointers to reference-counted objects:
+  template<class T>
+  class RCPtr {
+  public:
+      RCPtr(T* realPtr = 0);
+      RCPtr(const RCPtr& rhs);
+      ~RCPtr();
+      
+      RCPtr& operator=(const RCPtr& rhs);
+      T* operator->() const;
+      T& operator*() const;
+  private:
+      T *pointee;
+      void init();
+  };
+
+  template<class T>
+  RCPtr<T>::RCPtr(T* realPtr) : pointee(realPtr)
+  {
+      init();
+  }
+
+  template<class T>
+  void RCPtr<T>::init()
+  {
+      if (pointee == 0) {
+          return;
+      }
+
+      if (pointee->isShareable() == false) {
+          pointee = new T(*pointee);
+      }
+
+      pointee->addReference();
+  }
+
+- The type of pointee is pointer-to-T, so this statement creates a new T object and initializes it by calling T's copy constructor. In the cass of an RCPtr in the String class, T will be String::StringValue, so the statement will call String::StringValue's copy constructor. Default copy constructor copy only StringValue's data pointer, it will not copy the char* string data points to --> such behavior is disastrous.
+
+- The correct behavior of the RCPtr<T> template depends on T containing a copy constructor that makes a truly independent copy (a /deep copy/) of the value represented by T.
+
+  class String
+  {
+  private:
+      struct StringValue: public RCObject {
+          StringValue(const StringValue& rhs);
+          ...
+      };
+      ...
+  };
+
+  String::StringValue::StringValue(const StringValue& rhs)
+  {
+      data = new char[strlen(rhs.data) + 1];
+      strcpy(data, rhs.data);
+  }
+
+*** Putting it all together
+*** Adding Reference Counting to Existing Classes
+- Reference-counting implementations are not w/o cost. Each reference-counted value carries a reference count with it, and most operations require that this reference count be examined or manipulated in some way. Object values therefore require more memory, we execute more code. The underlying source code is considerably more complex
+- reference counting is an optimization technique predicated on the assumption that objects will commonly share values. Reference counting is most useful for improving effiency under the following conditions:
+  + Relatively few values are shared by relatively many objects: the higher objects/values ratio, the better the case for reference counting.
+  + Object values are expensive to create or destroy, or they use lots of memory
+- Reference counting can be attractive even if efficiency is not your primary concern. If you find yourself weighed down w/ uncertainty over who's allowed to delete what, reference counting could be just the technique you need to ease your burden.
+** Item 30: Proxy classes
+*** Implementing 2 dimensional Arrays
+- We can define a class template for two-dimensional arrays:
+  template<class T>
+  class Array2D {
+  public: 
+      Array2D(int dim1, int dim2);
+      ...
+  };
+
+- Now we can define the arrays we want:
+  Array2D<int> data(10, 20);
+  
+- We can overload operator[] to return an object of a new class, Array1D, then overload operator[] again in Array1D to return an element in our origial two-dimensional array:
+  template<class T>
+  class Array2D {
+  public:
+      class Array1D {
+          T& operator[](int index);
+          const T& operator[](int index) const;
+      };
+
+      Array1D operator[](int index);
+      const Array1D operator[](int index) const;
+  };
+
+- Objects that stand for other objects are often called proxy objects, and the classes that give rise to proxy objects are often called proxy classes. Array1D is a proxy class
+
+*** Distinguishing Reads from Writes via operator[]
+- operator[] can be called in 2 different contexts: to read a character or to write a character. Reads are known as /rvalue/ usages; writes are known as /lvalue/ usages. 
+- we'd like to distinguish between lvalue and rvalue usage of operator[] because, especially for reference-counted data structures, reads can be much less expensive to implement that writes
+- The approach is based on the fact that though it may be impossible to tell whether operator[] is being invoked in an lvalue or an rvalue context context from within operator[], we can still treat reads different from writes if we delay our lvalue-versus rvalue actions until we see how the result of operator[] is used. All we need is a way to postpone our decision on whether our object is being read or written until after operator[] has returned
+- 3 things you can do with a proxy:
+  + Create it, specify which string character it stands for.
+  + Use it as the target of an assignment, in which case you are really making an assignment to the string character it stands for. When used in this way, a proxy represents an lvalue use of the string on which operator[] was invoked
+  + se it in any other way. When used like this, a proxy represents an rvalue use of the string on which operator[] was invoked
+
+  class String {
+  public:
+     class CharProxy {
+     public:
+        CharProxy(String& str, int index);
+        CharProxy& operator=(const CharProxy& rhs);
+        CharProxy& operator=(char c);
+        
+        operator char() const;
+     private:
+        String& theString;
+        int charIndex;
+     };
+
+     const CharProxy operator[](int index) const;
+     CharProxy operator[](int index);
+
+     ...
+     friend class CharProxy;
+  private:
+     RCPtr<StringValue> value;
+  };
+
+  const String::CharProxy String::operator[](int index) const
+  {
+      return CharProxy(const_cast<String&>(*this), index);
+  }
+
+  String::CharProxy String::operator[](int index)
+  {
+      return CharProxy(*this, index);
+  }
+
+  String::CharProxy::CharProxy(String& str, int index)
+  : theString(str), charIndex(index) {}
+  
+- Conversion of a proxy to an rvalue is straightforward - we just return a copy of the character represented by the proxy:
+  
+  String::CharProxy::operator char() const
+  {
+      return theString.value->data[charIndex];
+  }
+
+  String::CharProxy& 
+  String::CharProxy::operator=(const CharProxy& rhs)
+  {
+      // if the string is sharing a value with other String objects
+      // break off a separate copy of the value for this string only 
+      if (theString.value->isShared()) {
+         theString.value = new StringValue(theString.value->data);
+      }
+
+      // now make the assignment: assign the value of the char
+      // represented by rhs to the char represented by *this
+      theString.value->data[charIndex] = rhs.theString.value->data[rhs.charIndex];
+      return *this;
+  }
+
+  String::CharProxy& String::CharProxy::operator=(char c)
+  {
+      if (theString.value->isShared()) {
+          theString.value = new StringValue(theString.value->data);
+      }
+
+      theString.value->data[charIndex] = c;
+      return *this;
+  }
+
+- The only difference between this String class and the final String class is that both operator[] functions now return CharProxy objects. 
+
+*** Limitations
+    String s1 = "Hello";
+    char *p = &s1[1];
+
+- The expression s1[1] returns a CharProxy, so the type of the expression on the right-hand side of the = is CharProxy*. There is no conversion from a CharProxy* to a char*, so the initialization of p fails to compile. 
+- To eliminate this difficulty, you'll need to overload the address-of operators for the CharProxy class
+
+  class String {
+  public:
+      class CharProxy {
+      public:
+          char* operator&();
+          const char* operator&() const;
+      };
+  };
+
+  const char* String::CharProxy::operator&() {
+      return &(theString.value->data[charIndex]);
+  }
+
+  char* String::CharProxy::operator&()
+  {
+      // make sure the character to which this function returns
+      // a pointer isn't shared by any other String objects
+      if (theString.value->isShared()) {
+         theString.value = new StringValue(theString.value->data);
+      }
+
+      theString.value->markUnshareable();
+      return &(theString.value->data[charIndex]);
+  }
+
+*** Evaluation
+- allow you to achieve some types of behavior that are otherwise difficult or impossible to implement. 
+  + multidimensional arrays
+  + lvalue/rvalue
+  + suppression of implicit conversions
+- the existence of proxy classes increases the complexity of software system 
+- shifting from a class that works with real objects to a class that works with proxies then changes the semantics of the class
+
+
+** Item 31: Making functions virtual with respect to more than one object
+- Game spaceship wars
+  class GameObject { ... };
+  class SpaceShip: public GameObject { ... };
+  class SpaceStation: public GameObject { ... };
+  class Asteroid: public GameObject { ... };
+
+  void checkForCollision(GameObject& object1, GameObject& object2)
+  {
+      if (theyjustCollided(object1, object2)) {
+          processCollision(object1, object2);
+      } else {
+          ...
+      }
+  }
+ 
+- what happens in the collision depends on both their dynamic types. A function call that's virual on only one object, you see, is not enough
+- CLOS (Common Lisp Object System) supports what is possibly the most general object-oriented function-invocation mechanism one can imagine: /multi-methods/
+  
+
+* Chapter 6: Miscellany
+** Item 32: Program in the future tense
+- Things change
+- Good software adapts well to change. It accommodates new features, it ports to new platforms, it adjusts to new demands, it handles new inputs. It is designed and implemented by programmers who conform to the constraints of today while keeping in mind the probable needs of tommorow.
+- To program in the future tense is to accept that things will change and to be prepared for it. Design and Implement in a fashion that facilitates comprehension, modification, and enhancement by others
+- One way to do this is to express design constraints in C++
+- Future-tense thinking simply adds a few additional considerations:
+  + provide complete classes
+  + design your interfaces to facilitate common operations and prevent common errors
+  + if there is no greate penalty for generalizing your code, generalize it. 
+
+*** Using Virtual functions and RTTI
+- Virtual functions implement a single dispatch: that's half of what we need; and compilers do virtual functions for us. 
+
+  class GameObject 
+  {
+  public:
+      virtual void collide(GameObject& otherObject) = 0;
+      ...
+  };
+
+  class SpaceShip: public GameObject
+  {
+  public:
+      virtual void collide(GameObject& otherObject);
+  };
+
+  class CollisionWithUnknownObject
+  {
+  public:
+      CollisionWithUnknownObject(GameObject& whatWeHit);
+      ...
+  };
+
+  void SpaceShip::collide(GameObject& otherObject)
+  {
+      const type_info& objectType = typeid(otherObject);
+      if (objectType == typeid(SpaceShip)) {
+          SpaceShip& ss = static_cast<SpaceShip&>(otherObject);
+          process a SpaceShip-SpaceShip collision;
+      }
+
+      else if (objectType == typeid(SpaceStation)) {
+          SpaceStation& ss = static_cast<SpaceStation&>(otherObject);
+          process a SpaceShip-SpaceStation collision;
+      }
+
+      else if (objectType == typeid(Asteroid&)) {
+          Asteroid& a = static_cast<Asteroid&>(otherObject);
+          process a SpaceShip-Asteroid collision;
+      }
+
+      else {
+          throw CollisionWithUnknownObject(otherObject);
+      }
+  }
+
+- virtual functions were invented in the first place: to shift the burden of generating and maintaining type-based function calls from programmers to compilers
+
+*** Using virtual functions only
+- How to attack the problem using only virtual functions
+  
+  class SpaceShip;
+  class SpaceStation;
+  class Asteroid;
+
+  class GameObject
+  {
+  public:
+      virtual void collide(GameObject& otherObject) = 0;
+      virtual void collide(SpaceShip& otherObject) = 0;
+      virtual void collide(SpaceStation& otherObject) = 0;
+      virtual void collide(Asteroid& otherObject) = 0;
+      ...
+  };
+
+  class SpaceShip: public GameObject
+  {
+  public:
+      
+  };
+
+- Modifying existing classes is something you are frequently in no position to do. 
+
+*** Emulating Virtual Function Tables
+- compilers typically implement virtual functions by creating an array of function pointers (the vtbl) and then indexing into that array when a virtual function is called. 
+  + make RTTI-based code more efficient
+  + isolate the use of RTTI to a single location
+
+    class GameObject
+    {
+    public:
+        virtual void collide(GameObject& otherObject) = 0;
+        ...
+    };
+
+    class SpaceShip: public GameObject
+    {
+    public:
+        virtual void collide(GameObject& otherObject);
+        virtual void hitSpaceShip(SpaceShip& otherObject);
+        virtual void hitSpaceStation(SpaceStation& otherObject);
+        virtual void hitAsteroid(Asteroid& otherObject);
+        ...
+    };
+
+    void SpaceShip::hitSpaceShip(SpaceShip& otherObject)
+    {
+        process a SpaceShip-SpaceShip collision;
+    }
+
+    void SpaceShip::hitSpaceStation(SpaceStation& otherObject)
+    {
+        process a SpaceShip-SpaceStation collision;
+    }
+
+    void SpaceShip::hitAsteroid(Asteroid& otherObject)
+    {
+        process a SpaceShip-Asteroid collision;
+    }
+
+- Inside SpaceShip::collide, we need a way to map the dynamic type of the parameter otherObject to a member function pointer that points to the appropriate collision-handling function. 
+
+*** Initializing Emulated Virtual Function Tables
+- add an intervening function, lookup, that takes a GameObject and returns the appropriate member function pointer. 
+
+  class SpaceShip: public GameObject
+  {
+  private:
+      typedef void (SpaceShip::*HitFunctionPtr)(GameObject&);
+      static HitFunctionPtr lookup(const GameObject& whatWeHit);
+      typedef map<string, HitFunctionPtr> HitMap;
+      static HitMap * initializingCollisionMap();
+  };
+
+  void SpaceShip::collide(GameObject& otherObject)
+  {
+      HitFunctionPtr hfp = lookup(otherObject);
+      if (hfp) {
+          (this->*hfp)(otherObject);
+      } else {
+          throw CollisionWithUnknownObject(otherObject);
+      }
+  }
+
+  SpaceShip::HitFunctionPtr
+  SpaceShip::lookup(const GameObject& whatWeHit)
+  {
+      static auto_ptr<HitMap*> collisionMap(initializingCollisionMap());
+      // lookup the collision-processing function for the type of
+      // whatWeHit. The value returned is a pointer-like object called
+      // an iterator
+      HitMap::iterator mapEntry = 
+          collisionMap.find(typeid(whatWeHit).name());
+      if (mapEntry == collisionMap.end()) return 0;
+      return (*mapEntry).second;
+  }
+
+  SpaceShip::HitMap * SpaceShip::initializeCollisionMap()
+  {
+      HitMap *pbm = new HitMap;
+      (*pbm)["SpaceShip"] = reinterpret_cast<HitFunctionPtr>(&hitSpaceShip);
+      (*pbm)["SpaceStation"] = reinterpret_cast<HitFunctionPtr>(&hitSpaceStation);
+      (*pbm)["Asteroid"] = reinterpret_cast<HitFunctionPtr>(&hitAsteroid);
+      
+      return pbm;
+  }
+  
+
+*** Using Non-member Collision-Processing Functions
+- The recompiltion problem would go away if our associative array contained pointers to non-member functions. 
+
+#include "SpaceShip.h"
+#include "SpaceStation.h"
+#include "Asteroid.h"
+
+namespace {                     // unnamed namespace — see below
+
+  // primary collision-processing functions
+  void shipAsteroid(GameObject& spaceShip,
+                    GameObject& asteroid);
+
+  void shipStation(GameObject& spaceShip,
+                   GameObject& spaceStation);
+
+  void asteroidStation(GameObject& asteroid,
+                       GameObject& spaceStation);
+  ...
+
+  // secondary collision-processing functions that just
+  // implement symmetry: swap the parameters and call a
+  // primary function
+  void asteroidShip(GameObject& asteroid,
+                    GameObject& spaceShip)
+  { shipAsteroid(spaceShip, asteroid); }
+
+  void stationShip(GameObject& spaceStation,
+                   GameObject& spaceShip)
+  { shipStation(spaceShip, spaceStation); }
+
+  void stationAsteroid(GameObject& spaceStation,
+                       GameObject& asteroid)
+  { asteroidStation(asteroid, spaceStation); }
+
+  ...
+
+  // see below for a description of these types/functions
+  typedef void (*HitFunctionPtr)(GameObject&, GameObject&);
+  typedef map< pair<string,string>, HitFunctionPtr > HitMap;
+
+  pair<string,string> makeStringPair(const char *s1,
+                                     const char *s2);
+
+  HitMap * initializeCollisionMap();
+
+  HitFunctionPtr lookup(const string& class1,
+                        const string& class2);
+
+} // end namespace
+
+void processCollision(GameObject& object1,
+                        GameObject& object2)
+{
+  HitFunctionPtr phf = lookup(typeid(object1).name(),
+                              typeid(object2).name());
+
+  if (phf) phf(object1, object2);
+  else throw UnknownCollision(object1, object2);
+}
+
+- Everything in an unnamed namespace is private to the current compilation translation unit. Static at file scope have been deprecated, so you should accustom yourself to using unnamed namespaces as soon as your compilers support them
+
+*** Inheritance and Emulated Virtual Function Tables
+- 
+
+  

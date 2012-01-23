@@ -1,0 +1,62 @@
+the acts of the mind, wherein it exerts its power over simple ideas, are chiefly
+these there:
+1. Combining several simple ideas into one compound one, and thus all complex
+   ideas are made
+2. The second is bringing two ideas, whether simple or complex, together, and 
+   setting them by one another so as to take a view of them at once, without
+   uniting them into one, by which it gets all its ideas of relations
+3. The third is separating them from all other ideas that accompany them in 
+   their real existence: this is called abstraction, and thus all its general
+   ideas are made
+
+a computational process is indeed much like a sorcerer's idea of a spirit. It
+cannot be seen or touched. It is not composed of matter at all. However, it is 
+very real. It can perform intellectual work. It can answer questions. It can 
+affect the world by disbursing money at a bank or by controlling a robot arm in
+a factory. The programs we use to conjure processes are like a sorcerer's spells.
+
+* The elements of programming
+A powerful programming language is more than just a means for instructing a
+computer to perform tasks. The language also serves as a framework within which
+we organize our ideas about processes. Thus when we describe a language, we should
+pay particular attention to the means that the language provides for combining
+simple ideas to form more complex ideas. Every powerful language has three
+mechanisms for accomplishing this:
+- primitive expressions
+- means of combination
+- means of abstraction
+
+In programming, we deal w/ 2 kinds of elements: procedures & data.
+
+Complex programs are constructed by building, step by step, computational objects
+of increasing complexity.
+
+In evaluating combinations, the interpreter is itself following a procedure
+1. evaluate the subexpressions of the combination
+2. Apply the procedure that is the value of the leftmost subexpression (the 
+   operator) to the arguments that are the values of the other subexpressions
+
+** Procedures and the Processes they generate
+
+We have now considered the elements of programming: we have used primitive
+arithmetic operations, you have combined these operations, and we have abstracted
+these composite operations by defining them as compound procedures. But that is
+not enough to enable us to say that we know how to program. Our situation is 
+analogous to that of someone who has learned the rules for how the pieces move
+in chess but knows nothing of typical openings, tactics, or strategy. Like the
+novice chess player, we don't yet know the common patterns of usage in the 
+domain. We lack the knowledge of which moves a worth making (which procedures
+are worth defining). We lack the experience to predict the consequences of making
+a move. 
+
+The ability to visualize the consequences of the actions under consideration is 
+crucial to becoming an expert programmer, just as it is in any synthetic,
+creative activity.
+
+!. the technique of defining an invariant quantity that remains unchanged from 
+state to state is a powerful way to think about the design of iterative 
+algorithms
+
+Lame's Theorem: If Euclid's Algorithm requires k steps to compute the GCD of some
+pair, then the smaller number in the pair must greater than or equal to the kth
+Fibonacci number

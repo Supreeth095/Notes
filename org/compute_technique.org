@@ -1,0 +1,10 @@
+* Statistics
+** Calculate likelihood using the Central Limit Theorem
+   - In Bayesian statistics, [[http://en.wikipedia.org/wiki/Beta_distribution][beta distribution]] can be seen as the likelihood of
+     the parameter p of a binomial distribution from observing a - 1 independent
+     events with the probability p and b - 1 with probability 1 - p
+   - compute: in R we can compute beta distribution by dbeta function
+   - sample:
+     theta <- seq(0, .2, length=100)
+     lik <- dbeta(theta, 0, 138)
+     

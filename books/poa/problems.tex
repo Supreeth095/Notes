@@ -1,0 +1,153 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\title{Problems of Algorithm}
+\author{Bui Hong Ha}
+\date {\today}
+\begin{document}
+\maketitle
+\section{Summations}
+\begin {enumerate}
+
+\item Prove by induction on $n \geq 0 $ that $\sum_{i=1}^{n} i=n(n+1)/2$ 
+\\ Prove:
+\begin {itemize}
+\item Let $n = 1$ we have: 1 = 1(1+1)/2 right!
+\item Assume that the above equation is right with $ n = k, k \in
+  \mathbb{Z} $, we prove it right for $ n = k+1$.
+\item In fact, with $n = k+1$ we have:
+  \begin{align}
+    \sum_{i=1}^{k+1} i &= \sum_{i=1}^ki + (k+1) \\ \notag
+    &= k(k+1)/2 + (k+1) \\ \notag
+    &= (k+1)(k/2 + 1) \\ \notag
+    &= (k+1)(k+2)/2 \notag
+  \end{align}
+\end{itemize}
+
+\item Prove by induction on $ n \geq 0$ that $$\sum_{i=1}^n i^2 =  n(n+1)(2n+1)/6$$\\
+Prove:
+\begin{itemize}
+  \item Let $n = 1$ we have $\sum_{i=1}^1i^2 = 1(1+1)(2.1+1)/6 = 1$  right!
+    \item Assume that the equation is right with $n = k, k \in
+      \mathbb{Z}, k \geq 1$ we must prove it right for $n = k+1$. That
+      means we need to prove
+      $$\sum_{i=1}^{k+1}i^2 = (k+1)(k+2)(2k+3)/6 $$
+     \item Indeed we have: 
+       \begin{align}
+         \sum_{i=1}^{k+1} i^2 &= k(k+1)(2k+1)/6 + (k+1)^2 \notag
+         \intertext{as we assummed}
+         &= (k+1)[k(2k+1)+6(k+1)]/6\\ \notag
+         &= (k+1)(2k^2 + 7k + 6)/6\\ \notag
+         &= (k+1)(k+2)(2k+3)/6 \notag
+         \end{align}  
+\end{itemize}
+
+\item Prove by induction on $n \geq 0$ that $$\sum_{i=1}^n i^3 = n^2(n+1)^2/4$$
+\item Prove by induction on $n \geq 0$ that $$\sum_{i=0}^n (2i+1)^2 =
+  (n+1)(2n+1)(2n+3)/3$$
+\item Prove by induction on $n \geq 0$ that $$\sum_{i=1}^ni(i+1) =
+  n(n+1)(n+2)/3 $$
+\item Prove by induction on $n \geq 0$ that $$
+\sum_{i=1}^n i(i+1)(i+2) = n(n+1)(n+2)(n+3)/4$$
+
+\item Prove by induction on $n \geq 0$ that $$
+\sum_{i=1}^ni.i! = (n+1)! -1
+$$
+Prove:
+\begin{itemize}
+\item  Let $n = 1$ we have $\sum_{i=1}^1i.i! = (1+1)!-1$ is right!!
+\item Assume the equation is right with $n=k, k\in \mathbb{Z} \mbox{
+    and } k >1$. We have: $\sum_{i=1}^k i.i! = (k+1)!-1$. we must prove the equation is right with $n = k+1$
+\item As we assumed we have:
+\begin{align}
+\sum_{i=1}^{k+1}i.i! &= \sum_{i=1}^{k}i.i! + (k+1)(k+1)! \\ \notag
+&= (k+1)! -1 + (k+1)(k+1)!\\ \notag
+&= (k+1+1)(k+1)! - 1 \\ \notag
+&= (k+2)(k+1)! - 1 \\ \notag
+&= (k+2)! - 1 \notag
+\end{align}
+\end{itemize}
+
+\item Prove by induction on $n \geq 1$ that $$
+\sum_{i=1}^n\frac{1}{2^i} = 1 - \frac{1}{2^n}
+$$
+Prove: 
+\begin{itemize}
+\item Let $n = 1$, we have $1/2^1 = 1 - 1/2^1$ right!
+\item Assume the equation is right with $n = k$, we have $\sum_{i=1}^k1/2^i = 1 - 1/2^k$. We need to prove the equation is right with $n = k+1$, or $\sum_{i=1}^{k+1}1/2^i = 1 - 1/2^{k+1}$
+\item We have:
+\begin{align}
+  \sum_{i=1}^{k+1}1/2^i &= 1 - 1/2^k + 1/2^{k+1} \\ \notag
+  &= 1 - 1/2^k + 1/2.2^k \\ \notag
+  &= 1 - 1/2^k(1-1/2) \\ \notag
+  &= 1 - 1/2^{k+1} \\ \notag
+\end{align}
+That is what we need to prove.
+\end{itemize}
+
+\item Prove by induction on $n \geq 1$ that for every $a \neq 1$,
+$$
+\sum_{i=0}^na^i = \frac{a^{n+1} -1}{a-1}
+$$
+Prove:
+\begin{itemize}
+\item Let $n=1$, we have $$\sum_{i=0}^1a^i = \frac{a^2-1}{a-1} = a+1$$ right!!
+\item Assume the above equation is right with $n=k$, or $$\sum_{i=0}^ka^i = \frac{a^{k+1} -1}{a-1}$$ we need to prove it is also right with $n=k+1$, or $$\sum_{i=0}^{k+1}a^i = \frac{a^{k+2} -1}{a-1}$$
+\item With $n=k+1$ we have: 
+\begin{align}
+  \sum_{i=0}^{k+1}a^i &= \sum_{i=0}^{k}a^i + a^{k+1} \\ \notag
+  &= \frac{a^{k+1} -1}{a-1} + a^{k+1} \\ \notag
+  &= \frac{a^{k+1} - 1 + a^{k+1}(a-1)}{a-1} \\ \notag
+  &= \frac{a^{k+2} - 1}{a-1} \\ \notag
+\end{align}
+That is what we need to prove
+\end{itemize}
+
+\item Prove by induction on $n \geq 0$ that for every $a \neq 1$, and all $0\leq j \leq n$,
+$$
+\sum_{i=j}^na^i = \frac{a^{n+1} - a^j}{a-1}
+$$
+prove:
+\begin{itemize}
+\item Let $j = 1$ we have the result of the above problem which is true.
+\item Assume that the equation is also right with $j=k, 0 \leq k \leq n$, we have
+  $$
+  \sum_{i=k}^na^i = \frac{a^{n+1} - a^k}{a-1}
+  $$
+  we need to prove the equation is also right with $j = k+1$ or we need to prove
+  $$
+  \sum_{i=k+1}^na^i = \frac{a^{n+1} - a^{k+1}}{a-1}
+  $$
+\item We have: 
+  \begin {align}
+    \sum_{i=k+1}^na^i &= \frac{a^{n+1} - a^{k+1}}{a-1} \\ \notag
+    &= \sum_{i=k}^na^i - a^k \\ \notag
+    &= \frac{a^{n+1} - a^k}{a-1} - a^k \\ \notag
+    &= \frac{a^{n+1} - a^k - a^k(a-1)}{a-1} \\ \notag
+    &= \frac{a^{n+1} - a^{k+1}}{a-1} \\ \notag
+    \end{align}
+That is what we need to prove
+\end{itemize}
+
+\item Prove by induction on $n \geq 0$ that 
+$$\sum_{i=0}^n2^i = 2^{n+1} - 1$$
+prove:
+\begin{itemize}
+  \item Let $n=1$ we have $$\sum_{i=0}^{1}2^i=1+2=3=2^{2}-1$$ right
+  \item Assume that the equation is also true with $n=k$ or
+    $$\sum_{i=0}^{n=k}2^i = 2^{k+1}-1$$
+    We need to prove that the equation is also true with $n=k+1$
+  \item We have
+    \begin{align}
+      \sum_{i=0}^{k+1}2^i &= \sum_{i=1}^{k+1}2^i + 1 \\ \notag
+      &= 2*\sum_{i=0}^{k}2^i + 1 \\ \notag
+      &= 2*(2^{k+1}-1) + 1 \\ \notag
+      &= 2^{k+2} - 2 + 1 \\ \notag
+      &= 2^{k+2} - 1 \\ \notag
+    \end{align}
+    That is what we need to prove
+\end{itemize}
+
+\end {enumerate}
+
+\end{document}

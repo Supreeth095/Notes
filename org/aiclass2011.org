@@ -1,0 +1,139 @@
+* Welcome to AI
+** Introduction
+** Course Overview
+- basic of AI
+- excite to the field
+- Structure:
+  + videos
+  + quizzes
+  + answer videos
+- assignment:
+  + videos exams
+
+** Intelligent Agents  
+- an AI program is a intelligent agent
+- Environment -> agents -> environment
+           sensors   actuators
+- perception action cycle
+
+** Application of AI
+- AI in finance
+- AI in robotics
+- AI in games
+- AI in medicine
+
+** Terminology
+- *Fully* vs *partially observable*
+  + state
+  + fully observable -> agent has access to all states of environment
+    partially: has a measurement
+- *Deterministic* vs *Stochastic*
+- *Discrete* vs *Continuous*
+- *Benign* vs *Adversarial* environment
+
+** Poker questions
+** AI and Uncertainty
+- AI as uncertainty management
+  + AI = what to do when you don't know what to do?
+  + Reasons: 
+    ~ sensor limits
+    ~ adversaries
+    ~ stochastic env
+    ~ laziness
+    ~ ignorance: just know but don't do
+** Examples of AI
+** Summary
+- Key app of AI
+- intelligent agent
+- 4 key attributes
+- sources of uncertainty
+- rationality
+* Problem solving
+** Introduction
+- complexity of problem from ideas of states
+  + navigation problem: multichoices
+- example: route finding problem
+** What is a Problem?
+- components
+  + initial state
+  + actions)s) -> {a1, a2, a3...}
+  + result(s, a) -> s'
+  + GoalTest(s) -> T|F if s is goal or not
+  + PathCost(s->s->s) --> n 
+    StepCost(s, a, s') -> n
+    Cost: number of miles, minutes 
+
+** Example: route finding
+- frontier: furthest points explored
+- explored
+- unexplored
+
+** Tree Search
+function TreeSearch(problem):
+   frontier = {[initial]}
+   loop:
+      if frontier is empty: return FAIL
+      path = remove_choice(frontier)  <- different here, which path will look at first
+      s = path.end
+      if s is a goal: return path
+      for a in actions:
+         add [path a -> Result(s, a)] to frontier
+
+- Breadth First Search: 
+  + shortest first search: choose frontier
+
+** Graph Search (avoid repeated path)
+function GraphSearch(problem):
+   frontier = {[initial]};
+   explored = {};
+   loop:
+      if frontier is empty: return FAIL
+      path = remove_choice(frontier)
+      s = path.end
+      add s to explored
+      if s is a goal: return path
+      for a in actions:
+          add [path a -> Result(s, a)] to frontier
+          Unless Result(s, a) in frontier + explored
+
+
+** Uniform Cost Search
+- Find path with cheapest cost
+- Choose the path with the lowest cost, add it to the frontier + explored, and sum the total cost
+
+** Search comparison
+
+|            | Depth First Search | Uniform Cost Search | Breadth First Search |
+|            |                    |                     |                      |
+|------------+--------------------+---------------------+----------------------|
+| space      | disadvantage       | OK                  | OK                   |
+| terminate? | no                 | yes                 | yes                  |
+|            |                    |                     |                      |
+
+
+** A Star Search
+- f = g + h
+  g(path): path cost
+  h(path) = h(s) estimated distance to goal
+- A* performance depends on h function:
+  + h(s) < true cost of path to the goal
+  + h never overestimate
+  + h optimistic, h admissable
+
+** State space
+- h1 = #misplaced blocks
+- h2 = sum(distance of blocks)
+- both are admissable. Using h2 induces less steps than h1
+- generating relaxation
+
+
+** Problem solving works
+- fully observable (state)
+- known set of available states
+- discrete
+- deterministics (result to take an action)
+- static: nothing can change the world, but actions
+
+** Notes on implementation
+- Path = linked list
+- Frontier = priority queue, Explored: hash, tree

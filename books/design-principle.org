@@ -1,0 +1,2230 @@
+* Introduction
+** Finding Appropriate Objects
+- Many objects in a design come from the analysis model, but OOD often end up
+  with classes that have no counterparts in the real world.
+- Strict modeling of the real world leads to a system that reflects today's
+  realities but not necessarily tomorrow's.
+  -> *the abstraction are key to make design flexible*
+
+** Specifying Object Interfaces
+- a type is a name used to denote a particular interface
+- an object may have many types, and widely different object can share a type
+- 2 objects of the same type need only share parts of their interfaces.
+- interfaces can contain other interfaces as subsets.
+- *dynamic binding* means that issuing a request doesn't commit you to a 
+  particular implementation until run-time.
+
+** Specifying Object Implementations
+- Objects are created by *initiating* a class. The object is said to be an
+  *instance* of the class.
+
+** Class versus Interface inheritance
+- An object's class defines how the object is implemented. The class defines 
+  the object's internal state and the implementation of its operations.
+- An object's type only refers to its interface- the set of requests to which
+  it can respond
+- Class inheritance defines an object's implementation in terms of another 
+  object's implementation
+- Interface inheritance describes when an object can be used in place of another
+
+** Programming to an interface, not an implementation
+- implementation reuse is only half of the story. Inheritance's ability to 
+  define families of objects with identical interfaces (usually by inheriting 
+  from an abstract class) is also important. Polymorphism depends on it.
+- when inheritance is used properly, all classes derived from an abstract class
+  will share its interface. All subclasses can then respond to the requests in
+  the interface of this abstract class, making them all subtypes of the 
+  abstract class.
+- 2 benefits to manipulating objects solely in terms of the interface defined
+  by abstract classes:
+  + clients remain unaware of the specific types of objects they use, as long
+    as the objects adhere to the interface that clients expect
+  + clients remain unaware of the classes that implement these objects.
+- principle of reusable object-oriented design:
+  *program to an interface, not an implementation*
+
+** Putting Reuse mechanisms to work
+*** Inheritance versus Composition
+- inheritance is white-box reuse. The internals of parent classes are often 
+  visible to subclasses.
+- object composition: new functionality is obtained by assembling or composing
+  objects to get more complex functionality.
+
+|             | Advantages                                | Disadvantages                          |
+|-------------+-------------------------------------------+----------------------------------------|
+| Inheritance | statically at compile-time -> easy to use | can't change implementation at runtime |
+|             | easy to modify the implementation         | inheritance break encapsulation        |
+|             |                                           |                                        |
+| Composition | dynamically at run-time                   |                                        |
+|             | object are accessed only through their    |                                        |
+|             | interface -> don't break encapsulation    |                                        |
+
+--> *Favor object composition over class inheritance*
+
+*** Delegation
+- 2 objects are involved in handling a request. A receiving object delegates 
+  operations to its *delegate*
+- ex: instead of making class Window a subclass of class Rectangle, the Window
+  class might reuse the behavior of Rectangle by keeping a Rectangle instance
+  variable and delegating Rectangle-specific behavior to it.
+- advantage:
+  + easy to compose behaviors at run-time and to change the way they're 
+    composed
+  + example: window can become circular at run-time simply by replacing its
+    Rectangle instance with a Circle instance
+- disadvantage:
+  + dynamic, highly parameterized software is harder to understand that more
+    static software.
+  + run-time inefficiency
+- Several design patterns use Delegation:
+  + State 
+  + Strategy
+  + Visitor
+  + Mediator: mediate communication between other objects.
+
+*** Inheritance versus Parameterized Type
+- generics and templates are techniques for reusing functionality.
+
+*** Relating run-time and compile-time structures
+- object-oriented program's run-time structure often bears little resemblance 
+  to its code structure.
+- Aggregation implies that one object owns or is responsible for another object
+- Acquaintance implies that an object merely knows of another object.
+- Composite and Decorator are especially useful for building complex run-time
+  structures. Observer involves run-time structures that are often hard to 
+  understand unless you know the pattern.
+
+*** Designing for Change
+- The key to maximizing reuse lies in anticipating new requirements and changes
+  to existing requirements, and in designing your systems so that they can 
+  evolve accordingly.
+- To design the system so that it's robust to such changes, you must consider
+  how the system might change over its life-time.
+- Each design pattern lets some aspect of system structure vary indepedently 
+  of other aspects.
+- Common causes of redesign:
+  + /Creating an object by specifying a class explicitly/.
+    *solution*: create object indirectly through interface
+    *patterns*: Abstract Factory, Factory Method, Prototype
+  + /Dependence on specific operations/. When you specify a particular operation,
+    you commit to one way of satisfying an object. 
+    *solution*: avoiding hard-coded requests
+    *patterns*: Chain of Responsibility, Command
+  + /Dependence on hardware and software platform/: 
+    *solution*: APIs are different on different hardware and software platforms
+    *patterns*: Abstract Factory, Bridge
+  + /Dependence of object representations and implementations/: Clients that 
+    know how an object is represented, stored, located, or implemented might 
+    need to be changed when the object changes.
+    *solution*: Hiding this information from users
+    *patterns*: Abstract Factory, Bridge, Memento, Proxy
+  + /Algorithmic dependencies/: 
+    *solution*: algorithms that are likely to change should be isolated
+    *patterns*: Builder, Iterator, Strategy, Template, Method, Visitor
+  + /Tight coupling/: hard to reuse in isolation, since they depend on each 
+    other. Tight coupling leads to /monolithic/ systems
+    *solution*: Design patterns use techniques such as abstract coupling and
+    layering to promote loosely coupled systems.
+    *patterns*: Abstract Factory, Bridge, Chain of Responsibility, Command,
+    Facade, Mediator, Observer
+  + /Extending functionality by subclass/: 
+    *solution*: Use patterns that produce designs in which you can introduce
+    customized functionality just by defining one subclass and composing its
+    instance with existing ones
+    *patterns*: Bridge, Chain of Responsibility, Composite, Decorator, Observer
+    Strategy
+  + /Inability to alter classes conveniently/: 
+    *solution*: use patterns that let you modify classes in such circumstances
+    *patterns*: Adapter, Decorator, Visitor
+
+*** Application Programs
+- /internal reuse/: reduce dependencies -> increase internal reuse. Looser
+  coupling boosts the likelihood that one class of object can cooperate with 
+  several others.
+- /maintainability/: use limit platform dependencies and layer a system  
+- /extension/: show how to extend class hierarchies and how to exploit object
+  composition.
+
+*** Toolkits
+- example: a set of collection classes for lists, associative tables, stacks
+
+*** Frameworks
+- A framework is a set of cooperating classes that make up a reusable design
+  for a specific class of software
+- example: 
+  + geared framework for building graphical editors for different domains 
+    like artistic drawing, music composition.
+  + compilers for different programming languages and target machines
+  + financial modeling applications
+- patterns vs frameworks:
+  + Design patterns are more abstract than frameworks
+  + Design patterns are smaller architectural elements than frameworks
+  + Design patterns are less specialized than frameworks. Frameworks always
+    have a particular application domain.
+
+
+** How to select a design pattern
+   1. Consider how design patterns solve design problems
+   2. Scan Intent sections
+   3. Study how patterns interrelate
+   4. Study patterns of like purpose
+   5. Examine a cause of design
+   6. Consider what should be variable in your design
+
+** How to use a design patter
+  1. Read the pattern once through for an interview
+  2. Go back and study the Structure, Participants, and Collaborations sections
+  3. Look at sample code section
+  4. Choose names for pattern participants that are meaningful in the application
+  5. Define the class
+  6. Define application specific names for operations in the pattern. 
+  7. Implement the operations to carry out responsibilities and collaborations
+     in the pattern
+
+* A case study: Design a document editor
+- seven problems in Lexi's design
+  + Document structure: the choice of internal representation for the document
+    affects every aspect of Lexi's design
+  + Formatting: What objects are responsible for carrying out different 
+    formatting policies? How do these policies interact with the document
+    internal
+  + Embellishing the user interface.
+  + Supporting multiple look-and-feel standards
+  + Supporting multiple window systems
+  + User operations
+  + Spelling checking and hyphenation
+** Document structure
+- the internal representation should support:
+  + maintaining the document's physical structure
+  + generating and presenting the document visually
+  + mapping positions on the display to element in the internal representation
+- some constraints:
+  + text == graphics
+  + treat simple and complex element uniformly
+
+*** Recursive composition
+- build complex elements from simple elements
+  + treat line, character, graphic as objects
+
+*** Glyphs
+- abstract class for all objects that can appear in the document structure.
+- have 3 basic responsibilities
+  + how to draw themselves
+  + space they occupy
+  + their children and parent
+- glyphs can have children -> interface for add/remove/access those children
+-> *Composite pattern*
+
+** Formatting
+- representation and formatting are distinct: the ability to capture the 
+  document's physical structure doesn't tell us how to arrive at a particular
+  structure.
+- *Encapsulating the Formatting Algorithm*
+  + design Lexi so that it's easy to change the formatting algorithm at the
+    run-time. 
+  + We can isolate the algorithm and make iteasily replacable at the same time
+    by encapsulating it in an object.
+
+*** Compositor and Composition
+- *Compositor* class for objects that can encapsulate the formatting algorithm.
+  The interface lets the compositor know what glyps to format and when to do 
+  the formatting
+- The glyphs it formats are the children of a special Glyph subclass called
+  *Compostion*
+
+*** Strategy pattern
+- Encapsulating an algorithm in an object is the intent of the Strategy pattern
+  The key participants in the pattern are Strategy objects (which encapsulate
+  different algorithm) and the context in which they operate.
+- Compositors are strategies; a composition is the context for a compositor
+
+** Embellishing the User Interface
+*** Transparent Enclosure
+- Object composition offers a potentially more workable and flexible extension
+  mechanism
+  -> make the embellishment itself an object
+- concepts: combines the notions of (1) single child composition and (2) 
+  compatible interfaces
+
+*** Monoglyph
+- define a subclass of Glyph: *MonoGlyph* to serve as an abstract class for
+  "embellishment glyphs", like border 
+
+*** Decorator pattern
+
+** Supporting multiple look-and-feel standards
+- Lexi needs a way to determine the look-and-feel standard's being targeted in
+  order to create the appropriate widgets. Not only must weavoid making 
+  explicit constructor calls. We can achieve both by /abstracting/ the process
+  of object creation 
+*** Factories and Product classes
+*** Abstract Factory Pattern
+- Factories and products are the key participants in the Abstract Factory
+- This pattern captures how to create family of related product objects without
+  instantiating classes directly.
+
+** Supporting Multiple Window Systems
+*** Encapsulating implementation dependencies
+- The Window class must span the functionality of windows from different window
+  systems. 2 extreme philosophies:
+  + Intersection of functionality
+  + Union of functionality
+- *Neither extreme is viable solution*!
+*** Window and WindowImp
+- WindowImp is abstract class for different window API
+*** Configuring windows with windowimps
+*** Bridge Pattern
+- The relationship between Window and WindowImp is an example of *Bridge*.
+- The intent behind Bridge is to allow seperate class hierarchies to work 
+  together even as they evolve independently
+
+** User Operations
+*** Encapsulating a Request
+*** Command Class and Subclasses
+*** Command Pattern
+
+** Spelling checking and Hyphenation
+- 2 pieces of this puzzle:
+  + access the information to be analyzed 
+  + doing the analysis
+
+*** Accessing scattered information
+- *encapsulating access and traversal*
+*** Iterator class and subclasses
+*** Iterator pattern
+*** Traversal vs Traversal actions
+- decide where to put the responsibility for analysis.
+  + put it in the Iterator classes.
+  + making analysis an internal part of traversal.
+- different analysis - same iterator -> analysis and traversal should be 
+  seperated -> each glyph has its own analysis -> change every glyph
+*** Encapsulating the Analysis
+- put analysis into a class and use an instance to this class in conjunction
+  with an appropriate iterator.
+- fundamental problem: how the analysis object distinguishes different kind of
+  glyphs without resorting to typetests or downcasts.
+- solution: define a function
+  void GlyphSubclass::checkMe(SpellingChecker &checker) {
+     checker.checkGlyphSubclass(this)
+  }
+*** Visitor class and subclasses
+*** Visitor Pattern
+- Visitor pattern captures the technique we've used to allow an open-ended 
+  number of analyses of glyph structures without having to change the glyph 
+  classes themselves.
+- Important question to ask yourself before applying the Visitor pattern is,
+  which class hierarchies change most often.
+
+** Summary
+- we've applied 8 patterns to Lexi's design:
+  + Composite
+  + Strategy
+  + Decorator
+  + Abstract Factory
+  + Bridge
+  + Command
+  + Iterator
+  + Visitor
+
+* Design Pattern Catalog
+** Creational Patterns
+- Creational pattern abstract the instantiation process.
+- Creational patterns become important as systems evolve to depend more on 
+  object composition than class inheritance.
+- 2 recurring themes in these patterns:
+  + they all encapsulate knowledge about which concrete classes the system uses
+  + they hide how instances of these classes are created and put together
+ -> these patterns give you the flexibility in what gets created, who creates
+  it, how it gets created, and when.
+
+** Abstract Factory
+*** Intent
+- Provide an interface for creating families of related and dependent objects
+  without specifying their concrete classes.
+*** Also known as 
+- Kit
+*** Motivation
+- solve problem by defining an abstract Widget Factory class that declares an 
+  interface for creating each basic kind of widget.
+*** Applicability
+- Use the Abstract Factory pattern when:
+  + a system should be independent of how its product are created, composed, and
+    represented
+  + a system should be configured with one of multiple families of products
+  + a family of related product objects is designed to be used together, and you
+    need to enforce this constraint
+  + you want to provide a class library of products, and you want to reveal just
+    their interfaces, not their implementations
+*** Participants
+- *AbstractFactory (WidgetFactory)*
+  + declares an interface for operations that create abstract product objects
+- *ConcreteFactory (MotifWidgetFactory, PMWidgetFactory)*
+  + implements the operations to create concrete product objects
+- *AbstractProduct (Window, ScrollBar)*
+  + declares an interface for a type of product object
+- *ConcreteProduct (MotifWindow, MotifScrollBar)*
+  + defines a product object to be created by the corresponding concrete factory
+  + implements the AbstractProduct interface
+- *Client*
+  + uses only interfaces declared by AbstractFactory and AbstractProduct classes
+*** Collaborations
+- Normally a single instance of a ConcreteFactory is created at run-time. This
+  concrete factory creates product objects having a particular implementation. 
+  To create different product objects, clients should use a different concrete
+  factory
+- AbstractFactory defers creation of product objects to its ConcreteFactory
+  subclass
+*** Consequences
+- It isolates concrete classes. 
+- It makes exchanging product families easy
+- It promotes consistency among products
+- Supporting new kinds of products is difficult
+*** Implementations
+- Factories as singletons
+- Creating the products: It's up to concreteProduct subclasses to create products
+  The most common way to do this is to define a factory method for each product.
+- Defining extensible factories
+
+*** Related patterns
+- AbstractFactory classes are often implemented with *Factory Methods*, but they
+  can also be implemented using *Prototype*
+- A concrete factory is often a *Singleton*
+** Builder
+*** Intent
+- Seperate the constructio of a complex object from its representation so that
+  the same construction process can create different representations
+*** Motivation
+- RTF reader user wants to convert RTF to many other text formats. The problem,
+  however, is that the number of possible conversions is open-ended.
+- Subclasses of TextConverter specialize in different conversions and formats
+- Each kind of converter class takes the mechanism for creating and assembling a
+  complex object and puts it behind an abstract interface. 
+- The *Builder* pattern captures all these relationships.
+- Each converter class is called a *builder*, and the reader is called the
+  *director*
+*** Applicability
+- use the Builder pattern when: 
+  + the algorithm for creating a complex object should be independent of the
+    parts that make up the object and how they're assembled.
+  + the construction process must allow different representations for the object
+    that's constructed
+*** Participants
+- *Builder* 
+  + specifies an abstract interface for creating parts of a Product object
+- *Concrete Builder*
+  + constructs and assembles parts of the product by implementing the Builder
+    interface
+  + defines and keeps track of the representation it creates
+  + provides an interface for retrieving the product
+- *Director* 
+  + constructs an object using the Builder interface
+- *Product*
+  + represents the complex object under construction. ConcreteBuilder builds the
+    product's internal representation and defines the process by which it's 
+    assembled
+  + includes classes that define the constituent parts, including interfaces for
+    assembling the parts into the final result.
+*** Collaborations
+- The client creates the Director object and configures it with the desired 
+  Builder object
+- Director notifies the builder whenever a part of the product should be built
+- Builder handles requests from the Director and adds parts to the product
+- The client retrieves the product from the Builder
+*** Consequences
+- It lets you vary a product's internal representation.
+- It isolates code for construction and representation.
+- It gives you finer control over the construction process.
+
+*** Implementation
+- Typically there's an abstract Builder class that defines an operation for each
+  component that a director may ask it to create. The operations do nothing by
+  default. A ConcreteBuilder class overrides operations for components it's 
+  interested in creating.
+- Implementation issues to consider:
+  + Assembly and construction interface: 
+    > The *Builder* class interface must be general enough to allow the 
+    construction of products for all kinds of concrete builders.
+    > A key design issues concerns the model for the construction and assembly 
+    process. A model where the results of construction request are simple 
+    appended to the product is ussually sufficient.
+    > sometimes we might need access to parts of the product constructed earlier
+  + why no abstract class for product? the products produced by the concrete
+    builder differ so greatly in their representation that there is little to 
+    gain from giving different products a common interface class.
+  + Empty method as default in Builder.
+*** Sample Code
+*** Known Uses
+- RTF converter application is from ET++. Its text building block uses a builder
+  to process text stored in RTF format
+- Builder is common pattern in SmallTalk
+  + The Parser class in the compiler subsystem is a Director that takes a 
+    ProgramNodeBuilder object as an argument. A Parser object notifies its
+    ProgramNodeBuilder object each time it recognize a syntactic construct.
+  + ClassBuilder is a builder that Classes use to create subclass for themselves
+  + ByteCodeStream is a builder that creates a compiled method as a byte array
+*** Related Patterns
+- *Abstract Factory*
+- difference: *Builder* pattern focuses on constructing a complex object step by
+  step. *Abstract Factory*'s emphasis is on families of product objects
+- A *Composite* is what the builder often builds
+
+** Factory Method
+*** Intent
+- Define an interface for creating an object, but let subclasses decide which 
+  class to instantiate. Factory Method lets a class defer instantiation to
+  subclasses
+*** Also Known As
+- Virtual constructor
+
+*** Motivation
+- Frameworks use abstract classes to define and maintain relationships between
+  objects. A Framework is often responsible for creating these objects as well.
+- The Factory Method pattern offers a solution. It encapsulates the knowledge of
+  which Document subclass to create and moves this knowledge out of the 
+  framework
+*** Applicability
+- Use the Factory Method pattern when:
+  + a class can't anticipate the class of objects it must create
+  + a class wants its subclasses to specify the objects it creates
+  + classes delegate responsibility to one of several helper subclasses, and you
+    want to localize the knowledge of which helper subclass is the delegate.
+*** Structure
+*** Participants
+- *Product*
+  + defines the interface of objects the factory method creates
+- *ConcreteProduct*
+  + implements the Product interface. 
+- *Creator*
+  + declares the factory method, which returns an object of type Product.Creator
+    may also define a default implementation of the factory method that returns
+    an default ConcreteProduct object.
+  + may call the factory method to create a Product object
+- *ConcreteCreator*
+  + overrides the factory method to return an instance of a ConcreteProduct
+*** Collaborations
+- creator relies on its subclasses to define the factory method so that it 
+  returns an instance of the appropriate ConcreteProduct
+*** Consequences
+- Factory methods eliminate the need to bind application-specific classes into 
+  your code. The code only deals with the Product interface; therefore it can 
+  work with any user-defined ConcreteProduct classes.
+- potential disadvantage: clients might have to subclass the Creator class just
+  to create a particular ConcreteProduct object.
+- 2 additional consequences of the Factory Method pattern
+  + Provides hooks for subclasses
+  + Connects parallel class hierarchies. Parallel class hierarchies result when
+    a class delegates some of its responsibilities to a separate class.
+*** Implementations
+- issues when applying the factory method pattern:
+  + Two major varieties
+    > Creator class is an abstract class and does not provide an implementation
+    for the factory method it declares.
+    > Creator is a concrete class and provides a default implementation for the
+    factory method.
+  + Parameterized factory methods. 
+    > lets the factory method create multiple kinds of products. The factory 
+    method takes a parameter that identifies the kind of object to create. All
+    objects the factory method creates will share the Product interface.
+  + Language-specific variants and issues. Different languages lend themselves
+    to other interesting variations and caveats.
+    > Factory methods in C++ are always virtual functions and are often pure
+    virtual. Just be careful not to call factory methods in the Creator's
+    constructor-the factory method in the ConcreteCreator won't be available yet
+- *lazy initialization* 
+class Creator {
+   public:
+      Product * getProduct();
+   protected:
+      virtual Product* createProduct();
+   private:
+      Product* _product;
+};
+
+Product* Creator::getProduct() {
+   if(_product == 0) {
+      _product = createProduct();
+   }
+}
+
+  + Using templates to avoid subclassing.
+  + Naming conventions. 
+
+*** Known Uses
+- Factory methods pervade toolkits and frameworks
+- Class View in the Smalltalk-80 Model/View/Controller framework has a method
+  defaultController that creates a controller.
+- The Orbix ORB system from IONA Technologies uses Factory Method to generate an
+  appropriate type of proxy. Factory Method makes it easy to replace the default
+  proxy with one that uses client-side caching.
+
+*** Related Patterns
+- *Abstract Factory* is often implemented with factory methods.
+- *Prototypes* don't require subclassing Creator. 
+
+** Prototype
+*** Intent
+- Specify the kinds of objects to create using a prototypical instance, and 
+  create new objects by copying this prototype.
+*** Motivation
+- We can use the Prototype pattern to reduce the number of classes even further.
+  We have separate classes for whole notes and half notes, but that's probably 
+  unnecessary. Instead they could be instances of the same class initialized 
+  with different bitmaps and durations. 
+*** Applicability
+- Use the Prototype pattern when a system should be independent of how its
+  products are created, composed, and represented; and
+  + when the classes to instantiate are specified at run-time, for example, by
+    dynamic loading; or
+  + to avoid building a class hierarchy of factories that parallels the class
+    hierarchy of products; or
+  + when instances of a class can have one of only a few different combinations 
+    of state. It may be more convenient to install a corresponding number of 
+    prototypes and clone them rather than instantiating the class manually, each
+    time with the appropriate state.
+*** Structure
+*** Participants
+- *Prototype* 
+  + declares an interface for cloning itself
+- *ConcretePrototype*
+  + implements an operation for cloning itself
+- *Client*
+  + creates a new object by asking a prototype to clone itself.
+*** Collaborations
+- a client asks a prototype to clone itself
+
+*** Consequences
+- Prototype has many of the same consequences that Abstract Factory and Builder
+  have: It hides the concrete product classes from the client, thereby reducing
+  the number of names clients know about. Moreover, these patterns let a client
+  work with application-specific classes without modification.
+- Additional benefits of the Prototype pattern
+  + Adding and removing products at run-time
+  + Specifying new objects by varying values
+  + Specifying new objects by varying structure
+  + Reduced subclassing. 
+  + configuring an application with classes dynamically.
+- Main liability of the Prototype pattern:
+  + subclass of Prototype must implement the Clone operation, which may be 
+    difficult.
+
+*** Implementation
+- issues when implementing prototypes
+  + Using a prototype manager: keep a registry of available prototypes. Client
+    won't manage prototypes themselves but will store and retrieve them from the
+    registry. A client will ask the registry for a prototype before cloning it. 
+    We call this registry a *prototype manager*
+  + Implementing the Clone operation. The hardest part of the Prototype pattern
+    is implementing the clone operation correctly. It's particularly tricky when
+    object structures contain circular references
+  + Initializing clones
+*** Sample Code
+*** Known Uses
+*** Related Patterns
+- Prototype and Abstract Factory are competing patterns in some ways. An 
+  Abstract Factory might store a set of prototypes from which to clone and 
+  return product objects
+- Designs that make heavy use of the Composite and Decorator patterns often can
+  benefit from Prototype as well.
+
+** Singleton
+*** Intent
+- Ensure a class only has one instance, and provide a global point of access to
+  it
+*** Motivation
+- many printers -> only one printer spooler.
+- A better solution is to make the class itself responsible for keeping track of
+  its sole instance. 
+*** Applicability
+- Use the Singleton pattern when:
+  + there must be exactly one instance of a class, and it must be accessible to
+    clients from a well-known access point
+  + when the sole instance should be extensible by subclassing, and clients
+    should be able to use an extended instance without modifying their code.
+*** Structure
+*** Participants
+- *Singleton*
+  + defines an instance operation that lets clients access its unique instance.
+    Instance is a class operation
+  + may be responsible for creating its own unique instance
+*** Collaborations
+- Clients access a Singleton instance solely through Singleton's Instance 
+  operation
+*** Consequences
+- The Singleton pattern has several benefits:
+  + Controlled access to sole instance
+  + Reduced name space
+  + Permits refinement of operations and representation
+  + Permits a variable number of instances
+  + More flexible than class operations
+*** Implementation
+- implementation issues to consider:
+  + Ensuring a unique instance
+    > static member function Instance of the Singleton class. protected 
+    constructor
+    > It isn't enough to define the singleton as a global or static object and
+    then rely on automatic initialization.
+      ^ we can't guarantee that only one instance of a static object will ever
+      be declared.
+      ^ We might no have enough information to instantiate every singleton at
+      static initialization time.
+      ^ C++ doesn't define the order in which constructors for global objects 
+      are called across translation units.
+  + Subclassing the Singleton class: 
+    > the main issue is not so much defining the subclass but installing its 
+    unique instance so that clients will be able to use it. In essence, the
+    variable that refers to the singleton instance must get initialized with an
+    instance of the subclass.
+    > Another way to choose the subclass of Singleton is to take the 
+    implementation of Instance out of the parent class and put it in a subclass.
+    That lets a C++ programmer decide the class of singleton at link-time but
+    keeps it hidden from the clients of the singleton.
+    > A more flexible approach uses a *registry of singleton*. Instead of having
+    Instance define the set of possible Singleton classes, the Singleton classes
+    can register their singleton instance by name in a well-known registry. The
+    registry maps between string names and singletons. 
+*** Sample Code
+*** Known Uses
+*** Related Patterns
+- Many patterns can be implemented using the Singleton pattern. See Abstract
+  Factory, Builder, and Prototype
+
+** Discussion of Creational Patterns
+- There are 2 common ways to parameterize a system by the classes of objects it
+  creates
+  + subclass the class that creates the objects; this corresponds to using the
+    Factory Method pattern. The main drawback of this approach is that it can 
+    require creating a new subclass just to change the class of the product.
+    Such changes can cascade. For example, when the product creator is itself 
+    created by a factory method, then you have to override its creator as well.
+  + Rely on object composition: define an object that's responsible for knowing
+    the class of the product objects, and make it a parameter of the system.
+    This is a key aspect of the *Abstract Factory*, *Builder*, and *Prototype*.
+    All three involve creating a new "factory object" whose responsibility is to
+    create product objects. 
+- Factory Method makes a design more customizable and only a little more
+  complicated. Other design patterns require new classes, whereas Factory method
+  only requires a new operation. 
+- Designs that uses Abstract Factory, Prototype, or Builder are even more
+  flexible that those that use Factory method, but they're also more complex. 
+  Often, designs start out using Factory Method and evolve toward the other 
+  creational patterns as the designer discovers where more flexibility is needed
+  Knowing many design patterns gives you more choices when trading off one 
+  design criterion against another.
+
+
+** Structural Patterns
+- concerned with how classes and objects are composed to form larger structures
+- use inheritance to compose interface or implementations: 
+  + *Adapter pattern*
+- Rather than composing interfaces or implementations, structural object pattern
+  describe ways to compose objects to realize new functionaly. 
+  + *Composite pattern* is an example of a structural object pattern. It 
+    describes how to build a class hierarchy made up of classes for 2 kinds of
+    objects: primitive and composite. 
+  + *Proxy pattern*: a proxy acts as a convenient surrogate or placeholder for
+    another object. Used in many ways: 
+    > act as local representative for an object in a remote address space
+    > represent a large object that should be loaded on demand
+    > protect access to a sensitive object.
+  + *Flyweight pattern* defines a structure for sharing objects. 
+  + *Facade pattern* shows how to make a single object representation entire 
+    subsystem.
+  + *Bridge pattern* separates an object's abstraction from its implementation
+    so that you can vary them independently.
+  + *Decorator pattern* describes how to add responsibilities to objects 
+    dynamically
+** Adapter
+*** Intent
+- Convert the interface of a class into another interface clients expect. Adapter
+  lets classes work together that couldn't otherwise because of incompatible 
+  interfaces.
+*** Also Known As
+- Wrapper
+*** Motivation
+- Sometimes a toolkit class that's designed for reuse isn't reusable only 
+  because its interface doesn't match the domain-specific interface an application
+  requires.
+  + drawing editor lets user draw and arrange graphical elements. The drawing
+    editor's key abstraction is the graphical object, which has an editable shape
+    and can draw itself.
+  + TextShape subclass that can display and edit text is considerably difficult
+  + We have TextView class
+  + How can existing and unrelated classes like TextView work in an application 
+    that expects classes with a different and incompatible interface. 
+- We could define TextShape so that it adapts the TextView interface to Shape's.
+  We can do this in one of 2 ways:
+  + Inheriting Shape's interface and TextView's implementation
+  + compose a TextView instance within TextShape and implementing TextShape in 
+    terms of TextView's interface
+- the adapter is responsible for functionality the adapted class doesn't provide
+*** Applicability
+- Use the Adapter pattern when:
+  + you want to use an existing class, and its interface does not match the one
+    you need
+  + you want to create a reusable class that cooperates with unrelated or 
+    unforeseen classes, that is, classes that don't necessarily have compatible
+    interfaces
+  + (object adapter only) you need to use several existing subclasses, but it's
+    impractical to adapt their interface by subclassing every one. An object
+    Adapter can adapt the interface of its parent class.
+*** Structure
+- A class adapter uses multiple inheritance to add one interface to another.
+*** Participants
+- *Target*
+  + defines the domain-specific interface that Client uses
+- *Client*
+  + collaborates with objects conforming to the Target interface
+- *Adaptee*
+  + defines an existing interface that needs adapting
+- *Adapter*
+  + adapts the interface of Adaptee to the Target interface
+*** Collaborations
+- Clients call operations on an Adapter instance. In turn, the adapter calls 
+  Adaptee operations that carry out the request
+*** Consequences
+- Class and Object adapters have different trade-offs. A class adapter
+  + adapts Adaptee to Target by committing to a concrete Adapter class. As a
+    consequence,a class adapter won't work when we want to adapt a class and all
+    its subclasses
+  + lets Adapter override some of Adaptee's behavior, since Adapter is a 
+    subclass of Adaptee
+  + introduces only one object, and no additional pointer indirection is needed
+    to get to the adaptee.
+- An object adapter
+  + lets a single Adapter work with many Adaptee - that is, the Adaptee itself
+    and all of its subclasses (if any). The Adapter can also add functionality 
+    to all Adaptees at once
+  + make it harder to override Adaptee behavior. It will require subclassing
+    Adaptee and making Adapter refer to the subclass rather than the Adaptee
+    itself
+
+- Issues to consider when using the Adapter pattern:
+  + How much adapting does Adapter do?
+  + Pluggable adapters
+    > Using abstract operations
+    > Using delegate objects
+    > Parameterized adapters
+  + Using two-way adapters to provide transparency
+*** Sample Code
+- using public and private inheritance
+- using a private instance to handle request to public interface
+*** Known Uses
+- Pluggable adapters are common in ObjectWorks
+- Meyer's "Marriage of Convenience" is a form of class adapter
+
+*** Related Patterns
+- *Bridge* has a structure similar to an object adapter, but *Bridge* has a
+  different intent: separate an interface from its implementation so that they 
+  can be varied easily and independently. *Adapter* is meant to change the 
+  interface of an existing object
+- *Decorator* enhances another object without changing its interface. Decorator
+  supports recursive composition, which isn't possible with pure adapters.
+- *Proxy* defines a representative or surrogate for another object and does not
+  change its interface.
+
+** Bridge
+*** Intent
+- Decouple an abstraction from its implementation so that the two way vary
+  independently
+*** Also Known As
+- Handle/Body
+*** Motivation
+- When an abstraction can have one of several possible implementations,the usual
+  way to accomodate them is to use inheritance. An abstract class defines the
+  interface to the abstraction, and concrete subclasses implement it in different
+  ways.
+  + it's inconvenient to extend abstraction to cover different kinds of new 
+    platforms
+  + It makes client code platform-dependent. Clients should be able to create a
+    window without commiting to a concrete implementation. Only the window
+    implementation should depend on the platform on which the application runs
+- The *Bridge pattern* addresses these problems by putting the Window abstraction
+  and its implementation in seperate class hierarchies. 
+- All operations on Window subclasses are implemented in terms of abstract 
+  operations from the WindowImp interface. This decouples the window abstractions
+  from the various platform specific implementations. 
+*** Applicability
+- Use the Bridge pattern when
+  + you want to avoid a permanent binding between an abstraction and its 
+    implementation. This might be the case, for example, when the implementation
+    must be selected or switched at run-time
+  + both the abstractions and their implementations should be extensible by
+    subclassing. In this case, the Bridge pattern lets you combine the different
+    abstractions and implementations and extend them independently.
+  + changes in the implementation of an abstraction should have no impact on 
+    clients
+  + (C++) you want to hide the implementation of an abstraction completely from
+    clients. In C++ the representation of a class is visible in the class interface
+  + You have a proliferation of classes as shown earlier in the first Motivation
+    diagram. Such a class hierarchy indicates the need for splitting an object
+    into 2 parts. 
+  + you want to share an implementation among multiple objects (perhaps using
+    reference counting), and this fact should be hidden from the client. A simple
+    example is Coplien's String class [Cop92], in which multiple objects can 
+    share the same string representation.
+*** Structure
+*** Participants
+- *Abstraction*
+  + defines the abstraction's interface
+  + maintains a reference to an object of type Implementor
+- *RefinedAbstraction*
+  + Extends the interface defined by Abstraction
+- *Implementor*
+  + defines the interface for implementation classes. This interface doesn't 
+    have to correspond exactly to Abstraction's interface; in fact the two 
+    interfaces can be quite different. Typically the Implementor interfaces
+    provides only primitive operations, and Abstraction defines higher-level 
+    operations based on these primitives
+- *ConcreteImplementor*
+  + implements the Implementor interface and defines its concrete implementation
+*** Collaborations
+- Abstraction forwards client requests to its Implementor object.
+*** Consequences
+- The Bridge pattern has the following consequences:
+  + Decoupling interface and implementation: 
+    > it's possible for an object to change its implementation at run-time
+    > Decoupling abstractio in and implementor also eliminates compile-time
+    dependencies on the implementation.
+    > encourage layering that can lead to a better-structured system.
+  + Improved extensibility: extend the Abstraction and Implementor hierarchies
+    independently
+  + Hiding implementation details from clients: shield clients from implementation
+    details, like the sharing of implementor objects and the accompanying 
+    reference count mechanism
+*** Implementation
+- Consider the following implementation issues:
+  + Only one implementor: degenerate case of the Bridge pattern: one Implementor
+    -> unnecessary to seperate. But it's important and useful when a change in
+    the implementation of a class must not affected its existing clients- that
+    is, they shouldn't have to be recompiled, just relinked
+    > Carolan [Car89] uses the term "Cheshire Cat" to describe this separation
+  + Creating the right implementor object
+  + Sharing implementors: Handle/Body idiom in C++ can be used to share 
+    implementations among several objects
+  + Using multiple inheritance: use multiple inheritance in C++ to combine an 
+    interface with its implementation
+*** Known Uses
+- ET++
+- Coplien [Cop92] and Stroustrup [Str91] mention Handle classes and give some
+  examples. Their examples emphasize memory management issues like sharing 
+  string
+- Libg++ 
+
+*** Related Patterns
+- An *Abstract Factory* can create and configure a particular Bridge
+- The *Adapter* pattern is geared toward making unrelated classes work together
+** Composite
+*** Intent
+- Compose objects into tree structures to represent part-whole hierarchies. 
+  Composite lets clients treat individual objects and compositions of objects
+  uniformly
+*** Motivation
+- Graphics applications like drawing editors and schematic capture systems let
+  users build complex diagrams out of simple components. A simple implementation
+  could define classes for graphical primitives such as Text and Lines plus 
+  other classes that act as containers for these primitives
+- there's a problem: code that uses these classes must treat primitive and 
+  container objects differently. Having to distinguish these objects make the
+  application more complex. The *Composite pattern* describes how to use 
+  recursive composition so that clients don't have to make this distinction
+- The key to the Composite pattern is an abstract class that represents both
+  primitives and their containers
+*** Applicability
+- Use the Composite pattern when
+  + you want to represent part-whole hierarchies of objects
+  + you want clients to be able to ignore the difference between compositions of
+    objects and individual objects. Clients will treat all objects in the 
+    composite structure uniformly.
+*** Structure
+*** Participants
+- *Component*
+  + declares the interface for objects in the composition
+  + implements default behavior for the interface common to all classes as 
+    appropriate
+  + declares an interface for accessing and managing its child components
+  + (optional) defines an interface for accessing a components's parent in the
+    recursive structure, and implements it if that's appropriate
+- *Leaf* 
+  + represent leaf objects in the composition. A leaf has no children
+  + defines behavior for primitive objects in the composition
+- *Composite*
+  + defines behavior for components having children
+  + stores child components
+  + implements child-related operations in the Component interface
+- *Client*
+  + manipulates objects in the composition through the Component interface
+*** Collaborations
+- cliens use the component class interface to interact with objects in the 
+  composite structure. If the recipient is a Leaf, then the request is handled
+  directly. If the recipient is a Composite, then it usually forwards requests
+  to its child components, possibly performing additional operations before and
+  or after forwarding
+*** Consequences
+- The Composite pattern
+  + defines class hierarchies consisting of primitive objects and composite 
+    objects. Primitive objects can be composed into more complex objects, which
+    in turn can be composed, and so on recursively
+  + makes the client simple. Clients can treat composite structure and 
+    individual objects uniformly. Clients normally don't know whether they're
+    dealing with a leaf or a composite component.
+  + makes it easier to add new kinds of components
+  + make your design overly general
+*** Implementation
+- many issues to considered
+  + /Explicit parent references/
+    > Maintaining references from child components to their parent can simplify 
+    the traversal and management of a composite structure.Parent references also
+    help support *Chain of Responsibility* pattern
+    > usual place to define the parent reference is in the Component class
+  + /Sharing components/
+    > It's useful to share components to reduce storage requirements
+    > a possible solution is for children to store multiple parents
+  + /Maximizing the Component interface/
+    > one of the goals of the Composite pattern is to make clients unaware of
+    the specific Leaf or Composite classes they're using. To attain this goal, 
+    the Component class should define as many common operations for Composite &
+    Leaf classes as possible.
+    > this goal will sometimes conflict with the principle of class hierarchy
+    design that says a class should only define operations that are meaningful 
+    to its subclasses.
+  + /Declaring the child management operation/
+    > important issue when implementing the Add and Remove operations for 
+    managing children: Should we declare these operations in the Component and 
+    make them meaningful for Leaf classes or should we declare and define them
+    only in the Composite and its subclasses.
+    > the decision involves a trade-off between safety and transparency
+      ~ Defining the child management interface at the root of the hierarchy 
+      gives you transparency, because you can treat all the components uniformly
+      ~ Defining child management in the Composite class gives you safety, bcauz
+      any attempt to add or remove objects from leaves will be caught at compile
+      time in a statically typed language like C++
+  + /Should component implement a list of Components?/
+  + /Child ordering/: many designs specify an ordering on the children of 
+    Composite. When child ordering is an issue, you must design child access &
+    management interfaces carefully ot manage the sequence of children
+  + /Caching to improve performance/
+  + /Who should delete components?/ In languages without garbage collection,
+    it's usually best to make a Composite responsible for deleting its children
+    when it's destroyed.
+  + /What's the best data structure for storing components?/: linked-lists, tree
+    arrays, and hash tables
+*** Sample Code
+*** Known Uses
+- Examples of the Composite pattern can be found in all object-oriented systems.
+  The original View class of Smalltalk's MVC was a composite.
+*** Related Patterns
+- Component-parent link is used for a *Chain of Responsibility*
+- *Decorator* is often used with Composite. When decorators and composites are
+  used together, they will usually have a common parent class. So decorators will
+  have to support the Component interface with operations like Add, Remove, and
+  GetChild
+- *Fly weight* lets you share components, but they can no longer refer to their
+  parents
+- *Iterator* can be used to traverse composites
+- *Visitor* localizes operations and behavior that would otherwise be 
+  distributed across Composite and Leaf classes.
+
+** Decorator
+*** Intent
+- Attach additional responsibilities to an object dynamically.Decorators provide
+  a flexible alternative to subclassing for extending functionality
+*** Also Known As
+- Wrapper
+*** Motivation
+- Sometimes we want to add responsibilities to individual objects, not to an 
+  entire class.
+- one way to add responsibilities is with inheritance, but it's inflexible.
+- A more flexible approach is to enclose the component in another object that
+  adds the border. The enclosing object is called a *decorator*
+- Decorator subclasses are free to add operations for specific functionality. 
+  For example, ScrollDecorator's ScrollTo operation lets other objects scroll
+  the interface if they know there happens to be a ScrollDecorator object in the
+  interface
+*** Applicability
+- Use Decorator
+  + to add responsibilities to individual objects dynamically and transparently,
+    that is, without affecting other objects.
+  + for responsibilities that can be withdrawn
+  + when extension by subclassing is impractical. 
+*** Participants
+- *Component* 
+  + defines the interace for objects that can have responsibilities
+- *Concrete Component*
+  + defines an object to which additional responsibilities can be attached
+- *Decorator* 
+  + maintains a reference to a Component object and defines an interface that
+    conforms to Components's interface
+- *Concrete Decorator*
+  + adds responsibilities to the component
+*** Collaborations
+- Decorator forwards requests to its Component object. It may optionally perform
+  additional operations before and after forwarding the request
+*** Consequences
+- The *Decorator pattern* has at least 2 key benefits and 2 liabilities:
+  + /More flexibility that static inheritance/
+  + /Avoids feature-laden classes high up in the hierarchy/
+  + /A decorator and its component aren't identical/
+  + /Lots of little objects/
+*** Implementations
+- Several issues should be considered when applying the Decorator pattern:
+  + /Interface conformance/: A decorator object's interface must conform to the
+    interface of the component it decorates
+  + /Omitting the abstract Decorator class/: no need to define an abstract 
+    Decorator class when you only need to add one responsibility
+  + /Keeping component classes lightweight/: Component should focus on defining
+    an interface, not on storing data. Putting a lot of functionality into 
+    component also increases the probability that concrete subclasses will pay
+    for features they don't need.
+  + /Changing the skin of an object vs changing its guts/
+    > *Strategies* are a better choice in situations where the Component class
+    is intrinsically heavyweight. In the strategy pattern, the component forwards
+    some of its behavior to a separate strategy object. The strategy pattern
+    lets us alter or extend the component's functionality by replacing the 
+    strategy object.
+*** Known Uses
+- Many object-oriented user interface toolkits use decorators to add graphical
+  embellishments to widgets
+- I/O Streams
+*** Related Patterns
+- *Adapter*: a decorator is different from an adapter in that a decorator only
+  changes an object's responsibilities, not its interface; an adapter will give
+  an object a completely new interface
+- *Composite* a decorator can be viewed as a degenerate composite with only one
+  component. However, a decorator adds additional responsibilities - it isn't
+  intended for object aggregation.
+- *Strategy*: a decorator lets you change the skin of an object; a strategy lets
+  you change the guts.
+
+** Facade
+*** Intent
+- Provide a unified interface to a set of interfaces in a subsystem. Facade
+  defines a higher-level interface that makes the subsystem easier to use
+*** Motivation
+- One way to achieve this goal is to introduce a *facade* object that provides a
+  single simplified interface to the more general facilities of a subsystem.
+*** Applicability
+- Use the Facade pattern when:
+  + /You want to provide a simple interface to a complex subsystem/: a facade
+    can provide a simple default view of the subsystem that is good enough for
+    most clients. Only clients needing more customizability will need to look
+    beyond the facade
+  + /there are many dependencies between clients and the implementation classes
+    of an abstraction/
+  + /You want to layer your subsystems/ use a facade to define an entry point to
+    each subsystem level.
+*** Structure
+*** Participants
+- *Facade* 
+  + knows which subsystem classes are responsible for a request
+  + delegates client requests to appropriate subsystem objects
+- *Subsystem classes*
+  + implement subsystem functionality
+  + handle work assigned by the Facade object
+  + have no knowledge of the facade; that is, they keep no references to it
+*** Collaborations
+- Clients communicate with the subsystem by sending requests to Facade, which 
+  forwards them to the appropriate subsysem objects. The Facade may have to do
+  work of its own to translate its interface to subsystem interfaces
+- clients that use the facade don't have to access its subsystem objects directly
+*** Consequences
+- The Facade pattern offers the following benefits:
+  + /It shields clients from subsystem components/
+  + /It promotes weak coupling between the subsystem and its clients/
+    > vary the components of the subsystem without affecting its clients
+    > layer a system and the dependencies between objects. They can eliminate 
+    complex or circular dependencies.
+    > Reducing compilation dependencies
+  + It doesn't prevent applications from using subsystem classes if they need to
+*** Implementation
+- issues when implementing a facade
+  + /Reducing client-subsystem coupling/
+    > making Facade an abstract class with concrete subclasses for different 
+    implementations of a subsystem. The application can communicate with the
+    subsystem through the interface of the abstract Facade class.
+    > Configure a Facade object with different subsystem objects
+  + /Public versus private subsystem classes/
+*** Sample Code
+*** Known Uses
+- Smalltalk compiler system
+- ET+ application framework
+- Choices operating system
+*** Related patterns
+- *Abstract Factory* can be used with Facade to provide an interface for 
+  creating subsystem objects in a subsystem-independent way.
+- *Mediator* is similar to Facade in that it abstracts functionality of existing
+  classes. However, Mediator's purpose is to abstract arbitrary communication 
+  between colleague objects, often centralizing functionality that doesn't belong
+- Usually only one Facade object is required. Thus Facade objects are often 
+  Singletons
+
+** Flyweight
+*** Intent
+- Use sharing to support large numbers of fine-grained objects efficiently
+*** Motivation
+- A *flyweight* is a shared object that can be used in multiple contexts 
+  simultaneously. The Flyweight acts as an independent object in each context-it
+  is indistinguishable from an instance of the object that's not shared.
+- flyweights cannot make assumptions about the context in which they operate. 
+  The key concept here is the distinction between *intrinsic* and *extrinsic*
+  state.
+  + *instrinsic* state is stored in the flyweight; it consists of information 
+    that's independent of the flyweight's context, thereby making it sharable
+  + *extrinsic* state depends on and varies with the flyweight's context and
+    therefore can't be shared. Client objects are responsible for passing 
+    extrinsic state to the flyweight.
+- Flyweight model concepts or entities that are normally too plentiful to 
+  represent with objects.
+*** Applicability
+- The flyweight pattern's effectiveness depends heavily on how and where it's 
+  used. Apply the Flyweight pattern when all of the following are true:
+  + An applicatioin uses a large number of objects
+  + storage costs are high because of the sheer quantity of object
+  + most object state can be made extrinsic
+  + many groups of objects may be replaced by relatively few shared objects once
+    extrinsic state is removed
+  + the application doesn't depend on object identity. Since flyweight objects
+    may be shared, identity tests will return true for conceptually distinct
+    objects
+*** Structure
+*** Participants
+- *Flyweight* 
+  + declares an interface through which flyweights can receive and act on 
+    extrinsic state
+- *Concrete Flyweight*
+  + implements the Flyweight interface and adds storage for intrinsic state, if
+    any. A Concrete Flyweight object must be sharable. Any state it stores must
+    be intrinsic; that is, it must be independent of the Concrete Flyweight 
+    object's context
+- *Unshared Concrete Flyweight* 
+  + not all Flyweight subclasses need to be shared. The Flyweight interface 
+    enables sharing; it doesn't enforce it. It's common for UnsharedConcrete
+    Flyweight objects to have Concrete Flyweight objects as children at some
+    level in the flyweight object structure
+- *Flyweight Factory* 
+  + creates and manages flyweight objects
+  + ensures that flyweights are shared properly. When a client requests a flyw,
+    the FlyweightFactory object supplies an edisting instance or creates one
+- *Client*
+  + maintains a reference to flyweights
+*** Collaborations
+- state that a flyweight needs to function must be characterized as either 
+  intrinsic or extrinsic. Intrinsic state is stored in the ConcreteFlyweight obj
+  extrinsic state is stored or computed by Client objects.
+- clients should not instantiate Concrete Flyweights directly.
+*** Consequences
+- Storage savings are a function of several factors:
+  + the reduction in the total number of instances that comes from sharing
+  + the amount of intrinsic state per object
+  + whether extrinsic state is computed or stored
+- The Flyweight pattern is often combined with the Composite pattern to 
+  represen a hierarchical structure as a graph with shared leaf nodes. A conseq
+  of sharing is that flyweight leaf nodes cannot store a pointer to their parent
+  Rather, the parent pointer is passed to the flyweight as part of its extrinsic
+  state.
+*** Implementation
+- Consider the following issues when implementing the flyweight pattern
+  + /Removing extrinsic state/
+  + /Managing shared objects/
+*** Known Uses
+- The concept of flyweight objects was first described and explored as a design 
+  technique.
+- ET++ uses flyweights to support look-and-feel independence.
+*** Related Patterns
+- The FLyweight pattern is often combined with the *Composite* pattern to impl
+  a logically hierarchical structure in terms of a directed-acyclic graph with
+  shared leaf nodes.
+- It's often best to implement *State* and *Strategy* objects as flyweights
+
+** Proxy
+*** Intent
+- provide a surrogate or placeholder for another object to control access to it
+*** Known As
+- Surrogate
+*** Motivation
+- One reason for controlling access to an object is to defer the full cost of 
+  its creation and initialization until we actually need to use it. 
+  + document editor that can embed graphical objects in a document
+- These constraints would suggest creating each expensive object /on demand/
+- The solution is to use another object, an image *proxy*, that acts as a 
+  stand-in for the real image.
+*** Applicability
+- Proxy is applicable whenever there is a need for a more versatile or 
+  sophisticated reference to an object than a simple pointer. several common 
+  situations
+  + A *remote proxy* provides a local representative for an object in a 
+    different address space.
+  + A *virtual proxy* creates expensive objects on demand. 
+  + A *protection proxy* controls access to the original object.
+  + A *smart reference* is a replacement for a bare pointer that performs 
+    additional actions when an object is accessed. Typical uses include
+    > counting the number of references to the real object so that it can be
+    freed autonomically when there are no more references (*smart pointers*)
+    > loading a persistent object into memory when it's first referenced
+    > checking that the real object is locked before it's accessed to ensure 
+    that no other object can change it.
+*** Structure
+*** Participants
+- *Proxy* 
+  + maintains a reference that lets the proxy access the real object. Proxy may
+    refer to a Subject when Subject and RealSubject interfaces are the same.
+  + provides an interface identical to Subject's so that a proxy can by 
+    substituted for the real subject.
+  + controls access to the real subject and may be responsible for creating and
+    deleting it
+  + other responsibilities depend on the kind of proxy:
+    > remote proxies are responsible for encoding a request and its arguments &
+    for sending the encoded request to the real subject in a different address
+    space
+    > virtual proxies may cache additional information about the real subject so
+    that they can postpone accessing it. 
+    > protection proxies check that the caller has the access permissions 
+    required to perform a request.
+- *Subject*
+  + defines the common interface for RealSubject and Proxy so that a Proxy can 
+    be used anywhere a RealSubject is expected
+- *RealSubject*
+  + defines the real object that the proxy represents
+*** Collaborations
+- Proxy forwards requests to RealSubject when appropriate, depending on the kind
+  of proxy
+*** Consequences
+- The Proxy pattern introduces a level of indirection when accessing an object. 
+  The additional indirection has many uses, depending on the kind of proxy
+  + a remote proxy can hide the fact that an object resides in a different addr
+    space
+  + a virtual proxy can perform optimizations such as creating an object on 
+    demand
+  + Both protection proxies and smart references allow additional housekeeping
+    tasks when an object is accessed.
+- There's another optimization that the Proxy pattern can hide from the client.
+  It's called *copy-on-write*, and it's related to creation on demand.
+*** Implementation
+- The *proxy pattern* can exploit the following language features:
+  + Overloading the member access operator in C++.
+  + Using *doesNotUnderstand* in SmallTalk.
+  + Proxy doesn't always have to know the type of real subject.
+*** Sample Code
+*** Known Uses
+- The virtual proxy example in the Motivation section is from ET++ text building
+  block classes
+- NEXTSTEP uses proxies as local representatives for objects that may be 
+  distributed
+*** Related Patterns
+- *Adapter*: an adapter provides a different interface to the object it adapts. 
+  In contrast, a proxy provides the same interface as its subject.
+- *Decorator*: a decorator adds one or more responsibilities to an object, 
+  whereareas a proxy controls access to an object
+- *Proxies* vary in the degree to which they are implemented like a decorator.
+** Discussion of structural patterns
+*** Adapter versus Bridge
+- both promote flexibility by providing a level of indirection to another object&
+  forward requests to this object from an interface
+- the key difference lies in their intent:
+  + Adapter focuses on resolving incompatibilities between two existing intefaces
+  + Bridge bridges an abstraction and its implementations (potential numerous)
+*** Composite versus Decorator versus Proxy
+- Composite and Decorator have similar structure diagrams, reflecting the fact
+  that both rely on recursive composition to organize an open-ended number of objs
+- The similarity ends at recursive composition, again because of differing intent
+  + Decorator lets you add responsibilities to objects without subclassing
+  + Composite focuses on structuring classes so that many related objs can be
+    treated uniformly, and multiple objs can be treated as one.
+  + These intents are distinct but complementary. Consequently, the Composite and
+    Decorator patterns are often used in concert. Both lead to the kind of design
+    in which you can build applications just by plugging objs together w/o defs
+    any new classes.
+- Both the proxy and decorator objs keep a reference to another object to which
+  they forward requests. Once again, they are intended for diff purposes:
+  + Proxy pattern composes an objs and provides an identical interface to clients
+
+
+
+** Behavioral Patterns
+- concern with algorithms and the assignment of responsibilities between objects
+- describes not just objects or classes but also the patterns of communication 
+  between them.
+- shift your focus away from flow of control to let you concentrate just on the 
+  way objects are interconnected
+- Behavioral class pattenrs use inheritance to distribute behavior between 
+  classes. 2 methods
+  + Template method
+    > abstract definition of an algorithm. It defines the algorithm step by step
+    each step invokes either abstract operation or a primitive operation
+    > a subclass fleshes out the algorithm by defining the abstract operations
+  + Interpreter: which represents a grammar as a class hierarchy and implements
+    an interpreter as an operation on instances of these classes.
+- Behavioral object patterns use object composition rather than inheritance
+  + some describe how a group of peer objs cooperate to perform a task that no
+    single obj can carry out by itself. An important issue is how peer objs know
+    about each other. Peer could maintain explicit references to each other, but
+    that would increase their coupling. 
+    > The *Mediator* pattern avoids this by introducing a mediator obj between 
+    peers. The mediator provides the indirecting needed for loose coupling.
+    > *Chain of Responsibility* provides even looser coupling. It lets you send
+    requests to an obj implicitly through a chain of candidate objs.
+    > The *Observer* pattern defines and maintains a dependency between objs.
+  + other behavioral obj patterns are concerned with encapsulating behavior in an
+    obj and delegating requests to it.
+    > the *Strategy* pattern encapsulates an algorithm in an object.
+    > the *Command* pattern encapsulates a request in an object so that it can be
+    passed as a parameter, stored on a history list, or manipulated in other ways
+    > the *State* pattern encapsulates the states of an object so that the obj
+    can change its behavior when its state objs change.
+    > *Visitor* encapsulates behavior that would otherwise be distributed across
+    classes
+    > *Iterator* abstracts the way you access and traverse objs in an aggregate
+  
+** Chain of Responsibility
+*** Intent
+- Avoid coupling the sender of a request to its receiver by giving more than one
+  obj a chance to handle the request. Chain the receiving objs and pass the reqs
+  along the chain until an obj handles it.
+*** Motivation
+- context-sensitive help facility for a graphical user interface. It's natural to
+  organize help information according to its generality from the most specific to
+  the most general.
+- The prob here is that the obj that ultimately provides the help isn't known
+  explicitly to the obj that initiates the help request. What we need is a way to
+  decouple the button that initiates the help request from the objs that might 
+  provide help information
+- The idea of this pattern is to decouple senders and receivers by giving multiple
+  objs a chance to handle a reqs. the reqs passed along a chain of objs until one
+  of them handles it
+- the obj that made the request has no explicit knowledge of who will handle it.
+  We say the request has an *implicit receiver*
+*** Applicability
+- Use Chain of Responsibility when:
+  + more than one obj may handle a request, and the handler isn't known as priori
+    The handler should be ascertained automatically
+  + you want to issue a request to one of several objs w/o specifying the 
+    receiver explicitly
+  + the set of objs that can handle a request should be specified dynamically
+*** Structure
+*** Participants
+- *Handler*
+  + defines an interface for handling requests
+  + implements the successor link
+- *ConcreteHandler*
+  + handles requests it is responsible for
+  + can access its successor
+  + if the ConcreteHandler can handle the request, it does so; otherwise it 
+    forwards the request to its successor
+- *Client*
+  + initiates the request to a ConcreteHandler object on the chain
+*** Collaborations
+- When a client issues a request, the request propagates along the chain until a
+  ConcreteHandler obj takes responsibility for handling it.
+*** Consequences
+- Chain of Responsibility has the following benefits and liabilities:
+  + /Reduced coupling/: Both the receiver and sender have no explicit knowledge 
+    of each other, and an obj in the chain doesn't have to know about the chain's
+    structure. 
+  + /Added flexibility in assigning responsibilities to obj/: Chain of 
+    Responsibilities gives you added flexibility in distributing responsibilities
+    among objs.
+  + /Receipt isn't guaranteed/
+*** Implementation
+- implementation issues to consider in Chain of Responsibilites:
+  + /Implementing the successor chain/ There are 2 possibile ways to implement 
+    the successor chain
+    > Define new links
+    > Use existing links
+  + /Connecting successors/
+  + /Representing requests/
+  + /Automatic forwarding in Smalltalk/
+*** Sample Code
+*** Known Uses
+- Several class libraries use the Chain of Responsibility pattern to handle user
+  events.
+*** Related patterns
+- Chain of responsibility is often applied in conjunction with *Composite*
+** Command
+*** Intent
+- Encapsulate a request as an obj, thereby letting you parameterize clients w/ 
+  different requests, queue or log requests, and support undoable operations
+*** Also Known As
+- Action, Transaction
+*** Motivation
+- Sometimes it's necessary to issue requests to objs w/o knowing anything about
+  the operation being requested or the receiver of the request.
+- The *Command pattern* lets toolkit objs make requests of unspecified apps objs
+  by turning the request itself into an obj. The key to this pattern is an 
+  abstract Command class, which declares an interface for executing operations.
+- Menu can be easily implemented by Command. The app configures each MenuItem w/
+  an instance of concrete Command subclass.
+*** Applicability
+- Use the Command pattern when you want to
+  + parameterize objs by an action to perform. You can express such 
+    parameterization in a procedural language with a *callback* function, that is
+    a function that's registered somewhere to be called at a later point. 
+    Commands are an object oriented replacement for callbacks
+  + specify, queue, and execute requests at different times.
+  + support undo.
+  + support logging changes so that they can be reapplied in case of a system 
+    crash.
+  + structure a system around high-level operations built on primitives operations
+    The command pattern offers a way to model *transaction*
+*** Structure
+*** Participants
+- *Command*
+  + declares an interface for executing an operation
+- *ConcreteCommand* 
+  + defines a binding between a Receiver obj and an action
+  + implements Execute by invoking the corresponding operation(s) on Receiver
+- *Client*
+  + creates a ConcreteCommand obj and sets its receiver
+- *Invoker*
+  + asks the command to carry out the request
+- *Receiver*
+  + Knows how to perform the operations associated w/ carrying out a request. Any
+    class may serve as a Receiver.
+*** Collaborations
+- the client creates a ConcreteCommand obj and specifies its receiver
+- An Invoker obj stores the ConcreteCommand obj
+- the invoker issues a request by calling Execute on the command. When commands
+  are undoable, ConcreteCommand stores state for undoing command prior to 
+  invoking Execute
+- The ConcreteCommand obj invokes operations on its receiver to carry out the 
+  request.
+*** Consequences
+- The Command pattern has the following consequences
+  + Command decouples the obj that invokes the operation from the one that knows
+    how to perform it.
+  + Commands are first-class objs. They can be manipulated and extended like any
+    other obj
+  + You can assemble commands into a composite commands.
+  + It's easy to add new Commands, because you don't have to change existing 
+    classes
+*** Implementation
+- issues when implementing the Command pattern
+  + /How intelligent shoud a command be/
+  + /supporting undo and redo/
+  + /Avoiding error accumulation in the undo process/
+  + /Using C++ templates/
+*** Sample Code
+*** Known Uses
+- THINK class library
+- Coplien describes how to implement *functors*, objs that are functions, in C++.
+*** Related Patterns
+- A *Composite* can be used to implement MacroCommands
+- A Memento can keep state the command requires to undo its effect
+- A command that must be copied before being placed on the history list acts as a
+  Prototype.
+
+
+** Interpreter
+*** Intent
+- Given a language, define a representation for its grammar along with an 
+  interpreter that uses the representation to interpret sentences
+*** Motivation
+- If a particular kind of problem occurs often enough, the it might be worthwhile
+  to express instances of the problem as sentences in a simple language. Then you
+  can build an interpreter that solves the problem by interpreting these 
+  sentences
+- The Interpreter pattern describes how to define a grammar for simple languages
+  represent sentences in the language, and interpret these sentences.
+*** Applicability
+- Use the Interpreter pattern when there is a language to interpret, and you can 
+  represent statements in the language as abstract syntax trees. The interpreter
+  pattern works best when
+  + the grammar is simple.
+  + efficiency is not a critical concern
+*** Structure
+*** Participants
+- *Abstract Expression*
+  + declares an abstract Interpret operation that is common to all nodes in the
+    abstract syntax tree
+- *Terminal Expression*
+  + implements an Interpret operation associated with terminal symbols in the
+    grammar
+  + an instance is required for every terminal symbol in a sentence
+- *Nonterminal Expression*
+  + One such class is required for every rule R::=R1R2..Rn
+  + maintains instance variables of type AbstractExpression for each symbols R1
+    through Rn
+  + implements an Interpret operation for nonterminal symbol in the grammar.
+- *Context*
+  + contains information that's global to the interpreter
+- *Client*
+  + builds an abstract syntax tree representing a particular sentence in the 
+    language that the grammar defines.
+  + invokes the Interpret operation
+*** Collaborations
+- The client builds the sentence as an abstract syntax tree of 
+  NonterminalExpression and TerminalExpression instances. Then the client 
+  initializes the context and invokes the Interpret operation
+- Each NonterminalExpression node defines Interpret in terms of Interpret on each
+  subexpression.
+- The Interpret operations at each node use the context to store and access the
+  state of the interpreter
+*** Consequences
+- The interpreter pattern has the following benefits and liabilities:
+  + /It's easy to change and extend the grammar/
+  + /Implementing the grammar is easy/
+  + /Complex grammars are hard to maintain/
+  + /Adding new ways to interpret expression/
+*** Implementation
+- issues specific to interpreter
+  + /Creating the abstract syntax tree/
+  + /Defining the Interpret operation/
+  + /Sharing terminal symbols with the Flyweight pattern/
+*** Sample Code
+*** Known Uses
+- The interpreter pattern is widely used in compilers implemented w/ obj-oriented
+  languages
+*** Related Patterns
+- *Composite*: the abstract syntax tree is an instance of the Composite pattern
+- *Flyweight*: shows how to share terminal symbols w/i the abstract syntax tree
+- *Iterator*: the interpreter can use an Interator to traverse the structure
+- *Visitor*: can be used to maintain the behavior in each node in the abstract
+  syntax tree in one class.
+
+** Iterator
+*** Intent
+- Provide a way to access the elements of an aggregate obj sequentially w/o
+  exposing its underlying representation.
+*** Also Known As
+- Cursor
+*** Motivation
+- An aggregate obj should give you a way to access its elements w/o exposing its
+  internal structure.
+- The *Iterator* pattern lets you do all this. The key idea in this pattern is to
+  take the responsibility for access and traversal out of the list obj and put it
+  into an *iterator* obj.
+- Separating the traversion mechanism from the list obj lets us define iterators
+  for different traversal policies w/o enumerating them in the List interface.
+- The clients commits to a particular aggregate structure. It would be better if
+  we could change the aggregate class w/o changing client code. We can do this by
+  generalizing the iterator concept to support *polymorphic iteration*
+*** Applicability
+- Use the Iterator pattern
+  + to access an aggregate obj's contents w/o exposing its internal representation
+  + to support multiple traversals of aggregate objs
+  + to provide a uniform interface for traversing different aggregate structures
+*** Structure
+*** Participants
+- *Iterator*
+  + defines an interface for accessing and traversing elements
+- *ConcreteIterator*
+  + implements the iterator interface
+  + keeps track of the current position in the traversal of the aggregate
+- *Aggregate*
+  + defines an interface for creating an Iterator obj
+- *ConcreteAggregate*
+  + implements the Iterator creation interface to return an instance of the
+    proper ConcreteIterator.
+*** Collaborations
+- A ConcreteIterator keeps track of the current obj in the aggregate and can
+  compute the succeeding obj in the traversal.
+*** Consequences
+- 3 important consequences
+  + /It supports variations in the traversal of an aggregate/
+  + /Iterators simplify the Aggregate interface/
+  + /More than one traversal can be pending on an aggregate/
+*** Implementation
+- Iterator has many implementation variants and alternatives. The trade-offs 
+  often depend on the control structures of your language.
+  + /Who controls the interation?/
+  + /Who defines the traversal algorithm/
+  + /How robust is the iterator/: A *robust iterator* ensures that insertions and
+    removals don't interferes w/ traversal.
+  + /Additional Iterator operations/
+  + /Using polymorphic iterator in C++/
+  + /Iterators may have privileged access/
+  + /Iterators for composites/
+  + /Null iterators/
+*** Sample Code
+*** Known Uses
+- Iterators are common in obj-oriented system. Most collection class libraries
+  offer iterators in one form or another.
+*** Related Patterns
+- *Composite*: iterators are often applied to recursive structures such as
+  Composites.
+- *Factory Method*: polymorphic iterators rely on factory methods to instantiate
+  the appropriate Iterator subclass
+- *Memento*: is often used in conjunction w/ the Iterator pattern.
+
+** Mediator
+*** Intent
+- Define an obj that encapsulates how a set of objs interact. Mediator promotes
+  loose coupling by keeping objs from referring to each other explicitly, and it
+  lets you vary their interaction independently
+*** Motivation
+- obj-oriented design encourages the distribution of behavior among objects.
+- a mediator is responsible for controlling and coordinating the interactions of
+  a group of objs
+*** Applicability
+- Use the Mediator pattern when:
+  + a set of objs communicate in well-defined but complex ways. The resulting 
+    interdependencies are unstructured and difficult to understand
+  + reusing an obj is difficult because it refers to and communicates with many
+    other objs
+  + a behavior that's distributed between several classes should be customizable
+    w/o a lot of subclassing.
+*** Structure
+*** Participants
+- *Mediator*
+  + defines an interface for communicating w/ Colleague objs
+- *ConcreteMediator*
+  + implements cooperative behavior by coordinating Colleague objs
+  + knows and maintains its colleagues
+- *Colleague classes
+  + each Colleague class knows its Mediator obj
+  + each colleague communicates w/ its mediator whenever it would have otherwise
+    communicated w/ another colleague
+*** Collaborations
+- Colleagues send and receive requests from a Mediator obj. The mediator implements
+  the cooperative behavior by routing request between the appropriate colleagues
+*** Consequences
+- The Mediator pattern has the following benefits and drawbacks
+  + /It limits subclassing/
+  + /It decouples colleagues/
+  + /It simplifies obj protocols/
+  + /It abstracts how objs cooperate/
+  + /It centralizes control/
+*** Implementation
+- The following implementation issues are relevant to the Mediator pattern:
+  + /Omitting the abstract Mediator class/
+  + /Colleague-Mediator communication/: One approach is to implement the Mediator
+    as an Observer using the *Observer pattern*
+*** Sample Code
+*** Known Uses
+- Unidraw drawings framework
+*** Related Patterns
+- Facade abstracts a subsystem of objs to provide a more convenient interface.
+
+** Memento
+*** Intent
+- Without violating encapsulation, capture and externalize an obj's internal 
+  state so that the obj can be restored to this state later.
+*** Also known as
+- TOken
+*** Motivation
+- A *Memento* is an obj that stores a snapshot of the internal state of another
+  obj - the memento's *originator*
+*** Applicability
+- Use the Memento pattern when:
+  + a snapshot of an obj's state must be saved so that it can be restored to that
+    state later
+  + a direct interface to obtaining the state would expose implementation details
+    and break the obj's encapsulation.
+*** Participants
+- *Memento*
+  + stores internal state of the Originator obj.
+  + protects against access by objs other than the originator
+- *Originator*
+  + creates a memento containing a snapshot of its current internal state
+  + uses the memento to restore its internal state.
+- *Caretaker*
+  + is responsible for the memento's safekeeping
+  + never operates on or examines the contents of a memento
+*** Collaborations
+- A caretaker requests a memento from an originator, holds it for a time, and 
+  passes it back to the originator, as the following interaction diagram 
+  illustrates
+- MEmentos are passive
+*** Consequences
+- The Memento pattern has several consequences:
+  + /Preserving encapsulationg boundaries/
+  + /It simplifies Originator/
+  + /Using mementos might be expensive/
+  + /Defining narrow and wide interfaces/
+  + /Hidden costs in caring for mementos/
+*** Implementation
+- Issues to consider when implementing the Memento pattern:
+  + Language support: Ideally the implementation language will support 2 levels
+    of static protection. C++ lets you do this by making the Originator a friend
+    of Memento and making Memento's wide interface private
+  + Storing incremental changes
+*** Sample Code
+*** Known Uses
+- Collections in Dylan
+- The QOCA constraint-solving toolkit
+*** Related Patterns
+- *Command*: Commands can use mementos to maintains state for undoable operations
+- *Iterator*: mementos can be used for iteration as described earlier.
+
+
+** Observer
+*** Intent
+- Define a one-to-many dependency between objs so that when one obj changes
+  state, all its dependents are notified and update automatically
+*** Also known As
+- Dependents, Publish-Subscribe
+*** Motivation
+- A common side-effect of partitioning a system into a collection of cooperating
+  classes is the need to maintain consistency between related objs.
+- The Observer pattern describes how to establish these relationships. The key
+  objs in this pattern are *subject* and *observer*. A subject may have any No
+  of dependent observers. All observers are notified whenever the subject 
+  undergoes a change in state. In response, each observer will query the subject
+  to synchronize its state w/ the subject's state.
+*** Applicability
+- Use the Observer pattern in any of the following situations:
+  + When an abstraction has 2 aspects, one dependent on the other. Encapsulating
+    these aspects in separate objs lets you vary and reuse them independently
+  + When a change to one obj requires changing others, and you don't know how
+    many objs need to be changed.
+  + When an obj should be able to notify other objs w/o making assumptions about
+    who these objs are. In other words, you don't want these objs tightly 
+    coupled
+*** Structure
+*** Participants
+- *Subject*
+  + knows its observers. Any number of Observer objs may observe a subj
+  + provides an interface for attaching and detaching Observer objs
+- *Observer*
+  + defines an updating interface for objs that should be notified of changes in
+    a subj
+- *Concrete Subject*
+  + stores state of interest to ConcreteObserver objs
+  + sends a notification to its observers when its state changes
+- *ConcreteObserver*
+  + maintains a reference to a ConcreteSubject obj
+  + stores state that should stay consistent w/ the subj's
+  + implements the Observer updating interface to keep its state consistent w/
+    the subj's
+*** Collaborations
+- ConcreteSubject notifies its observers whenever a change occurs that could
+  make its observers's state inconsistent w/ its own.
+- After being informed of a change in the concrete subj. a ConcreteObserver obj
+  may query the subj for information. ConcreteObserver uses this information to
+  reconcile its state w/ that of the subj
+*** Consequences
+- Observer patterns lets you vary subjs and observers independently. You can 
+  reuse subjs w/o reusing their observers, and vice versa.
+- Further benefits and liabilities:
+  + /Abstract coupling between Subject and Observer/
+  + /Support for broadcast communication/
+  + /Unexpected updates/
+*** Implementation
+- issues related to the implementation of the dependency mechanism:
+  + /Mapping subjs to their observers/
+  + /Observing more than one subj/
+  + /Who triggers the update/
+    > Have state-setting operations on Subject call Notify after they change the
+    subj's state. Advantage: clients don't have to remember to call Notify on
+    the subj. Disadvantage: several consecutive operations will cause several
+    consecutive updates
+    > Make clients responsible for calling Notify at the right time
+  + /Dangling references to deleted subjects/
+  + /Making sure Subj state is self-consistent before notification/
+  + /Avoiding observer-specific update protocols/: the *pull* and *push* model
+  + /Specifying modifications of interest explicitly/: improve update efficiency
+    by extending the subj's registration interface to allow registering 
+    observers only for specific events. One way to support this uses the 
+    notation of *aspects*
+  + /Encapsulating complex update semantics/: When the dependency relationship
+    between subjects and observers is particularly complex, an obj that 
+    maintains these relationships might be required. We call such an obj a 
+    *ChangeManager*. ChangeManager has 3 responsibilities:
+    > It maps a subj to its observers and provides an interface to maintain this
+    mapping. This eliminates the need for subjects to maintain references to 
+    their observers and vice versa
+    > It defines a particular update strategy
+    > It updates all dependent observers at the request of a subject. 
+    ChangeManager is an instance of the *Mediator* pattern. In general there is
+    only one ChangeManager, and it is known globally. The *Singleton* pattern 
+    would be useful here.
+  + /Combining the Subject and Observer classes/
+*** Sample Code
+*** Known Uses
+- SmallTalk MVC
+*** Related Patterns
+- Mediator: by encapsulating complex update semantic, the *ChangeManager* acts
+  as mediator between subj and observers.
+- *Singleton*: The ChangeManager may use the Singleton pattern to make it 
+  unique and globally accessible.
+
+** State
+*** Intent
+- Allow an obj to alter its behavior when its internal state changes. The obj 
+  will appear to change its class.
+*** Also Known As
+- objects for States
+*** Motivation
+- Consider a class TCPConnection that represents a network connection. A TCPConn
+  obj can be in one of several different states. When a TCPConn obj receives 
+  requests from other objs, it responds differently depending on its current 
+  state.
+- The key idea in this pattern is to introduce an abstract class called TCPState
+  to represent the states of the network connection.
+*** Applicability
+- Use the State pattern in either of the following cases:
+  + An obj's behavior depends on its state, and it must change its behavior at
+    run-time depending on that state.
+  + Operations have large, multipart conditional statements that depend on the
+    obj's state.
+*** Structure
+*** Participants
+- *Context*
+  + defines the interface of interest to clients
+  + maintains an instance of a ConcreteState subclass that defines the current
+    state
+- *State*
+  + defines an interface for encapsulating the behavior associated w/ a 
+    particular state of the Context
+- *ConcreteState subclasses*
+  + each subclass implements a behavior associated w/ a state of the Context
+*** Collaborations
+- Context delegates state-specific requests to the current ConcreteState obj
+- A context may pass itself as an argument to the State obj handling the request
+  This lets the State obj access the context if necessary
+- Context is the primary interface for clients. Clients can configure a context
+  w/ State objs. Once a context is configured, its clients don't have to deal w/
+  the State objs directly.
+- Either Context or the ConcreteState subclasses can decide w/ state succeeds
+  another and under what circumstances.
+*** Consequences
+- /It localizes state-specific behavior and partitions behavior for diff states/
+  new states and transitions can be added easily by defining new subclasses.
+- /It makes state transitions explicit/
+- /State objs can be shared/: If State objs have no instance variables- that is
+  the state they represent is encoded entirely in their type - then contexts can
+  share a State obj. When states are shared in this way, they are essentially
+  flyweights w/ nointrinsic state, only behavior
+*** Implementation
+- variety of implementation issues:
+  + /Who defines the state transitions/
+  + /A table-based alternative. In C++ Programming Style/. Disadvantages:
+    > A table look-up is often less efficient than a (virtual) function call
+    > Putting transition logic into a uniform, tabular format makes the 
+    transition criteria less explicit and therefore harder to understand
+    > It's usually difficult to add actions to accompany the state transitions.
+    The state pattern models state-specific behavior, whereas the table-driven
+    approach focuses on defining state transitions.
+  + /Creating and destroying State objs/
+  + /Using dynamic inheritance/
+*** Sample Code
+*** Known Uses
+- Johnson and Zweig characterize the State pattern and its application to TCP
+  connection protocols
+- Coplien's Envelope-Letter idiom [Cop92] is related to State
+*** Related Patterns
+- The *Flyweight* explains when and how State objs can be shared
+- State objs are often *Singletons*
+
+** Strategy
+*** Intent
+- Define a family of algorithms, encapsulate each one, and make the 
+  interchangable. Strategy lets the algorithm vary independently from clients 
+  that use it.
+*** Also Known As
+- Policy
+*** Motivation
+- Many algorithms exits for breaking a stream of text into lines. Hard-wiring
+  all such algorithms into the classes that require them isn't desirable for 
+  several reasons:
+  + clients that need linebreaking get more complex if they include the 
+    linebreaking code. That makes clients bigger and harder to maintain
+  + Different algorithms will be appropriate at different times. 
+  + It's difficult to add new algorithms and vary existing ones when linebreaking
+    is an integral part of a client.
+- We can avoid these problems by defining classes that encapsulated different
+  linebreaking algorithms. An algorithm that's encapsulated in this way is called
+  a *strategy*
+*** Applicability
+- Use the Strategy pattern when
+  + many related classes differ only in their behavior. Strategies provide a way
+    to configure a class w/ one of many behaviors
+  + you need different variants of an algorithm.
+  + an algorithm uses data that clients shouldn't know about.
+  + a class defines many behaviors
+*** Participants
+- *Strategy*
+  + declares an interface common to all supported algorithms. Context uses this
+    interface to call the algorithm defined by a ConcreteStrategy
+- *ConcreteStrategy*
+  + implements the algorithm using the Strategy interface
+- *Context*
+  + is configured w/ a ConcreteStrategy obj
+  + maintains a reference to a Strategy obj
+  + may define an interface that lets Strategy access its data
+*** Collaborations
+- Strategy and Context interact to implement the chosen algorithm.
+  + A context may pass all data required by the algorithm to the strategy when
+    the algorithm is called
+  + the context can pass itself as an argument to Strategy operations. That lets
+    the strategy call back on the context as required
+- A context forwards requests from its clients to its strategy
+*** Consequences
+- The Strategy pattern has the following benefits and drawbacks:
+  + /Families of related algorithms/
+  + /An alternative to subclassing/
+  + /Strategies eliminate conditional statements/: Code containing many 
+    conditional statements often indicate the need to apply the Strategy pattern
+  + /A choice of implementations/: Strategies can provide different 
+    implementation of the same behavior
+  + /Clients must be aware of different Strategies/
+  + /Communication overhead between Strategy and Context/
+  + /Increased number of objs/
+*** Implementation
+- /Defining the Strategy and Context interfaces/
+- /Strategies as template parameters/ In C++ templates can be used to configure
+  a class w/ a strategy. This technique is only applicable if
+  + the Strategy can be selected at compile-time
+  + it doesn't have to be changed at run-time.
+- /Making Strategy objs optional/: The Context class may be simplified if it's
+  meaningful not to have a Strategy obj.
+*** Sample Code
+*** Known Uses
+- ET++ and InterViews use strategies to encapsulate different linebreaking
+- RTL system for compiler code optimization
+- The Booch components use strategies as template arguments. Memory allocation 
+  strategies:
+  + managed (allocation out of pool)
+  + controlled (allocation/deallocation are protected by locks)
+  + andunmanaged (the normal memory allocator)
+*** Related patterns
+- Flyweight: strategy objs often make good flyweights
+
+
+** Template Method
+*** Intent
+- Define the skeleton of an algorithm in an operation, deferring some steps to 
+  subclasses. Template Method lets subclasses redefine certain steps of an algo
+  w/o changing the algorithm's structure.
+*** Motivation
+- *Template method* defines an algorithm in terms of abstract operations that 
+  subclasses override to provide concrete behavior
+- By defining some of the steps of an algorithm using abstract operations, the
+  template method fixes their ordering, but it lets Application and Document
+  subclasses vary those steps to suit their needs.
+*** Applicability
+- The Template Method pattern should be used
+  + to implement the invariant parts of an algorithm once and leave it up to 
+    subclasses to implement the behavior
+  + when common behavior among subclasses should be factored and localized in a
+    common class to avoid code duplication. *refactoring to generalize*: 
+    > identify the differences in the existing code and separate the differences
+    into new operations
+    > replace the differing code w/ a template method
+  + control subclasses extensions
+*** Structure
+*** Participants
+- *AbstractClass*
+  + defines abstract *primitive operations* that concrete subclasses define to
+    implement steps of an algorithm
+  + implements a template method defining the skeleton of an algorithm.
+- *ConcreteClass*
+  + implements the primitive operations to carry out subclass-specific steps of
+    the algorithm
+*** Collaborations
+- ConcreteClass relies on AbstractClass to implement the invariant steps of the
+  algorithms
+*** Consequences
+- Template methods are the means for factoring out common behavior in library
+  classes
+- Template methods call the following kinds of operation:
+  + concrete operations
+  + concrete AbstractClass operations
+  + primitive operations
+  + factory methods
+  + *hook operations*, which provide default behavior that subclasses can extend
+    if necessary.
+- To reuse an abstract class effectively, subclass writers must understand which
+  operations are designed for overriding
+*** Implementation
+- 3 implementation issues are worth noting:
+  + /Using C++ access control/: in C++, the primitive operations that a template
+    method calls can be declared protected members. This ensures that they are
+    only called by the template method. Primitive operations that must be 
+    overridden are declared pure virtual. The template method itself should not
+    be overriden; therefore you can make the template method a non virtual 
+    member function
+  + /Minimizing primitive operations/: the more operations that need overriding,
+    the more tedious things get for clients
+  + /Naming conventions/
+*** Sample Code
+*** Known Uses
+- Template methods are so fundamental that they can be found in almost every 
+  abstract class.
+*** Related Patterns
+- *Factory Methods* are often called by template methods.
+- *Strategy*: template methods use inheritance to vary part of an algorithm.
+  Strategies use delegation to vary the entire algorithm.
+
+** Visitor
+*** Intent
+- Represent an operation to be performed on the elements of an object structure.
+  Visitor lets you define a new operation w/o changing the classes of the 
+  elements on which it operates
+*** Motivation
+- Manage a tree of nodes. THe problem is that distributing all these operations
+  across the various node classes leads to a system that's hard to understand,
+  maintain, and change. It would be better if each new operation could be added
+  separately, and the node classes were independent of the operations that apply
+  to them
+- We can have both by packing related operations from each class in a separate
+  obj, called a *visitor*, and passing it to elements of the abstract syntax
+  tree as it's traversed.
+*** Applicability
+- Use the Visitor pattern when:
+  + an obj structure contains many classes of objs w/ differing interfaces,and 
+    you want to perform operations on these objs that depend on their concrete 
+    classes
+  + many distinct and unrelated operations need to be performed on objs in an 
+    obj structure, and you want to avoid "polluting" their classes w/ these ops
+  + the classes defining the obj structure rarely change, but you often want to
+    define new operations over the structure
+*** Structure
+*** Participants
+- *Vistor*
+  + declares a Visit operation for each class of ConcreteElement in the obj 
+    structure
+- *ConcreteVisitor*
+  + implements each operation declared by Visitor
+- *Element*
+  + defines an Accept operation that takes a visitor as an argument
+- *ConcreteElement*
+  + implements an Accept operation that takes a visitor as an argument
+- *Object Structure*
+  + can enumerate its elements
+  + may provide a high-level interface to allow the visitor to visit its elems
+  + may either be a composite or a collection such as a list or a set
+*** Collaborations
+- A Client that uses the Visitor pattern must create a ConcreteVisitor obj and
+  then traverse the obj structure, visiting each elems w/ the visitor
+- When an element is visited, it calls the Visitor operation that corresponds to
+  its class. The elemtn supplies itself as an arguments to this operation to let
+  the visitor access its state, if necessary
+*** Consequences
+- /Visitor makes adding new operations easy/
+- /A visitor gathers related operations and separates unrelated ones/
+- /Adding new ConcreteElement classes is hard/
+- /Visiting across class hierarchies/
+- /Accumulating state/
+- /Breaking encapsulation/
+*** Implementation
+- 2 implementation issues:
+  + /Double dispatch/: means the operation that gets executed depends on the
+    kind of request and the types of two receivers. Double-dispatching lets 
+    visitors request different operations on each class of element.
+    THe key to the Visitor pattern: The operation that get executed depends on
+    both the type of Visitor and the type of Elements visit. Instead of binding
+    operations statically into the Element interface you can consolidate the 
+    operations in a Visitor and use Accept to do the binding at run-time
+  + /Who is responsible for traversing the obj structure/
+    > obj structure is responsible for iteration
+    > use an iterator to visit the elements.
+    > the main reason to put the traversal strategy in the visitor is to 
+    implement a particular complex traversal.
+*** Sample Code
+*** Known Uses
+- IRIS Inventor is a toolkit for developing 3-D graphics apps
+- To make adding new nodes easier, Inventor implements double-dispatch scheme 
+  for C++
+*** Related Patterns
+- *Composite*: visitors can be used to apply an operation over an obj structured
+  defined by the Composite pattern
+- *Interpreter*: visitor may be applied to do the interpretation.
+*** Notes
+- We could use function overloading to give these operations the same simple 
+  name
+- Languages that support double- or multiple dispatch lessen the need for the
+  Visitor pattern
+
+** Discussion of Behavioral patterns
+*** Encapsulating Variation
+- Encapsulating variation is a theme of many behavioral patterns. When an aspect
+  of a program changes frequently, these pattenrs define an object that 
+  encapsulates that aspect. The patterns usually define an abstract class that
+  describes the encapsulating obj, and the pattern derives its name from that 
+  obj
+  + a Strategy obj encapsulates an algorithm
+  + a State obj encapsulates a state-dependent behavior
+  + a Mediator obj encapsulates the protocol between objs 
+  + an Iterator obj encapsulates the way you access and traverse the components
+    of an aggregate obj.
+- Most patterns have 2 kinds of objs:
+  + the new objs that encapsulate the aspect
+  + the existing objs that use the new ones
+- Usually the functionality of new objs would be an internal part of the 
+  existing objs were it not for the pattern.
+- *Chain of Responsibility* illustrates another difference in behavior patterns.
+  It prescribes communication between an open-ended number of objs
+*** Objects as Arguments
+- Several patterns introduce an obj that's always use as an argument
+  + Visitor is the argument to a polymorphic Accept operation on the objs it 
+    visits
+- Other patterns define objs that act as magic tokens to be passed around and 
+  invoked at a later time.
+  + Command and Memento
+  + polymorphism is important in the Command pattern, because executing the 
+    Command obj is a polymorphic operation
+  + Memento interface is so narrow that a memento can only be passed as a value
+*** Should Communication be Encapsulated or Distributed
+- Mediator and Observer are competing patterns
+  + Observer distributes communication by introducing Observer and Subject objs
+  + Mediator obj encapsulates the communication between other objs
+- Communication patterns are determined by the way observers and subjects are 
+  interconnected.
+- It's easier to make reusable Observers and Subjects than to make reusable 
+  Mediator. On the other hand, it's easier to understand the flow of 
+  communication in Mediator than in Observer
+*** Decoupling Senders and Receivers
+- Command, Observer, Mediator, and Chain of Responsibilities address how you can
+  decouple senders and receivers, but w/ different trade-offs
+- Command patterns supports decoupling by using a Command obj to define the 
+  binding between a sender and receiver. It provides a simple interface for 
+  issuing the request
+- Observer pattern decouples senders from receivers by defining an interface for
+  signaling changes in subjects
+- Mediator pattern decouples objs by having them refer to each other indirectly
+  through a Mediator obj
+- Chain of Responsibility pattern decouples the sender from the receiver by 
+  passing the request along a chain of potential receivers
+*** Summary
+- behavioral design patterns complement and reinforce each other
+  + a class in a chain of responsibility will probably include at least one app
+    of *Template Method*
+  + Interpreter can use the State pattern to define parsing context
+- behavioral patterns work well w/ other patterns
+  + a system that uses the *Composite pattern* might use a visitor to perform 
+    ops on components of the composition
+  + It could use *Chain of Responsibility* to let components access global 
+    properties through their parent.
+  + It could use *Decorator* to override these properties on part of the 
+    composition
+  + It could use the *Observer pattern* to tie one obj structure to another and 
+    the State pattern
+- the composition might be treated as *Prototype* and might be created using the
+  approach in *Builder*
+
+
+** Conclusion
+*** What to expect from Design Pattern
+**** A common Design Vocabulary
+- knowledge and experience isn't organized simply around syntax but in larger 
+  conceptual structures such as: algorithms, datastructures, and idioms, and 
+  plans for fulfilling a particular goal
+- design patterns:
+  + provide a common vocabulary for designers to use to communicate, document, &
+    explore design alternatives
+  + make system seemless complex by letting you talk about it at a higher level
+    of abstraction than that of a design notation or programming language
+  + raise the level at which you design and discuss design w/ your colleagues
+**** A Documentation and Learning Aid
+- Make it easier to understand existing systems
+- Make we a better designer. They provide solutions to common problems
+**** An Adjust to existing methods
+- design methods promote good design
+- design patterns 
+  + show how to use primitive techniques such as objs, inheritance and 
+    polymorphism
+  + useful in turning an analysis model into an implementation model
+**** A target for Refactoring
+- reusable software is that it often has to be reorganized or *refactored*. 
+  Design patterns help you determine how to reorganize a design
+- lifecycle of object-oriented software has several phases:
+  + prototyping
+  + expansionary
+  + consolidating
+*** A Brief History
+*** The pattern community
+*** An Invitation
+- What can you do if you are interested in patterns
+  + use pattern as a language
+  + be a critical consumer
+  + look for patterns you use, and write them down.
+*** A parting thought

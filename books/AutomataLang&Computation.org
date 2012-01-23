@@ -1,0 +1,282 @@
+* Automata: The Methods and The Madness
+** Why study Automata Theory
+*** Introduction to Finite Automata
+- useful model for many important kinds of hardware and software
+  + software for designing and checking the behavior or digital circuits
+  + lexical analyzer
+  + scan large bodies of text to find words, phrases, or patterns
+  + verifying systems of all types that have a finite number of distinct states
+*** Structural Representations
+- 2 important notations that are not automaton-like, but play an important role
+  in study of automata and their applications:
+  + Grammars: useful models when designing software that processes data w/ a 
+    recursive structure
+  + Regular Expressions: the patterns of strings they describe are exactly the
+    same as what can be described by finite automata
+*** Automata and Complexity
+- essential for the study of the limitation of computation    
+  + what can a computer do at all?
+    > decidability, decidable
+  + What can a computer do efficiently?
+    > intractability, tractable
+
+** Introduction to Formal Proof
+- To make your iteration or recursion correct, you need to set up an inductive 
+  hypothesis, and it is helpful to reason, formally or informally, that the 
+  hypothesis is consistent w/ the iteration or recursion.
+
+*** Deductive Proofs
+- deductive proofs: seq of statements whose truth leads us from some initial 
+  statement, called the /hypothesis/ or given /statements/ to a /conclusion/
+- H -> C: C is deduced from H
+- logical rule (/modus ponens/): H is true, H -> C is true, then C is true
+
+*** Reduction to Definitions
+- In many other theorems, including many from automata theory, the terms used in
+  statement may have implications that are less obvious. A useful way to proceed 
+  in many proofs is:
+  + If you are not sure how to start a proof, convert all terms in the 
+    hypothesis to their definitions
+
+*** Other Theorem Forms
+- *Ways of saying "If-Then"*
+  + H implies C
+  + H only if C
+  + C if H
+  + Whenever H holds, C follows
+- *If-And-Only-If Statements*
+
+*** Theorems That Appear Not to Be If-Then Statements
+- This statement does have a hypothesis, and the hypothesis consists of all the
+  statements u need to know to interpret the statement
+
+** Additional Forms of Proof
+- Proofs about sets
+- Proofs by contradiction
+- Proofs by couterexample
+
+*** Proving Equivalences About Sets
+- In automata theory, we are frequently asked to prove a theorem which says that
+  the sets constructed in 2 different ways are the same sets.
+
+*** The Contrapositive
+- A statement and its contrapositive are either both true or both false, so we
+  can prove either to prove the other
+
+*** Proof by contradiction
+- H and not C implies falsehood
+- by proving the above logical rule, we're showing that case 2 cannot occur
+
+*** Counterexample
+
+** Inductive Proofs
+*** Introduction on Integers
+- We generally take as an integral part of our logical reasoning system:
+  + The Induction principle: if we prove S(i) and we prove that for all n >= i, 
+    S(n) implies S(n+1), then we may conclude S(n) for all n >= i
+*** More general forms of integer inductions
+
+*** Structural Inductions
+- BASIS: a single node is a tree, and that node is the /root/ of the tree
+- INDUCTION: if T1, T2, ..., Tk are trees, then we can form a new tree as follow
+  + Begin w/ a new node N, which is the root f the tree
+  + Add copies of all the trees T1, T2, ..., Tk
+  + Add edges from node N to the roots of each of the trees T1, T2,...,Tk
+- Theorem
+  + Every tree has one more node than it has edges
+  + every expressioin has an equal number of left and right parentheses
+
+*** Mutual inductions
+- Sometimes we need to prove a group of statements S1(n), S2(n), ... Sk(n) 
+  together by induction on n. Strictly speaking, proving a group of statements
+  is no different from proving the /conjunction/ AND of all the statements.
+  However, It is generally less confusing to keep the statements separate and to
+  prove them all in their own parts of the basis and inductive steps. 
+- we call this sort of proof /mutual induction/
+- Example: 
+
+  Start -> Off -> Push -> On 
+               <- Push <- 
+
+- We need to prove:
+  + S1(n) the automaton is in state /off/ after n pushes if and only if n is 
+    even
+  + S2(n) the automaton is in state /on/ after n pushes if and only if n is odd
+
+- S1 -> S2 and vice versa. However what is not always true about an automaton is
+  that it is in one and only on state -> prove S1S2 by mutual induction
+- Proof:
+  + BASIS n = 0. Since there are 2 statements, each of which must be proved in 
+    both directions, there are actually 4 cases to the basis, and 4 cases to the
+    induction as well.
+    > S1, If: since 0 is even, we need to show after 0 pushes, the automaton is
+    in state /off/. Since that is the start state, the automaton is indeed in 
+    state /off/
+    > S1, Only If: the automaton is in state /off/ after 0 pushes, we must show
+    0 is even. There is nothing to prove here because 0 is even by definition
+    > S2, If: the hypothesis H (n = 0 is odd) is false, any statement of the 
+    form if H then C is true, thus this part of the basis also holds
+    > S2, Only If: since the hypothesis is also false, the statement is true
+  + INDUCTION: We assume that S1(n) and S2(n) are true, and try to prove 
+    S1(n+1) and S2(n+1) (text-book reference)
+
+** The Central Concepts of Automata Theory
+- The most important definitions of terms that pervade the theory of automata
+  + alphabet
+  + strings
+  + language
+*** Alphabets
+- An /alphabet/ is a finite, nonempty set of symbols. Conventionally we use the 
+  symbol \sum for an alphabet.
+  + \sum = {0, 1}: the binary alphabet
+  + \sum = {a, b, ...,z} the set of all lower-case letters
+  + the set of all ASCII char
+
+*** Strings
+- A string is a finite seq of symbols chosen from some alphabet
+- The *empty string* is the string w/ zero occurences of symbols
+- *Length of a String* 
+- *Powers of an Alphabet*
+  + \sum^k to be the set of strings of length k, each of those symbols is in \sum
+  + the set of all strings over an alphabet \sum is conventionally denoted \sum*
+- *Concatenation of Strings
+
+*** Languages
+- A set of strings all of which are chosen from some \sum*, where \sum is an 
+  alphabet is called a /language/.
+
+*** Problems
+- In automata theory, a problem is the question of deciding whether a given 
+  string is a member of some particular language. More precisely, if \sum is an
+  alphabet, and L is a language over \sum*, the the problem L is:
+  + Given a string w in \sum*, decide whether or not w is in L
+- the technique, showing one problem hard by using its supposed efficient algo
+  to solve efficiently another problem that is already known to be hard is called
+  a *reduction* of the second problem to the first
+
+
+** Summary of Chapter 1
+- *Finite automata*: invole states and transitions among states in response to
+  inputs
+- *Regular Expressions*: a structural notation for describing the same patterns
+  that can be represented by finite automata
+- *Context-free Grammars*: an important notation for describing the structure of
+  programming languages and related sets of strings
+- *Turing Machines*: These are automata that model the power of real computers
+- *Deductive Proofs*:
+- *Proving If-then statement*
+- *Proving the Contrapositive*
+- *Proof by contradiction*
+- *Counterexamples*
+- *Inductive Proofs*
+- *Structural inductions*
+
+* Finite Automata
+** An Informal picture of Finite Automata
+*** The Ground Rules
+- There are 3 participants: the customer, the store, and the bank.
+*** The Protocol
+*** Enabling the Automata to Ignore Actions
+- two kinds of actions that must be ignored are:
+  + actions that are irrelevant to the participant involved
+  + actions that must not be allowed to kill an automaton
+*** The Entire System as an Automaton
+*** Using the Product Automaton to Validate the Protocol
+- The real purpose of analyzing a protocol such as this one using automata is to
+  ask and answer questions that mean "can the following type or error occur?"
+
+** Deterministic Finite Automata
+- deterministic finite automaton: on each input, there is one and only one state
+  to which the automaton can transition from its current state.
+- nondeterministic finite automata: can be in several states at once.
+
+*** Definition of a Deterministic Finite Automaton
+- A /deterministic finite automaton/ consists of:
+  + A finite set of states, often denoted Q
+  + A finite set of input symbols, often denoted \sum
+  + A transition function \delta
+  + A start state, one of the states in Q
+  + A set of final or accepting states F. The set F is a subset of Q
+- a deterministic finite automaton = DFA
+
+*** How a DFA processes Strings
+- to understand about a DFA
+  + how the DFA decides whether or not to "accept" a seq of input symbols
+  + the language of the DFA is the set of all strings that the DFA accepts
+
+*** Simpler Notations of DFA's
+- 2 prefered notations
+  + A transition diagram
+  + A transition table
+
+*** Extending the Transition Function to Strings
+- The extended transition function is a function that takes a state q and a str
+  w and returns a state p - the state that the automaton reaches when starting 
+  in state q and processing the sequence of inputs w.
+
+*** The Language of a DFA
+- The language of a DFA A = (Q, \sum, \delta, q0, F) is defined by:
+  L(A) = {w | \edelta(q0, w) is in F}
+- If L is L(A) for some DFA A, then we say L is a /regular language/
+
+
+** Nondeterministic Finite Automata
+- a nondeterministic finite automaton (NFA) has the power to be in several 
+  states at once. This ability is often expressed as an ability to "guess" smth 
+  about its input
+- NFA accepts a language that is also accepted by DFA
+- NFA is easier to design, always convert an NFA to DFA
+
+*** An informal view of Nondeterministic Finite Automata
+- The difference between the DFA and the NFA is in the type of \lambda
+- example: NFA whose job is to accept all and only the strings of 0's and 1's 
+  that end in 01
+*** Definition of Nondeterministic Finite Automata
+- An NFA is represented essentially like a DFA:
+  A = (Q, \sum, \delta, q0, F)
+  where:
+  + Q is a finite set of states
+  + \sum is a finite set of /input symbols/
+  + q0, a member of Q, is the start state
+  + F, a subset of Q, is the set of /final states/
+  + \lambda: the /transition function/ is a function that takes a state in Q and
+    an input symbol in \sum as arguments and returns a subset of Q
+- Transition tables can be used to specify the transition function for an NFA as
+  well as for a DFA. The only difference is that each entry in the table for the
+  NFA is a set, even if the set is a /singleton/. When there is no transition at
+  all from a given state on a given input symbol, the proper entry is \empty
+
+*** The Extended Transition Function
+- BASIS: \lambda^(q, \epsilon) = {q}
+- INDUCTION: Suppose w is of the form w = xa, where a is the final symbol of w &
+  x is the rest of w. Also suppose that \lambda^ (q, x) = {p1, p2, ..., pn}. Let
+  \cum_{i=1}^{k} \lambda(p_i, a) = {r1, r2,..., rm}. Then 
+  \lambda^(q, w) = {r1, r2,...,rm}
+
+*** The Language of an NFA
+- NFA accepts a string w if it is possible to make any sequence of choices of 
+  next state
+- Formally if A = (Q, \sum, \delta, q0, F) is an NFA, then
+  L(A) = {w | \delta^(q0, w) \cup F != \empty }
+
+*** Equivalence of Deterministic and Nondeterministic Finite Automata
+- Every language that can be described by some NFA can also be described by some
+  DFA. Moreover the DFA in practice has about as many states as the NFA
+- The proof that DFA's can do whatever NFA's can do involves an important 
+  "construction" called the /subset construction/ because it involves 
+  constructing all subsets of the set of states of the NFA.
+- It is important for us to observe the subset construction as an example of how
+  one formally describes one automaton in terms of the states and transitions of
+  another, w/o knowing the specifics of the latter automaton.
+- NFA N = (Qn, \sum, \delta_n, q0, Fn). The goal is the description of a DFA 
+  D = (Qd, \sum, \delta_d, {q0}, Fd) such that L(D) = L(N). The other components
+  of D are constructed as follows
+  + Qd is the set of subsets of Qn; i.e., Qd is the /power set/ of Qn. If Qn has
+    n states, then Qd will have 2^n states
+  + Fd is the set of subsets S of Qn such that S \cup Fn != \empty. That is Fd 
+    is all sets of N's states that include at least one accepting state of N
+  + For each set S \subseteq Qn and for each imput symbol a in \sum
+    \delta_d(S,a) = \bigcup_{p in S} \delta_n(p, a)
+- *Theorem 2.11*: If D = (Qd, \sum, \delta_d, {q0}, Fd) is the DFA constructed
+  from NFA N = (Qn, \sum, \delta_n, q0, Fn) by the subset construction, then 
+  L(D) = L(N)

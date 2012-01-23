@@ -1,0 +1,10 @@
+* Building Abstractions with Data
+We come to the decisive step of mathematical abstraction: we forget about what
+the symbols stand for...[The mathematician] need not be idle; There are many 
+operations which he may carry out with these symbols, without ever having to
+look at the things they stand for.
+
+clojure property: the ability to create pairs whose elements are pairs is the
+essense of list structure's importance as a representational tool.
+
+

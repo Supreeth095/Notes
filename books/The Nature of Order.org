@@ -1,0 +1,766 @@
+* Preface
+** Our confusion in architecture
+Sometimes I think of it as a mass psychosis of unprecedented dimension, in which
+the people of earth - in large numbers and in almost all contemporary societies
+have created a form of architecture which is against life, insane, image-ridden,
+hollow (p6)
+
+The ugliness which has been created in the cities of the world, and the banality
+and pretentiousness of many 20th century buildings, streets, and parking lots
+have overwhelmed the earth (p6)
+
+** How architecture depends on our picture of the world
+If we do ever carefully examine our own picture of the world, we shall find, no
+doubt, a rather complicated mixture of things: vague conceptions of atoms,
+galaxies, and stars (p7)
+
+What exactly do I mean by the /mechanist-rationalist/?
+- /all/ understood in a more or less mechanical fashion (p8)
+- Even though we would admit that the precise laws and mechanisms may not be 
+known, we assume that underlying our ignorance there are /some/ laws, not quite
+formulated, which do account for how things work, even in these everyday
+surroundings (p8)
+
+The strang fantasies, the private in-house language about architecture, the
+strange nature of 20th-century gallery art, deconstructionism, postmodernism,
+modernism, and a host of other "isms", all of which affect our physical world
+hugely, /are created because of an entanglement between the nature of 
+architecture, the practice of architecture, and the mechanical conception of the
+universe/ (p8)
+
+The mistake and confusion in our picture of the art of building /has come from
+our conception of what matter is/. 
+- The present conception of matter, and the opposing one which I shall try to
+put in its place, may both be summarized by the nature of /order/
+- our idea of matter is essentially governed by our idea of order
+--> It is the nature of order which lies at the root of the problem of 
+architecture
+
+** What is order
+Order explained by scientists:
+- Ludwig Boltzmann in 1872 through the idea of entropy (p10)
+- special types of order like crystallographic order, defined by repetition
+- conceptions of military or hierarchic order (p10)
+- the theory of catastrophes, which tries to describe the birth of configurations
+ouf of chaos
+
+- Conclusions
+ + /none/ of this, suggestive as it all is
+ + not deep enough or concrete enough
+ + none even capable of helping us to /understand/ the order
+ + for making things, or giving life to them, our current ideas of order are 
+   /utterly/ inadequate
+
+** Order as mechanism
+/order/ which physics helps us talk about is only the /mechanical/ order
+
+** Decartes
+The mechanistic idea of Decartes: "If you want to know how something works, you
+can find out by pretending that it is a machine. You completely isolate the
+thing you are interested in from everything else, and you invent a mechanical
+model, a mental toy, which obeys certain rules, and which will then replicate
+the behavior of the thing"
+
+This process is only a /method/
+
+** The Destructive impact of mechanistic thought on the art of building
+Architects make different idiosyncratic choices because within the mechanistic
+worldview it is not possible to function mentally without making some private
+choices of this kind (p20)
+  + make the "life" of towns and buildings and landscapes seem unreal
+  + make collaboration, social agreement /very difficult in principle/
+
+--> We need a sharable point of view, in which the many factors influencing the
+environment can coexist coherently, so that we can work together - not by 
+confrontation and argument - but because we share a single holistic view of the
+unitary goal of life.
+
+** A new vision of architecture
+a theory in which statements about relative degree of harmony, or life, or 
+wholeness - basic aspects of order - are understood as potentially true of false
+  + ideas of ornament and function
+  + ornament and function are different aspects of a single kind of order
+  + extension of sci
+* The Phenomenon of Life
+** Introduction
+"Order" may be understood as a most general system of mathematical structures 
+that arises because of the nature of space. And "life" is a concept of comparable
+generality. Every form of "order" has some degree of "life" (p28)
+** The need for a broader and more adequate definition of life
+** A new concept of "life"
+we do /feel/ there are different degrees of life in things (p32)
+  + breaking wave
+  + a fire
+  + gold feels alive
+* Wholeness and The theory of centers
+** Introduction
+To define life we need to understand
+- the wholeness
+- certain crucial entities: "centers"
+centers are building blocks of wholeness
+
+** The idea of wholeness
+The beauty of a building, its life, its capacity to support life all come from the fact that
+it is working as a whole
+wholeness is one of the main contemporary thought
+- physics
+- biology
+- neurophysiology
+- cosmology
+noone has shown how to represent wholeness
+- precise model of structure
+- clear picture of the way this "wholeness" might then contribute to the behavior of the
+buildings and spaces
+
+** An example of the wholeness in a simple case
+wholeness in any part of space is the structure defined by all the various coherent entities
+that exist in that part of space, and the way these entities are nested in and overlap each 
+other (p81)
+
+** The origin of the strength in entities
+Their strength and centeredness come from a combination of factors that all depend on the 
+overall configuration of the space (p83)
+General rules which will identify the zones of space that stand out as centers in any given
+configuration
+- The set which appear as entities are often locally symmetrical - but not always
+- The entities are usually bounded: that is, at their edge there is often a sharp change of
+structure
+- Some of the entities are marked by an internal center where there is another change of 
+continuity near the middle of the center itself
+- There is a simplicity and regularity about these sets which marks them as wholes, and makes
+them function as entities
+- They are often relatively homogeneous across their interior, compared with the surrounding
+space
+- There is a topological connectivity in them which marks them as compact
+- They are usually - not always - convex
+
+** The concept of a center
+centers: 
+- each one of these entities has, as its defining mark, the fact that it appears to
+  exist as a local center within a larger whole (p84)
+- to identify an organized zone of space - a distinct set of points in space, because of its
+organization, because of its internal coherence, and because of its relation to its context,
+/exhibits centeredness/, forms a local zone of relative centeredness with respect to the other
+parts of space
+when I use the word center, I am always referring to a physical set, a distinct physical 
+system, which occupies a certain volume in space, and has a special marked coherence
+
+** Wholeness as a subtle structure
+The strength of any given center is not merely a function of the internal shape which creates
+a function of the internal shape which creates that center in itself, but comes about as a 
+result of the influence of many other factors which extend outward in the given region of space
+, always as a result of the configuration /as a whole/
+
+The wholeness is a structure of great subtlety /which is induced in the whole/. It cannot 
+easily be predicted from the parts, and it is the useless to think of it as a relationship
+"among the parts"
+
+when we understand what wholeness is really like as a structure, we see that in most cases it
+is the wholeness which /creates/ its parts.
+
+When we understand things in their wholeness, this is the general rule. The sub-wholes - or
+centers - are induced within the wholeness, and come /from/ the wholeness
+
+** A further example of wholeness as it is captured by the system of centers
+
+** The fundamental entities of which the world is made
+The wholeness is not merely a way of focusing on the gestalt of the thing, but
+it instead a real structure, an actual "thing" in itself
+The wholeness gets its strength from the coherent spatial centers of which it is
+made.
+the wholeness of any portion of the world is this system of larger and smaller centers, in
+their connection and overlap (p90-91)
+
+
+** The subtlety of centers which exist in the world
+The centers we notice when we see the situation in its wholeness are not only 
+more dominant to the eye. They control the real behavior of the thing, the life
+which develops there, the real human events which happen, and the feelings
+people have about living there.
+
+** Wholeness as a fundamental structure
+I propose a view of physical reality which is dominated by the existence of this
+one particular structure, W, the wholeness. In any given region of space, some
+subregions have higher intensity as centers, others have less. Many subregions
+have weak intensity or none at all. The overall configuration of the nested 
+centers, together with their relative intensities, comprise a single structure.
+I define this structure as "the" wholeness of that region
+
+** The global character of wholeness
+** Wholeness as a fundamental part of physics
+** Wholeness as the underlying substrate of all life in space
+** Life comes directly from the wholeness
+* How life comes from wholeness
+** Vital points
+The creation of life is possible. There are 4 points which give us the secret
+of living structure, and the way life comes from wholeness
+- centers themselves have life
+- centers help one another: the existence and life of one center can intensify
+the life of another
+- centers are made of centers (this is the only way of describing their 
+composition)
+- a structure gets its life according to the density and intensity of centers 
+which have been formed in it
+** The hotel Palumbo
+** Each center has its life
+five assertions
+- centers arise in space
+- each center is created by a configuration of other centers
+- each center has a certain life or intensity. For the time being we do not know
+what thist life "is." But we can see that the life of any one center depends on
+the life of other centers. This life or intensity is not inherent in the center
+by itself, but is a function of the whole configuration in which the center 
+occurs.
+- the life or intensity of one center is increased or decreased according to the
+position and intensity of other nearby centers. Above all, centers which they
+are made of help each other. Exactly what "helping" means in this context remains
+to be defined.
+- The centers are the fundamental elements of the wholeness, and the degree of
+life of any given part of space depends entirely on the presense and structure
+of the centers there.
+** Each center gets its life from other centers
+** How recursion as a process, creates the life of a center step by step
+5 steps
+- the column as a center
+- the space next to the column as a center
+- centers at the top and bottom of the column
+- making top and bottom unequal
+- adding an ornament within the column, to intensify its life
+the process is not additive: it is transformative. At each step, we do not /add/
+things, but /transform/ the previous version, as a whole, to give it more
+centeredness, as a whole, by inducing more centers to intensify those that exist
+already
+** Profound life which can arise in the deepest cases
+** Objective comparison of degrees of life
+* Fifteen fundamental properties
+** Introduction
+Which one has more life? What are the common features of the examples that have 
+most life? 
+  - Levels of Scale
+  - Strong centers
+  - Boundaries
+  - Alternating Repetition
+  - Positive space
+  - Good shape
+  - Local Symmetries
+  - Deep interlock and ambiguity
+  - Contrast
+  - Gradients
+  - Roughness
+  - Echoes
+  - The void
+  - Simplicity and Inner calm
+  - Not-Seperateness
+** Levels of scale
+** Strong centers
+** Boundaries
+** Positive space
+definition: every single part of space has positive shape as a center. There are
+no amorphous meaningless leftovers. Every shape is a strong center, and every
+space is made up in such a way that it only has strong centers in its space,
+nothing else besides
+** Good shape
+Good shape itself is also related to the centers; and that, indeed, a shape we
+see as good is a shape which is /itself/, as a shape, made up from multiple 
+coherent centers.
+Good shape as a recursive rule
+List of properties to make a good shape:
+  - High degree of internal symmetries
+  - Bilateral symmetry (almost always)
+  - A well-marked center (not necessarily at the geometric middle)
+  - The spaces it creates next to it are also positive (positive space)
+  - It is very strongly distinct from what surrounds it
+  - It is relatively compact (i.e., not very different in overall outline from
+    something between 1:1 and 1:2 - exceptions may go as high as 1:4, but almost
+    never higher)
+  - It has closure, a feeling of being closed and complete.
+** Local Symmetries
+Symmetrical segments act as a kind of glue -- the glue which holds the space 
+together. The more glue there is, the more the space is one, solid, unified, 
+coherent.
+For the glue to be effective, it seems that many of the symmetrical segments 
+must overlap
+What is the relation between symmetries and centers? How do symmetries allow
+centers to intensify each other? A symmetry is used to establish an elementary 
+center. Each local symmetry establishes a symmetry between two smaller centers
+to create a larger center.
+** Deep Interlock and Ambiguity
+** Contrast
+** Gradients
+** Roughness
+Thie roughness is not merely an accidental feature of the tiles and of other 
+living things. It is an essential feature of living things, and has deep 
+structural causes.
+The seemingly rough arrangement is more precise because it comes from a much 
+more careful guarding of the essential centers in the design.
+** Echoes
+** The void
+** Simplicity and inner calm
+** Not-separatedness
+
+----------------------------------------------------------
+
+* Author's note
+** The concept of living structure
+- The basic idea: throughout the world, in the organic as in the inorganic, it 
+  is possible to make a distinction between living structure and non-living 
+  structure
+- The main accomplishment is in making this distinction precise, in providing 
+  empirical methods for observing and measuring degree of life as it occurs in
+  different structures.
+- many of these new artifacts and buildings are structures which can be /thought/
+  invented, created artificially, but they cannot be generated by a nature-like
+  /process/ at all.
+
+** Real life created by a process in the Caribbean
+- Technical language of structure-preserving process to the broader and more
+  intuitive language of living process.
+- The idea that all living processes are structure-preserving turns out to be
+merely the tip of a very large iceberg of hidden complexity
+** A source of life
+** On process
+*** A dynamic view of order
+- Order cannot be understood sufficiently well in purely static terms because
+  there is something /essentially/ dynamic about order.
+- The nature of order is interwoven in its fundamental character with the nature
+  of the processes which create the order.
+- Other dynamically, the concept of living structure /itself/ undergone some
+  change. 
+- /unfolded structure/ is as important, and should play as essential a role in
+  architecture, as the concept of /living/ structure.
+*** The necessary role of process
+*** Order as becoming
+- In classical physics change is nothing but a denial of becoming and time is
+  only a parameter, unaffected by the transformation that it describes - Prigogine
+-> Our current view of architecture rests on too little awareness of becoming as
+the most essential feature of the building process.
+*** Process, the key to making life in things
+- Once we recognize the possibility that some centers will be helpful to the
+  life of an existing wholeness, while others will be antagonistic to it, we
+  then begin to recognize the possibility of a highly complex kind of
+  self-consistency in any given wholeness.
+- We see that each given wholeness has a certain history: the wholeness becomes
+  more valuable if the history allows this wholeness to unfold in a way that is
+  considerate, respectful, of the existing structure, and less valuable if the
+  steps which are taken in the emergence of the wholeness are antagonistic to
+  the existing structure.
+- the value exists within the unfolding of the wholeness itself.
+
+*** Our mechanized process
+- The trouble is every building process so far has just been mechanical process
+  only. We think of things by the end-state we want, and then ask ourselves how
+  to get there. The process of getting to the goal was thought to be of little
+  importance in itself, except insofar as it attained (or failed to attain) the
+  desired goal.
+- Real kindness is something quite different, something valuable in itself.
+- In the mechanistic view of architecture we think mainly of /design/ as the
+  desired end-state of a building, and far too little of the /way/ or /process/ 
+  of making a building as something inherently beautiful in itself.
+- Why is this process-view essential?
+  + the ideals of "design" bear no relation to the actual nature, or problems,
+    or possibilities, of a living environment
+  + They are socially backward, since they necessarily diminish people's 
+    involvement in the continuous creation of their world.
+
+*** Possibility of a new view of architectural process
+- a process which is not based on making in a holistic sense, cannot create a
+  living structure.
+
+*Structure-preserving transformations* 
+
+
+
+* Structure-Preserving transformations
+We have relatively little theory that allows us to grasp this process of coming
+into being. Although there have been many discussions in the last two decades
+about chaos, catastrophes, bifurcation, and emergence, about the generation of
+complexity from interaction of simple rules, about the processes that have 
+become known as chaos theory, and the way that new structures emerge by
+differentiation and bifurcation, still, even now, there is not enough coherent
+scientific theory that tells us how these processes really work geometrically.
+
+- the idea that a living process always has enormous respect for the state (and
+morphology and form) of what exists, and always finds a next step forward which
+preserves the structure of what exists, and develops and extends its latent 
+structure as it creates change, or evolution, or development. This is the 
+process which is "creative"
+- these issues for cases in the natural world, and provide the outline of a 
+tentative approach that helps us understand the unfolding of geometry in biology
+and physics
+
+** The principle of unfolding wholeness in nature
+*** Introduction
+*** The need for a general explanation of the way that living structure is created
+- there is not familiar language in contemporary mathematics which answers 
+  questions such as: "will, in general, tend to occur again and again, 
+  throughout nature, within three-dimensional systems
+*** Creation of structure as it occurs in nature
+- Principle of /unfolding wholeness/: in the evolution of an otherwise 
+  undisturbed system, the wholeness W is progressively enhanced and intensified
+--> The transformations which occur in the system take whatever wholeness exists
+at any given instant and continue it and intensify it while, broadly, maintaining
+its global structure, so that at the next instant that wholeness is more 
+pronounced; as time goes forward, the wholeness gets progressively intensified,
+step by step by step.
+- characteristics of sequence of development
+  + smooth: each state follows, without breaking structure, from the state 
+    before
+  + even in those cases where there is a catastrophe, the catastrophe always
+    begins as a feature which is essentially consistent with the symmetries of
+    the earlier state
+
+*** Appearance of the fifteen properties
+- The process of formation is in every case /smoothly structure-preserving/ and
+  the fifteen properties appear again and again
+- the beauty and coherence of the result is the most remarkable feature of the
+  process
+
+*** Previously offered explanations of emergence from the whole
+- *Mechanical origins of living centers*
+  + the appearance of ALTERNATING REPETITION in the wave-like ripples of
+    wind-blown desert sand
+- *The principle of least action*
+  + the evolution of any dynamic system will always follow the path of least 
+    work
+  + Example: soap bubble: for a given volume of air, the bubble takes that shape
+    which minimizes the surface area. The potential energy is minimized
+- *Non-linear dynamics*
+  + the global behavior then comes about from interactions of individual local
+    behaviors
+  + Prigogine, Thom, Mandelbrot, Feigenbaum, Kauffman, Goodwin, and hundreds of
+    others have demonstrated that highly complex, ordered phenomena can arise as
+    a result of relatively simple interactions among variables linked by
+    non-linear equation.
+  + Central to the studies in complexity theory, is the discovery that these
+    systems converge to attractors (small regions in the state-space of the 
+    system), and that because of the mathematical behavior of the state-space,
+    order will arise in these systems spontaneously, under suitable conditions
+- *Other kinds of structure creation, also not easily explainable*
+  + the evolving system of the genetic material *ITSELF* cause evolution to
+    follow certain pathways, not only because of selective pressure from outside
+    but also by virtue of its own internal dynamical ordering tendencies. The
+    results of evolution are then to be understood mainly formed not by 
+    Darwinian selective pressure acting from outside, but by pressures created 
+    by the geometry and dynamics of the evolving genetic system itself.
+  + In each of these puzzling cases, it appears that some inherently geometric
+    principle of form-creation is at work, encouraging a coherent large-scale
+    order to emerge.
+
+*** A Principle of unfolding wholeness
+- The evolution of any natural system is governed by transformations of the 
+  mathematical wholeness and by a tendency, inherent in these transformations,
+  for the whole to unfold in a particular direction.
+- wholeness (defined as a structure of symmetries and centers) will always have
+  a natural dynamic of such a nature that as many as possible of these symmetries
+  (and especially some of the larger ones) are preserved as the system moves 
+  forward in time. As the system evolves, it destroys these symmetries and 
+  larger centers *AS LITTLE AS POSSIBLE*
+
+*** Emergence of living structure
+- At each moment in the emergence of a system, the system tends to go in that
+  direction which intensifies the already existing centers in the wholeness in
+  just such a fashion that the new centers reinforce and intensify the *LARGER*
+  configuration or wholeness which existed before.
+
+** Structure-Preserving transformations
+*** Structure-preserving transformations
+- Intricate and beautiful structure of living centers comes about naturally, and
+  most of the time without effort, as a result of the repeated application of
+  structure-preserving transformations to the wholeness which exists
+- how a mechanical process following from adherence to structure that exists
+  according to well-defined rules of transformation will by itself create 
+  entirely new and previously unseen structure.
+*** Structure-preserving transformations further dicussion
+*** The objectivity of structure-preserving transformations
+- rate the goodness of a structure-preserving transformation, approximately, by
+  the number of people who considered it to be so.
+*** Repeated application of structure-preserving transformations
+- If we have a sequence of transformations, all of which are structure-preserving
+  then the result of these transformations is almost always beautiful. Good
+  transformations do not cause any upheaval. So to get a good project, we merely
+  have a sequence of structure-preserving transformations. 
+- repeated application of a structure-perserving transformation creates rather
+  densely packed, rich systems of centers
+*** Minimum symmetry breaking
+- structure-preserving transformations == "symmetry breaking"
+- the system acts to preserve as much of its structure as possible.
+*** How the fifteen properties appear in nature from the unfolding of wholeness
+- At any given moment, in any given region of space, there is a wholeness W_t. 
+  At the next moment, this gives way to another wholeness W_t+1. The 
+  transformation of Wt --> Wt+1 is the way the world unfolds. Everything is
+  covered by it.
+- When the unfolding is /smooth/, the transformation is structure-preserving.
+  W_t+1 is one of the relatively few steps which is very deeply consistent with
+  the wholeness W_t
+- Example of how 15 properties work
+  + Level of Scale: within a given center A or directly near it, we shall find
+    smaller centers, B, one level of scale smaller.
+  + Strong centers: under structure-preserving transformations, strong centers
+    keep on increasing
+  + Boundaries: 
+  + Alternating repetition
+  + Positive space
+  + Good shape
+  + Local Symmetries
+  + Deep Interlock
+  + Contrast
+  + Gradients
+  + Roughness
+  + Echoes
+  + The void
+  + Simplicity and inner calm
+  + Not separateness
+*** Fifteen transformations
+- fifteen properties not merely results of structure-preserving transformations,
+  but also the names of particular types of structure-preserving transformations
+  themselves
+- How transformations work
+  + Levels of scale: introduce intermediate-sized centers to fill out the 
+    hierarchy of scales that exist in a given wholeness
+  + Strong center: any weak center which exist is made more emphatic by this 
+    transformation. The transformation itself, in a primitive form, acts to give
+    weight and definition and distinction and centeredness, to any weak center
+    which has begun to crystallize in any given field.
+  + Boundary: the zone becomes more distinct, and a thick boundary zone starts
+    forming in a discernible way.
+  + Alternating-repetition: generates a repeating pattern of similar entities,
+    within a previously undifferentiated field.
+  + Positive-space: creating new centers in the space between other centers, 
+    thus strengthening and shaping spaces between the other centers that are not
+    yet centers themselves.
+  + Good shape: intensifies the products of the alternating repetition, by
+    strengthening them, making them more distinctive.
+  + Local symmetry: strengthens a center by making the center have an internal
+    axis of symmetry.
+  + Deep interlock: takes an existing structure, especially in its boundary 
+    zones, and weaves the distinct opposing parts at the boundary into a tighter
+    less separated, union by physically creating connections in which part of 
+    one enters into the other, and vice versa.
+  + Contrast: works to increase the distinction between the two kinds
+  + Gradient: creates transitions of size and character.
+  + Roughness
+  + Echoes: applies procedures, angles, and shapes and shape-character of
+    certain repeating centers to other centers in the field.
+  + the void: at work getting rid of garbage.
+  + Simplicity: cleans, simplifies. It works by removing unwanted centers,
+    differences, and other kinds of complexity, throughout the structure, where
+    the void does it by creating a single homogeneous zone in one place
+  + Not-separateness: a kind of knitting
+*** A new view of the natural world
+- Through the process, centers will always tend to form in such a way as to
+  preserve and enhance previous structure - and this means, in such a way as to
+  help sustain other existing and emerging centers.
+*** In buildings, too, all living structure grows naturally from structure-preserving transformations
+
+** Struture-preserving transformations in traditional society
+*** Introduction: smooth unfolding as the origin of life in buildings
+
+* Emergence of formal geometry		   :appearance:finally:coherent_form:
+** Geometric order
+In order to achieve living structure, at a certain stage, it is necessary to 
+seize hold of the building design and force it into an almost brutal, simple,
+massive geometric mold
+
+All living processes use unfolding to create geometric order.
+When we contemplate any living process at all, we always see that the length and
+breadth of the process will be suffused by steps through which a coherent 
+geometry unfolds. In the case of buildings the fountain of geometrical order
+comes, above all, from building /structure/ (columns, walls, beams, vaults, and
+so forth), specifically from the aperiodic, tartan like grids which form the 
+abstract underpining of the building structure.
+
+In this chapter: how it is ultimately the powerful formation of this structural
+core that provides a living building with its geometrical substratum.
+
+** Formation of brutal and massive chunks in the visitor's center at west dean
+** Reasons for brutal geometric order to evolve
+There are 2 questions:
+- why the appearance of distinct levels of mass and scale must happen inevitably
+  in a living process as one develops the building structure
+- why the appearance of the geometry as it ensues in the building, may be 
+  described as almost brutal.
+
+For the first question:
+- we are at first find likely to find an order which is "informal", not too 
+  rigid, rather soft and harmonious and it fits itself to a landscape, or to a
+  valley, or to a street, or to the seeming disarray of neighboring buildings.
+  This /softness/ is what characterizes the "old" way.
+- But as we try to create this kind of soft order, there comes a time, 
+  inevitably when we have to /impose/. We have to create a geometry that comes
+  almost from the space itself, from the discipline of rectangles, and from the
+  discipline of equal or nearly equal structural bays
+--> it comes from the need for the internal geometrical coherence of the 
+building, not from the surroundings. Of course, as we introduce this formal 
+geometry, work it, care for it, we do our best to make it harmonious, we tame it
+we introduce necessary irregularities to make it fit the surroundings as well as
+possible.
+
+For the second question:
+- There is at the kernel of the whole process, an inevitable moment of truth 
+  which really is rather brutal, the moment when geometry, coming about for its 
+  own sake, imposes a discipline of its own that /must/ be introduced.
+- imposition of a discipline is undeniably a brutal act. Yet it is from this
+  moment of brutality, that real order must come.
+
+--> It is this injection of definite, strong, geometrical order that allows the
+profound depth of the made thing.
+
+** The aperiodic grid
+Another way to express brutality: There comes a time in the evolution of a 
+building form when we must forget the context, the plan, even turn our back on
+these things, and /focus only on the pure beauty of the structural order/, the
+building as a thing of beauty in itself.
+
+This is focused on beauty. It is brutal, only because, to do it, we must forget
+our responsibilities and the subtleties of site and function, and enter the play
+of pure forms with as much emphasis on feeling, art, and structure alone as we
+can.
+
+** The sapporo building
+** What is really happening in such a case
+What is the essence of this process for buildings? How is it related to the
+"brutal" aspects of process I have been describing? How is it related to the 
+repetition of the fundamental process that is required by all living processes?
+- The volumn is already fixed.
+- we have a rough idea of the way space is to be disposed inside this volume. In
+  broad terms, we have divided the thing up into areas and positions, possibly
+  including exterior areas or spaces
+- crucial step when orderly geometry of structured is introduced. We apply, to
+  this configuration of roughly conceived spaces, a special kind of sharpening
+  process: we use it to construct the simplest aperiodic grid consistent with
+  the harmony and variety of the building plan.
+
+** Outward simplicity of form and packing of form
+In some cases the "brutal" effect of geometry takes rather simple character. It
+sometimes is more a matter of pure geometry.
+The principle is: a rigid and definite geometry is introduced in a nearly brutal
+manner, but is then treated, bent, filled, and modified, so that its coherent
+existence, while being adapted to rooms, circumstances, needs and land, is
+nevertheless able to happen beautifully within a visible and satisfying order.
+
+** A further structural example
+** A glimpse of the idea of a generating sequence for building structure.
+the sequence that uses the fifteen transformations to build a highly regular
+aperiodic grid that fits decisions about volume and interior spaces which have
+been established earlier.
+
+** A Generative process for middle-range order in the building structure
+middle-range order: the existence of entities - centers - at the scale of rooms,
+bays, portions of a building.
+It is the use of generating process and the use of the aperiodic grid which 
+produces these middle-sized centers.
+How this process is related to the fundamental process and to the idea of living
+process
+  - when we construct an aperiodic grid, the critical issue is the alternation
+    of narrow grid bands with larger grid bands: allows for the creation of 
+    boundaries and levels of scale
+  - within this grid, it is certainly obvious that STRONG CENTERS, LOCAL 
+    SYMMETRIES, GOOD SHAPE, LEVELS OF SCALE play a huge part
+  - the existence of these halfway, middle-range centers in a living structure
+    sheds a great deal of light on the unfolding process.
+  - the effort is to make each "thing" positive.
+
+** What seems like an imposition of geometry is necessary as a part of every living process
+This formal creation of geometry really apply to other living processes
+  - the formation of a community
+  - creation of a human group
+  - brushwork of a delicate painting
+  - construction of a song played by a flute
+brutal and too-decisive though it may seem is the process by which the guts of a
+thing, its valuable force, is made
+
+* Form language and style
+(How can human beings implement a geometrical differentiating process 
+successfully)
+
+** Introduction
+Everything in architecture comes from layout, organization, form, shape. How
+elusive this is
+Is there anything, besides the advice already given in the last dozen chapters,
+which can guide us in this hardest task of all, the artistic task of formation,
+geometry-making
+
+** The format of our art
+It is a fundamental issue that belongs square in the middle of the analysis of
+living structure as a product of society
+Start from the fact, obvious enough, that we do not start each new design from
+scratch. We learn over years the ingredients that make a building good.
+At any given period of history, in any particular society, there are a certain
+number of schemata which provide rules of thumb for designing and constructing
+buildings. The form-language is the combinatory system of these schemata (social,
+technological, geometric, stylistic, etc). 
+Form-language the repository of style (p432)
+We shall only be able to reproduce versions and combinations of what can be
+"reached" by that form language. (p433)
+Reasons:
+  - the nature of human cognition is such that people will, in any case, use
+    schemata as the basis of their building operations
+  - It is, in essense, the shared form language of society.
+
+It is reasonable to ask, therefore, what a modern form language would need to be
+like, if it were to help us reach the goal of living process in our highly 
+modern and technically sophisticated society. (p433)
+If we want a living world, and we want one which is created and generated by 
+living process, it is imperative that the form languages we use, and the form
+languages available to us, help us and support us in this task.
+
+Unless we have a form language which supports the necessities of living structure,
+then living structure is simply out of our reach. If a society has inadequate
+style, inadequate shapes and forms, then no matter how hard the builders and 
+architects try, the environment they create will not be, /and cannot be/ a 
+living structure
+
+*Most vital targets of Alexander's search*: in order to make living process 
+possible, we must take at least first steps towards a new form language - in 
+effects 
+
+The problem: *How is such a language to be discovered*
+
+** Historically, what kind of thing did a form language do?
+What a form language is? and what it can do?
+The pattern languages and sequences in use in traditional societies, nearly 
+always specified form, shape, volume, material, style, ornament. They embodied a
+coherent geometric, visual, physical style, so that now, long afterwards, the 
+architecture of each given place and time, is still recognizable as part of the
+geometric living unity which was created by that culture.
+
+the creation of living structure:
+  - the emergence of living process
+  - ppl shape things, planning, making the building through the sequence of form 
+    language, share some coherence of style and geometric substance.
+
+** Twentieth-century struggles to invent a form-language for modern architecture
+** The style needed for unfolded, living form
+** The modern theory of language
+The concept of "language" was given by several mathematicians, for the case of
+natural language by Noam Chomsky who coined the phrase /transformation grammar/.
+The basic idea:
+  - a string creating system was defined.
+  - the starting point was usually a null sentence consisting of a single 
+    character, or word, or the null string.
+  - the language provides a series of rule which allowed certain kinds of 
+    transformations which would elaborate a given string.
+
+There is the enormous challenge of making such a language concrete, and culture
+specific, while not hampering it with traditional or historical reference.
+
+** Building a form-language from theory
+a form language able to produce life must be a system of transformations which
+allows such living centers to be created, one by one, or a few at a time, 
+gradually creating a profusion of coordinated and interdependent living centers,
+each well-related and supportive to the larger wholes around it. (p444)
+
+** The form of future buildings sketches to illustrate the output from a new form language
+the vital role of /unfolding/ - the process by which form is created through 
+differentation - and to see clearly how this comes about, what kinds of elements
+and local symmetries will typically be generated by unfolding
+
+This statement is highly abstract, highly general, and not oriented to history
+The step-by-step evolution of living centers, in a progressive differentiating
+process, is /necessary/ to the adaption process. It is not a cultural decision, 
+not an emotional decision, but a biological necessity - an essential part of the
+adaptation of a complex system.
+
+* words
+carcass
+impose

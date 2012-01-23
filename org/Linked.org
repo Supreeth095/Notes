@@ -1,0 +1,267 @@
+* What I have to do
+** TODO Write summary for each chapter and the whole book
+*** TODO Write summary for chapter 1
+*** DONE Write summary for chapter 2
+*** DONE Write summary for chapter 3
+*** DONE Write summary for chapter 4
+** DONE Read the 2 next chapters (six degrees of seperation and small world)
+
+
+
+* Six degrees of seperation					 :seperation:
+** notes
+
+
+** new words
++ literary
+  1. (a) concerning the writing, study, or content of literature
+  2. (a) associated w/ the literary works or other formal writing; having
+       a marked style intended to create a particular emotional effect
++ herd
++ prairy
++ demolish
++ irreversibly
++ implosion
++ infest
++ preposterous
++ couterfeit
++ interwoven
++ intimacy
++ scrutinize
++ obscurity
+
+
+* Hubs and Connectors
+** Notes
++ "Sprinkled among every walk of life... are handful of people w/ a truly extraordinary
+  knack of making friends and acquaintances. They are connectors" (p55)
++ Connectors are an extremely important component of our social network. They create
+  trends and fashions, make important deals, spread fads, or help lauch a restaurant.
++ Cyberspace embodies the ultimate freedom of speech. Some may be offended, others may
+  love it, but the content of a Webpage is hard to censor. Once posted, it is available
+  to hundreds of millions of people. This unparalleled license of expression, coupled w/
+  diminished publishing costs, makes the Web the ultimate forum of democracy; everybody's
+  voice can be heard w/ equal opportunity. Or so insist constitutional lawyers and glossy
+  business magazines. p(56)
++ Each of us has very different interests, values, beliefs, and tastes. The links we add
+  to our Webpage reflect this diversity.
++ the Anatomy of Buzz
+
+** words
++ enormous
++ sprinkled
++ knack of: an acquired or natural skill at performing a task.
+  She got the knack of it in the end
+  the tendancy to do something - the band has a knack of warping classic soul songs
++ pedigree
++ stumble across: find or encounter by chance - they stumbled across a farmer selling
+  25 acres.
++ anomalous: deviating from what is standard, normal, or expected: an anomalous situation
+  sentences that are grammatically.
++ reconcile: restore friendly relations between: she wanted to be reconciled w/ 
+  her father.
++ be coupled to / w/: combine - a sense of hope is coupled w/ a palpable sense of loss
++ diminished: make or become less - a tax whose purpose is to diminish spending
++ glossy: shiny and smooth: think, glossy, manageable hair
+  (magazine or photograph) printed on high-quality smooth shiny paper
++ truism
++ spectrum: 
++ inaugurate: begin or introduce (a system, policy, period)
+  the new president will be inaugurated on January 20
++ pretigious inspiring respect and admiration; having high status: a pretigious academic post
+
+
+* The 80/20 Rule
+** Notes
++ Nature normally hates power laws. 
++ Behind the hubs there is a rather strict mathematical expression, a power law (p78)
++ We now knew that they were the consequence of power laws - a hint of self-organization
+  and order (p78)
++ the 80/20 Rule in realworld (p66)
+  - 80 percent of profits are produced by only 20 percent of the employees
+  - 80 percent of Italy's land was owned by only 20 percent of the population
+  - 80 percent of customer service problems are created by only 20 percent of consumers
+  - 80 percent of decisions are made during 20 percent of meeting time
+  - 80 percent of crime is committed by 20 percent of criminals
+
+  - 80 percent of links on the Web point to only 15 percent of Webpages
+  - 80 percent of citations go to only 38 percent of scientists
+  - 80 percent of links in Hollywood are connected to 30 percent of actors.
++ the biggest surprise came when we tried to fit the histogram of the node connectivity on a so
+  called log-log plot.
++ most quantities in nature follow a bell curve, a distribution rather similar to the peaked
+  distribution characterizing random networks (p67)
++ on occasion nature generates quantities that follow a power law distribution instead of a bell
+  curve
++ Each power law is characterized by a unique exponent, telling us, for example, how many very 
+  popular Webpages are out there relative to the less popular ones. As in networks the power law 
+  describes the degree distribution; the exponent is often called the degree exponent. (p68)
++ Power laws mathematically formulate the fact that in most real networks the majority of nodes
+  have only a few links and that these numerous tiny nodes coexist w/ a few big hubs, nodes w/ an
+  anomalously high number of links. The few links connecting the smaller nodes to each other are
+  not sufficient to ensure that the network is fully connected. This function is secured by the
+  relatively rare hubs that keep real networks from falling apart. (p70)
++ In random network the peak of the distribution implies that the vast majority of nodes have the 
+  same number of links and that nodes devasting from the average are extremely rare. Therefore, a
+  random network had a characteristic scale in its node connectivity, embodied by the average node 
+  and fixed by the peak of the degree distribution. (p70)
++ The absence of a peak in a power-law degree distribution implies that in a real network there is
+  no such thing as a characteristic node. We see a continuous hierarchy of nodes, spanning from 
+  rare hubs to the numerous tiny nodes. The largest hub is closely followed by two or three somewhat
+  smaller hubs, followed by dozens that are even smaller, and so on, eventually arriving at the 
+  numerous small nodes. The power law distribution thus forces us to abandon the idea of a scale,
+  or a characteristic node. In a continuous hierarchy there is no single node which we could pick
+  out and claim to be characteristic of all the nodes. There is no intrinsic scale in these networks.
+  This is the reason my research group started to describe networks w/ power-law degree distribution
+  as scale-free.
++ power laws rarely emerge in systems completely dominated by a roll of the dice. Physicists have 
+  learned that most often they signal a transition from disorder to order. (p72)
++ there were laws behind complex networks -- Pareto (p73)
+
+** words
++ majestic
++ coerce
++ throne: a ceremonial chair for a sovereign, bishop, or similar figure
++ beggar: a person, typically a homeless one, who lives by asking for money or food.
++ consistency
++ vicinity: the area near or surrouding a particular place. 
++ decay: 
+  undergo change to a different form by emitting radiation.
+  undergo a gradual decrease. 
++ patent
++ unprecedented: never done or known before
++ unexpected
++ coherent coherence
++ unveil: remove a veil or covering from, esp. uncover.
++ divest
++ rigorous
+
+* Rich get richer
+** Notes
+- the random model of Erdos and Renyi rests on two simple and often disregarded 
+  assumptions.
+  + number of nodes is fixed and remains unchanged throughout the network's life
+  + all nodes are equivalent.
+- there is one thing about the Web that everybody agrees on: it is growing
+  + Web emerged one node at a time from Tim Berners-Lee's famous first Webpage.
+  + Hollywod network started w/ a tiny core, the actors of the first silent
+    movies
+- Despite their diversity most real networks share an essential feature: growth
+- The networks generated by these models are therefore static, meaning that the
+  number of nodes remains unchanged during the network's life. In contrast, our
+  examples suggested that for real networks the static hypothesis is not appro-
+  priate. Instead we should incorporate growth into our network models. This
+  was the initial insight we gained while trying to explain the hubs. In so
+  doing, we ended up dethroning the first fundamental assumption of the random
+  universe - its static character.
+- It is relative easy to model a growing network. We start from a tiny core and
+  keep adding nodes, one after the other.
+- Model A: 
+  + Start w/ 2 nodes, our third node will link to both of them. How do we
+  pick which two node we should link to? For the sake of simplicity, let's follow
+  the lead of Erdos and Renyi and randomly select and connect. we can continue
+  this process indefinitely, so that each time we add a new node, we connect it
+  to two randomly selected node.
+  + The difference from the random network model: in its growing nature.
+  + Characteristics: 
+    the first nodes will be the richest. The poorest node will be the last one 
+    to join the system.
+    The degree distribution, the function that distinguishes scale-free networks
+    from random models decayed too fast, following an exponential.
+  + Conclusion: the growth alone cannot explain the emergence of power law.
+- Startups and established companies had been burning venture capital and hard-
+  earnned cash, millions a day, to defeat the random universe of Erdos and Renyi
+- the bottom line is that when deciding where to link on the Web, we follow 
+  "preferential attachment": When choosing between two pages, one with twice as
+  many links as the other, about twice as many people link to the more connected
+  page. While our individual choices are highly unpredictable, as a group we
+  follow strict patterns.
+  + preferential attachment rules in Hollywood as well: the producer whose job
+    it is to make a movie profitable knows that stars sell movies. Thus, casting
+    is determined by two competing factors: the match between the actor and the
+    role, and the actor's popularity.
+- WWW and Hollywood force us to abandon the second important assumption inherent
+  in random networks - their democratic character. Popularity is attractive
+  + webpages w/ more links aare more likely to be linked to again.
+  + highly connected actors are more often considered for new roles
+  + highly cited papers are more likely to be cited again
+- Real networks are governed by two laws: growth and preferential attachment
+- Why do hubs and power laws emerge in the scale-free model?
+  + The expansion of the network means that the early nodes have more time than
+    the latecomers to acquire links. Thus growth offers a clear advantage to the
+    senior nodes, make them the richest in links
+  + Early nodes w/ more links will be selected more often and will grow faster
+    than their younger and less connected peers. The rich-get-richer phenomenon
+    naturally leads to the power laws.
+- Many related working or researching
+  + generalizing the scale-free model to include aging, incorporating the
+    possibility that actors stop acquiring links after retirement.
+  + preferential attachment follows some more complicated function
+- Network researching process: 
+  + capture how networks are assembled by reproducing the steps followed by
+    nature
+  + if we correctly model the network assembly, our final network should closely
+    match the reality.
+    --> Our goals have shifted from describing the topology to understand the
+    mechanisms that shape network evolution.
+** Words
+- elusive
+  difficult to find, catch, or achieve
+  success will become more and more elusive
+- inherent
+  1. existing in something as a permanent, essential, or characteristic attribute
+     any form of mountaineering has its inherent dangers.
+     the symbolism inherent in all folk tales
+- democratic
+  1. of, relating to, or supporting democracy or its principles
+     democratic reforms, democratic government.
+  2. favoring or characterized by social equality or egalitarian:
+     cycling is a democratic activity
+- aspiring
+- slow-moving river
+- seashore
+- medieval
+- defensible
+- magnificent
+- distinctive
+- vintage
+- dreamlike
+- distinguishing features
+- frantically
+- novelty
+- disseminate
+  1. spread or disperse widely
+     health authorities should foster good practice by disseminating information
+  2. spread throughout an organ or body
+     disseminated colonic cancer
+- taper
+- stark
+  1. severe or bare in appearance or outline
+     the ridge formed a stark silhouete against the sky
+  2. complete, sheer
+     stark contrast
+- dethrone: remove from power
+  he devised a plan to dethrone his brother, the king.
+
+* Achilles' Heel
+- blackout
+- elongate
+- oscillations
+- shatter
+- perturb
+- disruptive
+- catastrophe
+- cripple
+- diffusion
+* Virus and Fads
+* The Map of Life
+- manic
+- bipolar disorder
+- prevailing view
+- recant
+- catalyst
+- harken
+
+* Network Economy
+- makeover
+- scrap

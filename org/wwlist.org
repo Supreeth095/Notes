@@ -1,0 +1,198 @@
+#+LAST_MOBILE_CHANGE: 2010-11-02 17:35:49
+* Weeks 10/5/2010 - 15/5/2010
+** Tasks
+*** TODO Implement vectorsearch
+    :PROPERTIES:
+    :ID:       9398B4B2-8971-401B-9336-4B838674440B
+    :END:
+*** DONE Do simulation homeworks (2 chapters of Linked)
+
+*** TODO Implement vector search
+    :PROPERTIES:
+    :ID:       04294AA3-C02D-4397-A128-2E3CA6D34124
+    :END:
+
+*** DONE Barcode reader and Android layout
+*** DONE Design interface for company projects
+
+*** DONE Translate effective C++
+*** DONE Read C++ tutorial
+*** DONE Write summary QT's widgets
+*** DONE Read STL tutorial topcoder    
+
+** 10/5/2010
+*** DONE Implement get stopwords (java)
+*** DONE Survey android app layout
+*** DONE Translate effective C++
+*** DONE Implement ploting color histogram
+
+** 11/5/2010
+*** DONE Finish "the 80/20" and write summary
+*** DONE Fun w/ android graphics, Intent, Thread (Java Thread?)
+** 12/05/2010
+*** DONE Research the way to decode barcode
+
+** 13/05/2010
+*** DONE Read Linked
+*** DONE Translate effective C++ + read tutorial
+*** DONE Do simulation exercise: 
+*** DONE Write histogram analyze for lab
+    - Excel file
+    - What did you do?
+    - result?
+    - What can you say from data?
+      
+
+* Week 17/05/2010 - 23/05/2010
+** 18/05/2010
+*** DONE Implement android view
+*** DONE Default list view android
+*** DONE R prog review
+*** DONE Image processing
+*** DONE Implement C++ graph API + basic QT
+
+** 19/05/2010
+*** DONE R plot function, review R
+*** DONE GUI for research project
+*** DONE Image processing Java (GUI)
+*** DONE Code GUI for company project
+
+** 20/05/2010
+*** DONE java thread
+*** DONE probability + statistics in R
+*** DONE CSS GUI
+** 21/05/2010
+*** DONE statistics in R
+*** DONE CSS GUI
+*** DONE Java script
+
+
+* Week 15/06/2010 - 20/06/2010
+** 15/05/2010						         :AI:
+*** DONE implements concurrency for project
+*** DONE Clojure + AI
+*** DONE If Hung sends image file, start design the final ga
+** 16/05/2010 							 :simulation:
+*** DONE Think about simulation final project
+*** DONE Return the computer graphics book to library
+** 17/05/2010						 :statistics:gamepro:
+*** DONE clojure + statistics + probability
+*** DONE game pro document
+
+CubicMotion(duration)
+ - duration
+ - date
+ - path = [0,0,0,0]
+ - target = 0
+
+ + reset
+   this.path = [0, 0, 0, 0]
+
+*** DONE game pro torus game check
+
+** 18/05/2010						   :query:simulation:
+*** DONE Design query & result for query
+*** DONE think a model for simulation final project
+
+* Week 21/06/2010 - 26/05/2010
+** 21/06/2010
+*** DONE Design game system
+*** DONE Write game document (kadai)
+*** DONE Think about simulation (write email)
+** 22/06/2010
+*** DONE Simulation
+*** DONE Implement matrix, game proj object, AI
+*** DONE Implement creating game module.
+** 23/06/2010
+*** DONE Query design for graduation project
+*** DONE Simulation design
+** 24/06/2010
+*** DONE Simulation design
+*** DONE Finish game
+** 25/06/2010
+*** DONE write document for game project
+*** DONE code game.
+*** DONE Send message for Yuriko to inform the change in schedule
+
+* Week 28/06/2010 - 05/07/2010
+** 28/05/2010
+*** DONE Finish game pro
+*** DONE design program for simulation pro
+*** DONE Read paper on semantic web and design system for final project
+** 01/07/2010
+*** DONE Simulation programming
+*** DONE Finish + debug game
+*** DONE Semantic web project 
+
+* Week 12/07/2010 - 23/07/2010
+** DONE Submit research plan
+** DONE Start writing simulation paper
+* Week 28/08/2010 - 04/09/2010
+** DONE Finish reading "Orality and Literacy"
+   DEADLINE: <2010-08-29 Sun>
+** DONE Insert Japanese into report of summer project
+   DEADLINE: <2010-09-02 Thu>
+
+** DONE Write a prototype for graduation project
+   DEADLINE: <2010-09-01 Wed>
+
+
+** DONE Create slides for gasshuku
+   DEADLINE: <2010-08-31 Tue>
+* Week 06/09/2010 - 11/09/2010
+** DONE Finish reading "The timeless way of building"
+** DONE Survey methods to filter texture
+* Week 12/09/2010 - 19/09/2010
+** DONE Finish reading "Ubiquity"
+** DONE Write report
+* Week 02/10/2010 - 08/10/2010				    :paper:important:
+** DONE Draw System Architecture (tools?)
+   DEADLINE: <2010-10-03 Sun> CLOSED: [2010-10-04 Mon 02:18]
+   :PROPERTIES:
+   :ID:       F544B425-33FF-42F0-8744-1DB60F7EC7CB
+   :END:
+** DONE Collect more videos
+   DEADLINE: <2010-10-04 Mon> CLOSED: [2010-10-05 Tue 16:42]
+   :PROPERTIES:
+   :ID:       7DF2148F-1DE0-4D33-B734-9592D621D5F1
+   :END:
+** DONE Survey on how to do experiments
+   DEADLINE: <2010-10-05 Tue> CLOSED: [2010-10-05 Tue 16:41]
+   :PROPERTIES:
+   :ID:       B7E0690F-4EA6-4FDB-8328-A58E7AEA8BAF
+   :END:
+** DONE Update program
+   :PROPERTIES:
+   :ID:       DE39B9EE-544F-4E94-BB0E-6E7A9CF12733
+   :END:
+   - Filter and Retrieve videos from database
+   - Test the program with many other input and many videos
+** DONE Write a draft research paper
+   DEADLINE: <2010-10-06 Wed>
+   :PROPERTIES:
+   :ID:       C1003145-3C22-4876-83F7-58122FC31730
+   :END:
+** DONE Read prologue and chapter 1 of Nature of order
+   :PROPERTIES:
+   :ID:       827E9EEF-BF86-4ABB-BFE5-91F4B472BA96
+   :END:
+* Week 11/10/2010 - 16/10/2010
+** DONE Write a report on Bayes Statistics
+   :PROPERTIES:
+   :ID:       5B0840C7-9057-42BA-8A37-0248AE591157
+   :END:
+** DONE Finish the paper
+   DEADLINE: <2010-10-15 Fri> CLOSED: [2010-10-12 Tue 18:24]
+** DONE Finish chapter 2 of "everything"
+   :PROPERTIES:
+   :ID:       A4F3C632-8A11-4975-AE49-73660037B1AB
+   :END:
+** DONE Finish chapter of "street fighting math"
+   :PROPERTIES:
+   :ID:       389E9C1E-EFFC-459B-BDDD-DCD292D02CE2
+   :END:
+** DONE Finish 2 next chapter of "Nature of Order"
+   :PROPERTIES:
+   :ID:       33F6B654-28A1-41CC-AC53-9409D3A201A9
+   :END:
+

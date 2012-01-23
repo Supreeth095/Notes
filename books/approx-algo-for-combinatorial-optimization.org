@@ -1,0 +1,59 @@
+* Lecture 0
+** Class of problems:
+  - Vertex cover
+  - Set cover
+  - Steiner tree
+  - TSP
+
+** Basic theory of linear programming and duality
+  - If a rounding scheme can be found, we can use linear programming to
+    design approximation algorithms
+  - If the optimum is integral, we can use linear programming to design
+    exact algorithms
+
+** The content of the course
+  - Simple examples of approximation algorithm
+  - Linear Programming
+    + Linear programs can be solved in polymial time
+    + All the combinatorial problems (will be studied) can be written as
+      linear programs
+
+* Lecture 1
+** The Vertex Cover Problem
+*** Definitions
+Given an undirected graph G = (V,E), a vertex cover is a subset of vertices
+C \in V such that for every edge (u,v) \in E at least one of u or v is an 
+element of C
+
+In the /minimum vertex cover/ problem, given a graph and the goal is to find
+a vertex containing as few vertices as possible. Related to the
+/maximum independent set problem/. In a graph G = (V, E) an /independent set/
+is subset I \in V of vertices such that there is no edge (u,v) \in E
+
+*** Algorithm
+  - Input: graph G = (V, E)
+  - C:=O
+  - while there is an edge (u,v) \in E such as u \notin C and v \notin C
+    C:=C \union {u,v}
+  - return C
+
+*** The Metric Steiner Tree problem
+We are given a set of required points R and a set of optional points S, along
+with a distance function d: (R \union S) x (R \union S) --> R. The distance is
+a metric
+  + d(x,y) = d(y,x)
+  + d(x,y) <= d(x,z) + d(z,y)
+    for every x,y,z
+Our goal is to find a tree T = (V,E) that spans all the required points, and 
+possibly uses some of the optional points, that is, R \in V \in R \union S, and
+such that the total length of the tree \sum{d(x,y)} is minimized
+
+This problem is very similar to the /minimum spanning tree/ problem. The 
+difference is that in the minimum Steiner tree problem we only require to span
+a subset of vertices, and other vertices are included only if they are 
+beneficial to constructing a tree of lower total length.
+
+simple approximation algorithm: run a minimum spanning tree algorithm on the set
+of required vertices, that is, find the best possible tree that uses none of the
+optional vertices. Next time we will prove that this algorithm achieves a factor
+of 2 approximation.

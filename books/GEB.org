@@ -1,0 +1,24 @@
+
+* The key images and ideas that lie at the core of GEB
+- GEB is very personal attempt to say how it is that animate beings can come out of inanimate matter.
+- what is a self, and how can a self come out of stuff that is as selfless as a stone or a puddle
+- What is an "I" and why are such things found only in association with
+  "teetering bulbs of dread and dream"
+- GEB approaches these questions by slowly building up an analogy that likens inanimate molecules to meaningless symbols, and further likens selves to certain special swirly, twisty, vortex-like, and /meaningful patterns/ that arise only in particular types of systems of meaningless symbols. *It is these strange, twisty patterns that the book spends so much time on, because they are little known, little appreciated, counterintuitive, and quite filled with mystery*. Such strange, loopy patterns are called *Strange loops*
+- Godelian strange loop that arises in formal systems in mathematics (collections of rules for churning out an endless seris of mathematical truths solely by mechanical symbol-shunting w/o any regard to meanings or ideas hidden in the shapes being manipulated) is a loop that allows such a system to "perceive itself", to talk about itself, to become "self-aware", and in a sense it would not be going too far to say that by virtue of having such a loop, a formal system /acquire a self/
+
+* Meaningless Symbols Acquire Meaning Despite Themselves
+- the formal systems where these skeletal "selves" come to exist are built out of nothing but meaningless symbols. The self arises solely because of a special type of swirly, tangled /pattern/ among the meaningless symbols
+- *isomorphism*: when a system of "meaningless" symbols has patterns in it that accurately track, or mirror, various phenomena in the world, then that tracking or mirroring imbues the symbols with some degree of meaning -- indeed, such tracking or mirroring is no less and no more that what meaning is. Depending on how complex and subtle and reliable the tracking is, different degress of meaningfulness arise.
+- human language: fluid & subtle in its patterns of tracking reality
+- quite a few philosophers, scientists who believe that patterns of symbols per se never have meaning on their own, but that meaning instead, in some most mysterious manner, springs only from the organic chemistry, or perhaps the quantum mechanics, of processes that take place in carbon-based biological brains. Such ppl feel that some kind of "semantic magic" takes place only inside our "teetering bulbs", somewhere behind pairs of eyeballs, even though they can never quite put their finger on how or why this is. Moreover, they believe that this semantic magic is what is responsible for the existence of human selves, soul, consciousness.
+- The only way of overcoming this magical view of what "I" and consciousness are is to keep on reaminding oneself, unpleasant though it may seem, that the "teetering bulb of dread and dream" that nestles safely inside one's own cranium is a purely physical object made up of completely sterile and inanimate components, all of which obey exactly the same laws as those that govern all the rest of the universe. Only one keeps on bashing up against this disturbing fact can one slowly begin to develop a feel for the way out of the mystery of consciousness: that the key is not the /stuff/ out of which brains are made, but the /patterns/ that can come to exist inside the stuff of a brain.
+- brains are: as /media/ that support complex patterns that mirror, albeit far from perfectly, the world, of which, needless to say, those brains are themselves denizens -- and it is in the inevitable self-mirroring that arises, however impartial or imperfect it may be, that the strange loops of consciousness start to swirl
+
+* Kurt Godel Smashes through Bertrand Russell's Maginot Line
+- Not /all/ jumps from matter to pattern give rise to consciousness or soul or self, quite obviously: not all patterns are conscious. What kind of pattern is it, then, that is telltale mark of a /self/? GEB's answer is: /a strange loop/
+- the first strange loop ever found -- and my model for the concept in general -- was found in a system /tailor-made to keep loopiness out/ (Principia Mathematica - Russell and Whitehead)
+- Russell believed that for a mathematical systme to be able to talk about itself in anyway whatsoever was the kiss of death, for self-reference would, necessarily open the door to self-contradiction, and thereby send all of mathematics crashing to the ground
+
+* Upside-down Causality and the Emergence of "I"
+

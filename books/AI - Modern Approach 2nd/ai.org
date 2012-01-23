@@ -1,0 +1,433 @@
+* Introduction
+
+** What is AI?
+   
+Definitions vary along two main dimensions
+  + the ones concerned with *thought process* and *reasoning*
+  + the ones address *behavior*
+
+Measure success in terms of 
+  + human performance
+  + ideal concept of intelligence, which we will call *rationality*
+
+Defs
+  + The exciting new effort to make computers think... /machines with minds/, in
+    the full and literal sense (Haugeland, 1985)
+    [The automation of] activities that we associate with human thinking,
+    activities such as decision-making, problem solving, learning...
+    (Bellman, 1978)
+  + The art of creating machines that perform functions that require intelligence
+    when performed by people (Kurzweil 1990)
+    The study of how to make computers do things at which at the moment, people
+    are betern (Rich and Knight, 1991)
+  + The study of mental faculties through the use of computational models
+    (Charniak and MacDermott, 1985)
+    The study of the computations that make it possible to perceive, reason, and 
+    act (Winston, 1992)
+  + A field of study that seeks to explain and emulate intelligent behavior in
+    terms of computational process (Schalkoof, 1990)
+    The branch of computer science that is concerned with the automation of
+    intelligent behavior (Luger and Stubblefield, 1993)
+
+** Acting humanly: The Turing Test approach
+
+*The Turing Test* intelligent behavior as the ability to achieve human-level 
+performance in all cognitive tasks, sufficient to fool an interrogator
+To pass the tests, the computer need to process the following capabilities:
+  + natural language processing
+  + knowledge representation
+  + automated reasoning
+  + machine learning
+To pass the *total Turing Test*, the computer will need:
+  + computer vision
+  + robotics
+
+** Thinking humanly: the cognitive modelling approach
+ we say a computer thinks like a human --> we must have some way of determining
+  how humans think. We need to get /inside/ the actual workings of human minds. 
+  There are 2 ways:
+  + introspection
+  + psychological experiments
+The interdisciplinary field of *cognitive science* brings together computer
+models from AI and experimental techniques from psychology to try to construct
+precise and testable theories of the workings of the human kind
+
+** Thinking rationally: the laws of thought approach
+
+Aristotle's famous *syllogisms* provided patterns for argument structures that
+always give correct conclusions given correct premises. The law of thought 
+were supposed to govern the operation of the mind, and initiated the field of
+*logic*
+
+** Acting rationally: The rational agent approach
+Acting rationally means acting so as to achieve one's goals, given one's beliefs
+An *agent* is just something that perceives and acts
+
+* Intelligent Agents
+
+** Introduction
+An *agent* is anything that can be viewed as *perceiving* its environment
+  through *sensors* and *acting* upon that environment through *effectors*
+
+** How agents should act
+
+A *rational agent* is one that does the right thing. We will say that the right
+action is the one that will cause the agent to be most successful. That leaves
+us with the problem of deciding /how/ and /when/ to evaluate the agent's 
+success
+  + We use the term *performance measure* for the /how/. We as outside observers
+    establish a standard of what it means to be successful in an environment
+    and use it to measure the performance of agents.
+  + The /when/ of evaluating performance is also important.
+
+We need to be careful to distinguish between rationality and *omniscience*.
+An omniscient agent knows the /actual/ outcome of its actions, and can act
+accordingly; but omniscience is impossible in reality.
+
+What is rational at any given time depends on 4 things:
+  + The performance measure that defines degree of success
+  + Everything that the agent has perceived so far. We will call this complete
+    perceptual history the *percept sequence*
+  + What the agent knows about the environment
+  + The actions that the agent can perform.
+    --> *ideal rational agent*: for each possible percept sequence, an ideal 
+    rational agent should do whatever action is expected to maximize its 
+    performance measure, on the basis of the evidence provided by the percept
+    sequence and whatever built-in knowledge the agent has.
+
+*** The ideal mapping from percept sequences to actions
+- A table of the action it takes in response to each possible percept sequence. 
+  Such a list is called a *mapping* from percept sequences to actions.
+
+*** Autonomy
+ If the agent's actions are based completely on built-in knowledge,such that it 
+need pay no attention to its percepts, then we say that the agent lacks 
+*autonomy* --> /A system is autonomous to the extent that its behavior is 
+determined by its own experience/
+
+** Structure of Intelligent Agents
+
+The job of AI is to design the *agent program*: a function that implements the
+agent mapping from percepts to actions
+We assume this program will run  on some sort of computing device, which we will
+call the *architecture*
+
+*** Agent programs
+simple skeleton of agent programs
+_
+*function* SKELETON-AGENT(percept) *returns* action
+      *static*: memory, the agent's memory of the world
+
+      memory <- UPDATE-MEMORY(memory, percept)
+      action <- CHOOSE-BEST-ACTION(memory)
+      memory <- UPDATE-MEMORY(memory, action)
+      return action
+
+_
+
+*** Why not just look up the answers?
+this proposal is doomed to failure:
+- The table needed for something as simple as an agent that can only play chess
+would be about 35^100 entries
+- It would take quite a long time for the designer to build the table
+- The agent has no autonomy at all, because the calculation of best actions is
+entirely built-in. So if the environment changed in some unexpected way, the
+agent would be lost.
+- Even if we gave the agent a learning mechanism as well, so that it could have
+a degree of autonomy, it would take forever to learn the right value for all the
+table entries.
+
+*** Simple reflex agents
+Processing is done on visual input to establish the condition 
+(*condition-action rule*)
+
+_
+*function* SIMPLE-REFLEX-AGENT(percept) *returns* action
+    *static*: rules, a set of condition-action rules
+
+    state <- INTERPRET-INPUT(percept)
+    rule <- RULE-MATCH(state, rules)
+    action <- RULE-ACTION[rule]    
+    *return* action
+_
+
+*** Agents that keep track of the world
+Sensors do not provide access to the complete state of the world. In such cases,
+the agent may need to maintain some *internal state* information in order to 
+distinguish between world states that generate the same perceptual input but 
+nonetheless are significantly different.
+
+_
+*function* REFLEX-AGENT-WITH-STATE(percept) *returns* action
+    *static*: state, a description of the current world state
+              rules, a set of condition-action rules
+
+    state <- UPDATE-STATE(state, percept)
+    rule <- RULE-MATCH(state, rules)
+    action <- RULE-ACTION[rule]
+    state <- UPDATE-STATE(state, action)
+    *return* action
+_
+
+
+*** Goal-based agents
+
+Knowing about the current state of the environment is not always enough to
+decide what to do. The right decision depends on where the taxi is trying to get
+to. In other words, as well as a current state description, the agent needs some
+sort of *goal* information.
+
+*Search* and *planning* are the subfields of AI devoted to finding action 
+sequences that do achieve the agent's goals.
+goal-based agent appears less efficient, it is far more flexible.
+
+*** Utility-based agents
+
+Goals alone are not really enough to generate high-quality behavior. Goals just
+provide a crude distinction between "happy" and "unhappy" states, whereas a more
+general performance measure should allow a comparation a different world states
+according to exactly how happy they would make the agent if they could be 
+achieved
+
+The customary terminology is to say that if one world state is preferred to 
+another, then it has higher *utility* for the agent. Utility is therefore a 
+function that maps a state onto a real number, which describes the associated 
+degree of happiness.
+
+A complete specification of the utility function allows rational decisions in
+two kinds of cases where goals have trouble.
+  - when there are conflicting goals, only some of which can be achieved, the
+    utility function specifies the appropriate trade-off.
+  - when there are several goals that the agent can aim for, none of which can
+    be achieved with certainty, utility provides a way in which the likelihood
+    of success can be weighed up against the importance of the goals.
+
+** Environments
+   
+*** Properties of environments
+Environments come in several flavors. The principal distinctions to be made are:
+  - *Accessible* vs *inaccessible*
+    An environment is effectively accessible if the sensors detect all aspects 
+    that are relevant to the choice of action --> agent need not maintain any
+    internal state to keep track of the world.
+  - *Deterministic* vs *nondeteministic*
+    If the next state of the environment is completely determined by the current
+    state and the actions selected by the agents.
+  - *Episodic* vs *nonepisodic*
+    In an episodic environment, the agent's experience is divided into 
+    "episodes". Each episode consists of the agent perceiving and then acting.
+  - *Static* vs *dynamic*
+    If the environment can change while an agent is deliberating, then we say
+    the environment is dynamic for that agent;otherwise it is static. If the 
+    environment does not change with the passage of time but the agent's 
+    performance score does, then we say the environment is *semidynamic*
+  - *Discrete* vs *continous*
+    If there are a limited number of distinct, clearly defined percepts and 
+    actions we say that the environment is discrete.
+
+Different environment types require somewhat different agent programs to deal w/
+them effectively. The hardest case is /inaccessible/, /nonepisodic/, /dynamic/, 
+and /continuous/.
+
+| Environment               | Accessible | Deterministic | Episodic | Static | Discrete |
+|---------------------------+------------+---------------+----------+--------+----------|
+| Chess w/ a clock          | Yes        | Yes           | No       | Semi   | Yes      |
+| Chess w/o a clock         | Yes        | Yes           | No       | Yes    | Yes      |
+| Poker                     | No         | No            | No       | Yes    | Yes      |
+| Backgammon                | Yes        | No            | No       | Yes    | Yes      |
+| Taxi Driving              | No         | No            | No       | No     | No       |
+| Medical diagnosis system  | No         | No            | No       | No     | No       |
+| Image-analysis system     | Yes        | Yes           | Yes      | Semi   | No       |
+| Part-Picking robot        | No         | No            | Yes      | No     | No       |
+| Refinery controller       | No         | No            | No       | No     | No       |
+| Interactive English tutor | No         | No            | No       | No     | Yes      | 
+
+*** Environment programs
+_
+*procedure* RUN-ENVIRONMENT(state, UPDATE-FN, agents, termination)
+  *inputs*: state, the initial state of the environment
+            UPDATE-FN, function to modify the environment
+	    agents, a set of agents
+	    termination, a predicate to test when we are done
+  *repeat*
+      *for* *each* agent *in* agents *do*
+         PERCEPT[agent] <- GET-PERCEPT(agent, state)
+      *end*
+      
+      *for* *each* agent *in* agents *do
+         ACTION[agent] <- PROGRAM[agent](PERCEPT[agent])
+      *end*
+
+      state <- UPDATE-FN(actions, agents, state)
+
+  *until* termination(state)
+_
+
+_
+*procedure* RUN-EVAL-ENVIRONMENT(state, UPDATE-FN, agents, termination, 
+                                 PERFORMANCE-FN) *returns* scores
+  *inputs*: state, the initial state of the environment
+            UPDATE-FN, function to modify the environment
+	    agents, a set of agents
+	    termination, a predicate to test when we are done
+  *local variables*: scores, a vector the same size as agents, all 0
+
+  *repeat*
+      *for* *each* agent *in* agents *do*
+         PERCEPT[agent] <- GET-PERCEPT(agent, state)
+      *end*
+      
+      *for* *each* agent *in* agents *do
+         ACTION[agent] <- PROGRAM[agent](PERCEPT[agent])
+      *end*
+
+      state <- UPDATE-FN(actions, agents, state)
+      scores <- PERFORMANCE-FN(scores, agents, state)
+
+  *until* termination(state)
+  
+  *return* scores
+_
+
+
+* Solving Problems by Searching
+** Problem-Solving agents
+- one kind of goal-based agent called a problem-solving agent
+- *goals* help organize behavior by limiting the objectives that the agent is
+  trying to achieve. 
+- *Goal formulation* based on the current situation is the first step in 
+  problem solving.
+- *Problem formulation* is the process of deciding what actions and states to
+  consider, and follows goal formulation.
+- An agent with several immediate options of unknown value can decide what to do
+  by first examining different possible /sequences/ of actions that lead to 
+  states of known value, and then choosing the best one. This process of looking
+  for such a sequence is called *search*.
+- A search algorithm takes a problem as input and returns a *solution* in the
+  form of an action sequence.
+
+_
+*function* SIMPLE-PROBLEM-SOLVING-AGENT(p) *returns* an action
+   *inputs*: p, a percept
+   *static*: s, an action sequence, initially empty
+             state, some description of the current world state
+	     g, a goal, initially null
+	     problem, a problem formulation
+   
+   state <- UPDATE-STATE(state, p)
+   *if* s is empty *then*
+      g <- FORMULATE-GOAL(state)
+      problem <- FORMULATE-PROBLEM(state, g)
+      s <- SEARCH(problem)
+   action <- RECOMMENDATION(s,state)
+   s <- REMAINDER(s, state)
+_
+
+** Formulating problems
+*** Knowledge and problem types
+4 essentially different types of problems
+  + single-state problems
+  + multiple-state problems
+  + contingency problems
+  + exploration problems
+
+*** Well-defined problems and solutions
+*problems* is really a collection of information that the agent will use to 
+decide what to do.
+Basic elements of a problem definition are the states and actions
+- the *intial state* that the agent knows itself to be in
+- the set of possible actions available to the agent. The term *operator* is 
+  used to denote the description of an action in terms of which state will be
+  reached by carrying out the action in a particular state (An alternate 
+  formulation uses a *successor function* S. Given a particular state x, S(x)
+  returns the set of states reachable from x by any single action.
+*state space*: the set of all states reachable from the initial state by any
+sequence of actions. A *path* in the state space is simply any sequence of 
+actions leading from one state to another.
+The *goal test*, which the agent can apply to a single state description to
+determine if it is a goal state.
+A *path cost* function is a function that assigns a cost to a path. In all cases
+we will consider, the cost of a path is the sum of the costs of the individual
+actions along the path. The path cost function is denoted by g.
+The output of a search algorithm is a *solution*, that is, a path from the intial
+state to a state that satisfies the goal test.
+
+*** Measuring problem-solving performance
+The effectiveness of a search can be measured in at least three ways
+- Does it find a solution at all
+- Is it a good solution
+- What is the *search cost* associated with the time and memory required to find
+  a solution? The *total cost* of the search is the sum of the path cost and the
+  search cost.
+** Example problems
+** Searching for solutions
+*** Generating action sequences
+First step: test current state for the goal state. If it is not a goal state, we
+need to consider some other states. This is done by applying the operators to
+the current state, thereby *generating* a new set of states. The process is
+called *expanding* the state.
+The choice of which state to expand first is determined by the *search strategy*
+It is helpful to think of the search process as building up a *search tree*. The
+root of the search tree is a *search node* corresponding to the intial state.
+
+_
+*function* GENERAL-SEARCH (problem, strategy) *returns* a solution, or failure
+     initialize the search tree using the initial state of problem
+     *loop do*
+         *if* there are no candidates for expansion *then return* failure
+	 choose a leaf node for expansion according to /strategy/
+	 *if* the node contains a goal state *then return* the corresponding 
+	 solution
+	 *else* expand the node and add the resulting nodes to the search tree
+*end*
+_
+
+*** Data structures for search trees
+*datatype* node
+   *components*: STATE, PARENT-NODE, OPERATOR, DEPTH, PATH-COST
+
+We need to present the collection of nodes that are waiting to be expanded - 
+this collection is called the *fringe* or *frontier*. 
+
+The simplest representation would be a set of nodes. The search strategy then 
+would be a function that selects the next node to be expanded from this set. 
+Although this is conceptually straightforward, it could be computationally 
+expensive, because the strategy function might have to look at every element of 
+the set to choose the best one. Therefore, we will assume that the collection of
+nodes is a implemented as a *queue*. The operations on a queue:
+  - MAKE-QUEUE(Elements)
+  - EMPTY?(Queue)
+  - REMOVE-FRONT(Queue)
+  - QUEUING-FN(Elements, Queue)
+
+_
+*function* GENERAL-SEARCH (problem, QUEUING-FN) *returns* a solution, or failure
+
+     nodes <- MAKE-QUEUE(MAKE-NODE(INITIAL-STATE[problem]))
+
+     *loop do*
+         *if* /nodes/ is empty *then return* failure
+	 node <- REMOVE-FRONT(nodes)
+	 *if* GOAL-TEST[problem] applied to STATE(node) succeeds
+	 *then return* nodes
+	 nodes <- QUEUING-FN(nodes, EXPAND(node, OPERATORS[problem]))
+*end*
+_
+
+
+** Search strategies
+We will evaluate strategies in terms of 4 criteria:
+- *Completeness*
+- *Time complexity*
+- *Space complexity*
+- *Optimality*
+
+*uninformed search*: search strategies which have no information about the 
+number of steps or the path cost from the current state to the goal (somtimes
+called *blind search*)
+*** Breadth-first search    
+*** Uniform cost search
+*** Depth-first search
+*** Depth-limited search
+*** Iterative deepening search
+*** Bidirectional search

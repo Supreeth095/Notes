@@ -1,0 +1,517 @@
+* Preface
+** What makes a Pragmatic Programmer
+- Early adopter/fast adapter
+- Inquisitive
+- Critical thinker
+- Realistic: realism gives you a good feel for how difficult things are, and how long things will take. Understanding for yourself that a process should be difficult or will take a while to complete gives you the stamina to keep at it.
+- Jack of all trades
+
+Most basic characteristics:
+- care about your craft
+- Think! About your work
+
+** It's a Continuous Process
+Management consultants like to drop the word /kaizen/ in conversations. "Kaizen" is a Japanese term that captures the concept of continously making may small improvements. It was considered one of the main reasons for the dramatic gains in productivity and quality in Japanese manufacturing and was widely copied throughout the world.
+Kaizen applies to individuals too. Everyday work to refine your skills you have and to add new tools to your repetoire. 
+
+* A Pragmatic Philosophy
+- What distinguishes Pragmatic Programmers
+  + an attitude
+  + a style
+  + a philosophy
+  + take responsibility for everything they do
+- Learning is a continuous and ongoing process
+- Pragmatic programming stems from a philosophy of pragmatic thinking
+
+** The Cat Ate My Source Code
+/The greatest of all weaknesses is the fear of appearing weak
+One of the cornerstones of the pragmatic philosophy is the idea of taking responsibility for yourself and your actions in terms of your career advancement, your project, and your day-to-day work. A pragmatic programmer isn't admit ignorance or error.
+- *Take Responsibility*:
+  + when do you accept the repsonsibility for an outcome, you should expect to be held accountable for it. When you make a mistake or an error in judgement, admit it honestly and try to offer options.
+  + don't blame someone or something else, or make up an excuse.
+
+*Provide Options, Don't Make Lame Excuses*
+
+- Instead of excuses, provide options. Explain what can be done to salvage the situation
+  + does code have to be thrown out
+  + educate them on the value of refactoring
+  + spend time prototyping to determine the best way to proceed
+  + do you need to introduce better testing.
+
+*** Related sections:
+  + Prototypes and Post-it Notes
+  + Refactoring
+  + Code that's Easy to test
+  + Ubiquitous Automation
+  + Ruthless Testing
+
+*** Challenges
+
+** Software Entropy
+- When disorder increases in software, programmers call it "software rot". There are many factors that can contribute to software rot. The most important one is: psychology, or culture, at work on a project.
+
+*Don't Live with Broken Windows*
+
+- Don't leave "broken windows" (bad designs, wrong decisions, poor code) unrepaired. Fix each one as soon as it is discovered. If there is insufficient time to fix it properly, then board it up!
+- neglect accelerates the rot faster than any factor. Don't let entropy win.
+
+- *Putting Out Fires*:
+
+*** Related sections include:
+- Stone Soup and Boiled Frogs
+- Refactoring
+- Pragmatic Teams
+
+*** Challenges
+** Stone Soup and Boiled Frogs
+- People will form committees, budgets will need approval, and things will get complicated. Everyone will guard their own resources. Sometimes this is called "start-up fatigue".
+- Work out what you can reasonably ask for. Develop it well. Once you've got it, show people, and let them marvel. Sit back and wait for them to start asking you to add the functionality you originally wanted. People find it easier to join an ongoing success. Show them a glimpse of the future and you'll get them rally around.
+
+*Be a Catalyst for Change*
+
+*** The villagers' Side
+- Most software diasters start out too small to notice, and most project overruns happen a day at a time. 
+*Remember the Big Picture*
+
+*** Related sections include:
+- Software Entropy
+- Programming by Coincidence
+- Refactoring
+- The requirements Pit
+- Pragmatic Teams
+
+*** Challenges
+Can you determine whether you're making stone soup or frog soup when you try to catalyze change? Is the decision subjective or objective?
+
+*** Good-Enough Software
+Striving to better, oft we mar what's well
+*** Involve Your Users in the Trade-Off
+- the scope and quality of the system you produce should be specified as part of that system's requirements
+*Make Quality a Requirements Issue*
+- If you give your users something to play with early, their feedback will often lead you to a better eventual solution.
+
+*** Know When to Stop
+- Code could never be perfect. Don't spoil a perfectly good program by overembellishment and over-refinement. Move on, and let your code stand in its own right for a while.
+
+*** Releated sections include
+- Tracer Bullets
+- The Requirements Pit
+- Pragmatic teams
+- Great Expectations
+
+*** Challenges
+** Your Knowledge Portfolio
+An investment in knowledge always pays the best interest
+-- Benjamin Fraklin
+
+- Your knowledge and experience are your most important professional assets, but they're expiring assets
+
+*** Your Knowledge Portfolio
+- Manage a knowledge portfolio is very similar to managing a financial portfolio:
+  + serious investors invest regularly -- as a habit
+  + Diversification is the key to long-term success
+  + smart investors balance their portfolio between conservative and high-risk, high-reward investments
+  + Investors try to buy low and sell high for maximum return
+  + Portfolios should be reviewed and rebalanced periodically
+
+*** Building Your Portfolio
+- *Invest Regularly*: The habit itself, is as important as the sums
+- *Diversify*: The more /different/ things you know, the more valuable you are.
+- *Manage Risk*: don't put all your technical eggs in one basket
+- *Buy low, sell high*: 
+- *Review and Rebalance*:
+
+*Invest Regularly in Your Knowledge Portfolio*
+
+
+
+
+*** Goals
+- Learn at least one new language every year
+- Read a technical book each quarter
+- Read nontechnical books too
+- Take classes
+- Participate in local user groups: Don't just go and listen, but actively participate
+- Experiment with different environments
+- Stay current
+- Get wired
+
+*** Opportunities for Learning
+- find the answer (ask gurus, search web) --> find someone who can answer. time is already in short supply so you need to plan ahead.
+
+*** Critical Thinking
+- Think critically about what you read and hear
+*Critically Analyze What You Read and Hear*
+
+*** Challenges
+- Start learning a new language
+- Start reading a new book (finish this one first!). If you're doing very detailed implementation and coding, read a book on design, vice versa
+- Get out and talk technology with people who aren't involved in your project
+
+** Communicate!
+I believe that it is better to be looked over than it is to be overlooked.
+-- Mae West, Belle of the Nineties, 1934
+*** Know What you Want to Say
+- Plan what you want to say. Write an outline. Refine it until it does
+
+*** Know Your Audience
+acrostic wisdom
+                    What do you want them to learn?
+      What is their interest in what you've got to say?
+                How sophisticated are they?
+           how much detail do they want
+Whom do you want to own the information
+        How can you motivate them to listen to you?
+
+*** Choose your Moment
+*** Choose a Style
+*** Make It Look Good
+Your ideas are important and they deserve a good-looking vehicle to convey them to your audience
+*** Involve Your Audience
+*** Be a Listener
+if you want people to listen to you: listen to them
+
+*** Get Back to People
+*It's Both What You Say and the Way You Say it*
+
+* A Pragmatic Approach
+- certain tips and tricks that apply at all levels of software development that are rarely documented, written down as odd sentences in dicussions of design, project management, or coding
+- The Evils of Duplication and Orthogonality
+  + not to duplicate knowledge throughout your systems
+  + not to split any one piece of knowledge across multiple system components
+- Reversibility: 
+  + techniques that help insulate your projects from their changing environment
+- Tracer Bullets:
+  + gather requirements, test designs, and implement code @ the same time
+- Prototypes & Post it: how to use prototyping to test architectures, algorithms, interfaces, and ideas
+- Estimating
+** The Evils of Duplication
+- Knowledge isn't stable --> we spend a large part of our time in maintenance mode, reorganizing and reexpressing the knowledge in our systems
+- Maintenance is not a discrete activity, but a routine part of the entire development process
+- When we perform maintenance, we have to find and change the representations of things, those capsules of knowledge embedded in the application.
+- DRY principle:
+  Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.
+
+*** How Does Duplication Arise?
+- categories of the duplication:
+  + *Imposed Duplication*: Developers feel they have no choice -- the environment seems to require duplication
+  + *Inadvertent duplication*: Developers don't realize that they are duplicating information
+  + *Impatient duplication*: Developers get lazy and duplicate because it's easier
+  + *Interdeveloper duplication*: Multiple ppl on a team duplicate a piece of information
+
+- *Imposed Duplication*: 
+  + Multiple representations of information: write a simple filter or code generator
+  + Documentation in code: DRY principle tells us to keep the low-level knowledge in the code and reserve the comments for other, high-level explanations
+  + Documentation and code: 
+  + Language issues: think about comments in header and implementation files
+
+- *Inadvertent Duplication*:
+  + duplication comes about as the result of mistakes in the design
+
+- *Impatient Duplication*:
+  + shortcuts make for long delays
+  + impatient duplication is an easy form to detect and handle, but it takes discipline and a willingness to spend time up front to save pain later.
+
+- *Interdeveloper Duplication*:
+  
+- *Make It Easy to Reuse*
+
+*** Related sections:
+- Orthogonality
+- Text Manipulation
+- Code Generators
+- Refactoring
+- Pragmatic Teams
+- Ubiquitous Automation
+- It's All Writing
+
+** Orthogonality
+- critical concept if you want to produce systems that are easy to design, build, test, and extend
+*** What is Orthogonality?
+- 2 or more things are orthogonal if changes in one do not affect any of the others
+  database code will be orthogonal to the user interface
+- A Nonorthogonal System:
+  + helicopter controls
+
+*** Benefits of Orthogonality
+- *Eliminate Effects Between Unrelated Things*
+- 2 major benefits: increased productivity and reduced risk
+- *Gain productivity*:
+  + Changes are localized, so development time and testing time are reduced
+  + An orthogonal approach also promotes reuse. The more loosely coupled your systems, the easier they are to reconfigure and reengineer
+  + a fairly subtle gain in productivity when you combine orthogonal components
+
+- *Reduce Risk*: reduces the risks inherent in any development
+  + diseased sections of code are isolated
+  + the resulting system is less fragile
+  + an orthogonal system will probably be better tested
+  + not be as tightly tied to a particular vendor, product, or platform
+
+*** Project Teams
+- project teams are efficient when they are organized orthoganally
+- informal measure of the orthogonality: how many ppl need to be involved in discussing each change
+*** Design
+- organizing components into layers is an powerful approach
+
+*** Toolkits and Libraries
+- choose your technologies wisely because libraries and toolkits you choose can destroy orthogonality
+- when you bring in a toolkit, ask yourself whether it imposes changes on your code that shouldn't be there 
+- EJB / Aspect-Oriented Programming (AOP) are interesting technologies
+
+*** Coding
+- Several techniques you can use to maintain orthogonality:
+  + Keep your code decoupled:
+    write modules that don't reveal anything unnecessary to other modules and that don't rely on other modules' implementations
+  + Avoid global data: 
+    ~ code ties itself into the other components that share data when using global data
+    ~ The code is easier to understand and maintain if you explicitly pass any required context into your modules (through objects' constructors)
+  + Avoid similar functions
+
+*** Testing
+- An orthogonally designed and implemented system is easier to test
+- Building unit tests is itself an interesting test of orthogonality
+- Bug fixing is also a good time to assess the orthogonality of the system
+
+*** Documentation
+- Orthogonality also applies to documentation
+- modern processors provide style sheets and macros that help
+
+*** Living with Orthogonality
+- if a project is not orthogonally designed and coded, it's time to refactor.
+
+*** Related sections include:
+- The Evils of Duplication
+- Source Code Control
+- Design by Contract
+- Decoupling and the Law of Demeter
+- Metaprogramming
+- It's just a View
+- Refactoring
+- Code that's easy to Test
+- Evil Wizards
+- Pragmatic Teams
+- It's All Writing
+
+    
+
+** Reversibility
+Nothing is more dangerous than an idea if it's the only one you have
+
+*** Reversibility
+- The mistake lies in assuming that any decision is cast in stone and in not preparing for the contingencies that might arise.
+- *There Are No Final Decisions*
+
+*** Flexible Architecture
+- Think about maintaining flexibility in the areas of architecture, deployment and vendor integration.
+- Technologies such as CORBA can help insulate portions of a project from changes in development language or platform.
+
+*** Related sections include:
+- Decoupling and the Law of Demeter
+- Metaprogramming
+- It's Just a View
+
+** Tracer Bullets
+Pragmatic Programmers tend to prefer using tracer bullets
+*** Code that Glows in the Dark
+- *Use Tracer Bullets to Find the Target*
+- Tracer code is not disposable: you write it for keeps. It contains all the error checking, structuring, documentation, and self-checking
+- advantages:
+  + *Users get to see something working early*
+  + *Developers build a structure to work in*
+  + *You have an integration platform*
+  + *You have something to demonstrate*
+  + *You have a better feel for progress*
+
+*** Tracer Bullets Don't Always Hit Their Target
+- Tracer bullets show what you're hitting. This may not always be the target. You then adjust your aim until they're on target. That's the point.
+
+*** Tracer Code verus Prototyping
+- Prototyping generates disposable code - Tracer code is lean but complete
+
+*** Related sections include
+- Good-Enough Software
+- Prototypes and Post-it Notes
+- The Specification Trap
+- Great Expectations
+
+** Prototypes and Post-it Notes
+- use prototypes to try out specific ideas; prototyping is much cheaper than full-scale production.
+- we can build prototypes out of different materials
+
+*** Things to Prototype
+- Anything that carries risk, hasn't been tried before, absolutely critical, unproven, experimental, doubtful.
+  + Architecture
+  + New functionality in an existing system
+  + Structure or contents of external data
+  + Third-party tools or components
+  + Performance issues
+  + User interface design
+
+- The poin of prototyping: prototyping is a learning experience
+- *Prototype to Learn*
+
+*** How to Use Prototypes
+- What details can you ignore?
+  + Correctness
+  + Completeness
+  + Robustness
+  + Style
+
+*** Prototyping Architecture
+- specific areas you may want to look for in the architectural prototype:
+  + Are the responsibilities of the major components well defined and appropriate?
+  + Are the collaborations between major components well defined
+  + Is compling minimized?
+  + Can you identify potential sources of duplication
+  + Are the interface definitions and constraints acceptable?
+  + Does every module have an access path to the data it needs during executiong? Does it have that access when it needs it?
+
+*** How Not to Use Prototypes
+- make sure that everyone understands that you are writing disposable code
+- prototype --> tracer bullets
+
+*** Related sections include:
+- The Cate Ate My Source Code
+- Communicate
+- Tracer Bullets
+- Great Expectations
+
+** Domain Languages
+The limits of language are the limits of one's world
+
+- *Program Close to the Problem domain*
+
+*** Implementing a Mini-Language
+- define a syntax first using a notation (BNF)
+- use bison / lex / yacc
+
+*** Data Languages and Imperative Languages
+*** Stand-Alone and Embedded Languages
+
+*** Related sections include:
+- Metaprogramming
+
+** Estimating
+- *Estimate to Avoid Surprises*
+*** How Accurate is Accurate Enough
+- specify the context in which the answer will be taken? Do they need high accuracy or are they looking for a ballpark figure
+- recommend: scale time estimates as follows:
+| Duration     | Quote estimate in                    |
+|--------------+--------------------------------------|
+| 1 - 15 days  | days                                 |
+| 3 - 8 weeks  | weeks                                |
+| 8 - 30 weeks | months                               |
+| 30+ weeks    | think hard before giving an estimate |
+|              |                                      |
+
+*** Where do Estimates Come From?
+- basic estimate trick: ask someone who's already done it
+- Understand What's Being Asked:
+  + have a grasp of the scope of the domain
+
+- Build a Model of the System
+  + build a rough and ready bare-bones mental model: the model may be the steps that your organization uses during development, along with a very rought picture of how the system might be implemented
+  + the process of building the model leads to discoveries of underlying patterns and processes
+  + Inaccuracies are inevitable and beneficial
+
+- Break the Model into Components
+  + decompose it into components
+  + discover the mathematical rules that describe how these components interact
+  + identify each parameter that contributes to the overall model
+
+- Give Each Parameter a Value
+  + work out which parameters have the most impact on the result
+
+- Calculate the Answers
+  + During the calculationg phase, you may start getting answers that seem strange. If the arithmetic is correct, your understand of the problem or your model is probably wrong.
+
+- Keep Track of Your Estimating Prowess
+  + record the estimates to see how close we were
+  + keep track of all subestimates
+
+*** Estimating Project Schedules
+- Repeat the following steps:
+  + Check requirements
+  + Analyze risk
+  + Design, implement, integrate
+  + Validate with the users
+
+- *Iterate the Schedule with the Code*
+- This may not be popular with management, who typically want a single, hard-and-fast number before the project even starts. Help them understand that the team, their productivity and the environment will determine the schedule.
+
+*** What to Say When Asked for an Estimate
+- You say "I'll get back to you"
+- you almost always get better results if you slow the process down and spend some time going through the steps we describe
+
+*** Releated sections include:
+Algorithm Speed
+
+*** Challenges
+- Keep a log of your estimates
+
+* The Basic Tools
+** The Power of Plain Text
+- the best format for storing knowledge persistently is plain text: we are able to manipulate knowledge, both manually and programmatically, using virtually every tool at our disposal
+
+*** What is Plain Text?
+- plain text is made up of printable characters in a form that can be read and understood directly by people
+- XML, SGML, HTML are great examples of plain tet that has a well-defined structure
+- problem w/ binary formats: context necessary to understand the data is separate from the data itself.
+- *Keep Knowledge in Plain Text*
+
+*** Drawbacks
+- 2 major drawbacks:
+  + take more space to store than a compressed binary format
+  + computationally more expensive to interpret and process
+
+*** The Power of Text
+- benefits of plain text:
+  + Insurance against obsolescence
+  + Leverage
+  + Easier testing
+
+- Insurance Against Obsolescence
+  + parse a text file w/ only partial knowledge of its format
+
+- Leverage
+  + every tool in the computing universe (source code management systems, compiler, editors, stand-alone filters) can operate on plain text
+
+- Easier Testing
+  + modify test data w/o having to create any special tools
+
+*** Lowest Common Denominator
+- Plain text is a standard for communicating among all parties
+
+*** Related sections include
+- Source Code Control
+- Code Generators
+- Metaprogramming
+- Blackboards
+- Ubiquitous Automation
+- It's All Writing
+    
+
+** Shell Games
+- *Use the Power of Command Shells*
+** Power Editing
+- *Use a Single Editor Well*
+- Choose an editor, know it thoroughly, and use it for all editing tasks.
+
+** Editor Features
+- abilities of decent editor (u should use)
+  + configurable
+  + extensible
+  + programmable
+
+** Productivity
+- Some editors can help streamline common operations:
+  + name of the class or module filled in
+  + your name and/or copyright statements
+  + skeletons for constructs in that language
+- auto-indenting
+
+** Where to Go from here
+* Source Code Control
+Progress, far from consisting in change, depends on retentiveness. Those who cannot remember the past are condemned to repeat it
+- *Always Use Source Code Control*
+

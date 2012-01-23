@@ -1,0 +1,255 @@
+"The fundamental problem of communication is that of reproducing at one point
+either exactly or approximately a message selected at another point"
+(Claude Shannon)
+
+Information theory:
+- how to measure information content
+- how to compress data
+- how to communicate perfectly over imperfect communication channels
+
+* Introduction to Information Theory
+** how can we achieve perfect communication over an imperfect noisy communication channel
+- Examples of noisy communication channels:
+  + an analogue telophone line, over which two modems communicate digital 
+    information
+  + the radio communication link from Galileo, the Jupiter-orbiting space-craft,
+    to earth
+  + reproducing cells, in which the daughter cells' DNA contains information 
+    from the parent cells
+  + a disk drive
+    --> *These channels are noisy*
+- If we transmit data, e.g., a string of bits, over the channel, there is some
+  probability that the received message will not be identical to the transmitted
+  message. We would prefer to have a communication channel for which this 
+  probability wasa zero - or so close to zero that for practical purposes it is
+  indistinguishable from zero.
+- Consider /binary symmetric channel/. A noisy disk drive that transmits each 
+  bit correctly with probability (1-f) and incorrectly with probability f. Lets
+  imagine f = 0.1. If we expect to read and write an gigabyte per day for ten 
+  years, we require a bit error probability of the order of 10^-15
+  + The physical solution: improve the physical characteristics of the 
+    communication channel to reduce its error probability
+  + The system solution: include /encoder/ and /decoder/. Encoder adds 
+    redundancy to the original message in some way. The channel adds noise to
+    the transmitted message, yielding a received message r. The decoder uses the
+    known redundancy introduced by the encoding system to infer both the original
+    signal s and added noise.
+- Information theory is concerned with the theoretical limitations and 
+  potentials of such system. "What is the best error-correcting performance we
+  could achieve?"
+- Coding theory is concerned with the creation of practical encoding and 
+  decoding systems.
+
+** Error-correcting codes for the binary symmetric channel
+*** Repetition codes: 
+- repeat every bit of the message a prearranged number of 
+  times
+
+  s  0   0   1   0   1   1   0
+  t 000 000 111 000 111 111 000
+  n 000 001 000 000 101 000 000
+  r 000 001 111 000 010 111 000
+
+- Majority-vote decoding algorithm (smallest probability of being wrong)
+  Consider the decoding of a single bit s, which was encoded as t(s) and gave 
+  rise to three received bit r = r1r2r3. By Bayes'theorem, the posterior 
+  probability of s is:
+  P(s/r1r2r3) = P(r1r2r3/s)P(s) / P(r1r2r3)
+    + P(s=1/r1r2r3) = P(r1r2r3/s=1)P(s=1) / P(r1r2r3)
+    + P(s=0/r1r2r3) = P(r1r2r3/s=1)P(s=0) / P(r1r2r3)
+
+  We guess s = 0 if P(s=0/r) > P(s=1/r) and s = 1 otherwise. 
+  We assume P(s=0) = P(s=1) = 0.5; then maximize the posterior probability 
+  P(s/r) is equivalent to maximizing the likelihood P(r/s).
+  We also assume that the channel is a binary symmetric channel with noise level
+  f < 0.5 so that the likelihood is:
+  
+  P(r/s) = P(r/t(s)) = sum(n=1-->N, P(rn/tn(s)))
+
+  P(r/t) = (1-f) if r = t
+         = f if r!=t
+
+  Thus the likelihood ratio for the two hypotheses is
+
+  P(r/s=1) / P(r/s=0) = sum(n=1->N, P(rn/tn(1)) / P(rn/tn(0)))
+
+  The error probability is dominated by the probability that 2 bits in a block
+  of three are flipped, which scales as f^2. In the case of binary symmetric 
+  channel with f = 0.1, the R_3 code has a probability of error, after decoding,
+  of pb ~ 0.03 per bit. The repetition code R_3 has therefore reduced the 
+  probability of error.
+
+*** Block codes - the (7,4) Hamming code			       :_why:
+- A block code is a rule for converting a sequence of source bits s, of length K
+  into a transmitted sequence t of length N bits. To add redundancy, we make N
+  greater than K. In a linear block code, the extra N-K bits are linear functions
+  of the original K bits; these extra bits are called parity-check bits.
+  example: (7,4) Hamming code: transmits N = 7 bits for every K = 4 source bits
+- How to arrange bits in Hamming code: the parity bits are set so that the
+  parity within each circle is even.
+- Because the Hamming code is a linear code, it can be written compactly in terms
+  of matrices as follows. The transmitted codeword t is obtained from the source
+  sequence s by a linear operation:
+                                   t = G^T*s (1.25)
+  where G is the *generator matrix* of the code and the encoding operation (1.25)
+  uses modulo-2 arithmetic (1+1=0, 0+1=1, etc), s t are column vectors
+- Decoding the (7,4) Hamming code
+  + complex encoder s->t <-> decoder less straightforward
+  + If the channel is a binary symmetric channel and that all source vectors are
+    equiprobable, then the optimal decoder identifies the source vector s whose
+    encoding t(s) differs from the received vector r in the fewest bits 
+  + We could solve the decoding problem by measuring how far r is from each of
+    the sixteen codewords, then picking the closest.
+    *Is there a more efficient way of finding the most probable source vector?*
+- Syndrome decoding for the Hamming code
+- General view of decoding for linear codes: syndrome decoding
+  + describe the decoding problem for a linear code in terms fo matrices
+  + The first four received bits, r1r2r3r4, purport to be the four source bits;
+    and the received bits r5r6r7 purport to be the partities of the source bits
+  + The differences (mod 2) between these 2 triplets are called the /syndrome/
+    of the received vector. If the syndrome is non-zero, then the noise 
+    sequence for this block was non-zero, and the syndrome is our pointer to the
+    most probable error pattern.
+  + The computation of the syndrome vector is a linear operation. 
+- Summary of the (7,4) Hamming code's properties
+  + there are 8 distinct syndromes;they can be divided into seven non-zero 
+    symdromes
+  + The optimal decoder takes no action if the syndrome is zero, otherwise it 
+    uses this mapping of non-zero syndromes onto one-bit error patterns to unflip
+    the suspect bit.
+
+*** Error-correcting codes for the binary symmetric channel
+- There is a decoding error if the four decoded bits s1',s2',s3',s4' do not all
+  match the source bit s1,s2,s3,s4. The probability of block error pb is the 
+  probability that one or more of the decoded bits in one block fail to match 
+  the corresponding source bits
+                          pb = P(s'!=s)
+- The probability of bit error pb is the average probability that a decoded bit
+  fails to match the corresponding source bit
+                          pb = 1/K * sum(k=1->K, P(sk'!=sk)
+
+
+** What performance can the best codes achieve? 		  :important:
+- there seems to be a trade-off between the decoded bit-error probability pb and
+  the rate R. How can this trade-off be characterized.
+- Shannon proved the remarkable result that the boundary between achievable and
+  nonachievable points meet the R axis at a /non-zero/ value R = C. For any
+  channel, there exist codes that make it possible to communicate with arbitrarily
+  small probability of error pb at non-zero rates.
+- The maximum rate at which communication is possible with arbitrarily small pb
+  is called the /capacity/ of the channel.
+- /Noisy-channel coding theorem/
+  + Information can be communicated over a noisy channel at a non-zero rate 
+    with arbitrarily small error probability.
+  + Shannon limit R = C/(1-H2(pb))
+
+
+* Probability, Entropy, and Inference
+- we need to be careful to distinguish between a *random variable*, the value of
+  the random variable, and the proposition that asserts that the random variable
+  has a particular value.
+** probabilities and ensembles
+- *An ensemble* X is a triple (x,Ax,Px), where the outcome x is the value of a
+  random variable, which takes on one of a set of possible values,
+  Ax = {a1,a2,...,ai,...,aI}, having probabilities Px = {p1,p2,...,pI} with
+  P(x=ai) = pi, pi >= 0 and *sum(ai in Ax, P(x=ai)=1)*
+- P(x=ai) <-> P(ai) or P(x)
+
+  Rules of probability theory (H denotes assumptions on which the probabilities 
+  are based
+- *Probability of a subset*: If T is a subset of Ax then:
+             P(T) = P(x in T) = sum(ai in T, P(x=ai))
+
+- *A joint ensemble XY* is an ensemble in which each outcome is an ordered pair
+  x,y with x in Ax and y in Ay. We call P(x,y) the joint probability of x and y.
+
+- *Marginal probability* we can obtain the marginal probability P(x) from the 
+  joint probability P(x,y) by summation:
+             P(x=ai) == sum(y in Ay, P(x=ai, y))
+
+- *Conditional probability*
+             P(x=ai | y=bj) == P(x=ai,y=bj) / P(y=bj) if P(y=bj)!=0
+
+- *Product rule* - obtained from the definition of conditional probability
+             P(x,y|H) = P(x|y,H)P(y|H) = P(y|x,H)P(x|H)
+
+- *Sum rule* - a rewriting of the marginal probability definition
+             P(x|H) = sum(y, P(x,y|H)) = sum(y, P(x|y,H)P(y|H))
+
+- *Bayes' theorem* - obtained from the product rule:
+             P(y|x, H) = P(x|y,H)*P(y|H) / P(x|H)
+                       = P(x|y,H)*P(y|H) / sum(y',P(x|y',H)*P(y'|H))
+- *Independence* two random variables X and Y are /independent/ if and only if:
+             P(x,y) = P(x)P(y)
+
+** The meaning of probability
+- probabilities can be used in two ways:
+  + probabilities can describe /frequencies of outcomes in random experiments/
+  + probabilities can also be used, more generally, to describe degrees of belief
+- some books on probability restrict probabilites to refer only to frequencies of
+  outcomes in repeatable random experiments. Nevertheless, degrees of belief can 
+  be mapped onto probabilities if they satisfy simple consistency rules known as
+  the Cox axioms. Thus probabilities can be used to describe assumptions, and to
+  describe inferences given those assumptions
+- Use of probability to quantify beliefs is known as the Bayesian viewpoint
+
+** Forward probabilities and inverse probabilities
+- Probability calculations often fall into one of two categories:
+  + forward probability: involve a /generative model/
+  + inverse probability: instead of computing the probability distribution of 
+    some quantity /produced by the process/, we compute the conditional
+    probability of one or more of the /unobserved variables/ in the process, given
+    the observed variables.
+
+- Terminology of inverse probability
+  + marginal probability P(u) the prior probability of u
+  + P(nb|u,N): likelihood. Say "the likelihood of the parameters"
+  + P(u|nb,N): posterior probability. 
+  + P(nb|N): marginal likelihood, evedience
+    has no u-dependence so its value is not important if we simply wish to 
+    evaluate the relative probabilities of the alternative hypotheses u.
+  + posterior = likelihood x prior / evidence (2.28)
+
+- Inverse probability and prediction
+
+- Inference as inverse probability
+
+- Data compression and inverse probability
+
+- The likelihood principle
+
+** Definition of entropy and related functions
+- *The Shannon information content of an outcome* x is defined to be
+                     h(x) = log_2(1/P(x))   (2.34)
+
+- *The entropy of an ensembly X* = average Shannon information content of an 
+  outcome
+                     H(X) == Sum(x in Ax, P(x)*log(1/P(x)))
+
+- Decomposability of the entropy
+  + H(X) >= 0 with equality iff pi = 1 for one i
+  + Entropy is maximized if p is uniform:
+       H(X) <= log(|Ax|) with equality iff pi = 1/|Ax| for all i
+
+- *The redundancy of X*: 1 - H(X)/log(|Ax|)
+
+- *The joint entropy of X,Y*:
+       H(X,Y) = Sum(x,y in Ax,Ay, P(x,y)log(1/P(x,y)))
+       H(X,y) = H(X) + H(Y) iff P(x,y) = P(x)P(y)
+
+** Gibbs' inequality
+- *The relative entropy or Kullback-Leibler divergence* between two probability
+  distributions P(x) and Q(x) that are defined over the same alphabet Ax is
+          D_(KL)(P||Q) = sum(x, P(x)log(P(x)/Q(x))) (2.45)
+- The relative entropy satisfies Gibbs' inequality
+          D_(KL)(P||Q) >= 0   (2.46)
+- The relative entropy is important in pattern recognition, and neural networks
+  as well as in information theory.
+** Jensen's inequality for convex functions
+- *Convex functions* A function f(x) is convex over (a,b) if every chord of the
+  function lies above the function, as shown in figure 2.10; that is, for all
+  x1, x2 in (a,b) and 0 <= lambda <= 1,
+          f(lambda*x1 + (1-lambda)*x2) <= lambda*f(x1) + (1-lambda)*f(x2)
+
+- *Jensen's inequality* f is a convex function and x is a random variable 
+          E[f(x)] >= f(E[x]) E is expectation

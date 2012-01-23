@@ -1,0 +1,43 @@
+
+* TODO Read effective STL
+** DONE Item 1, 2
+   CLOSED: [2011-07-18 Mon 23:39]
+   CLOCK: [2011-07-18 Mon 23:16]--[2011-07-18 Mon 23:39] =>  0:23
+** TODO Item 3, 4
+** TODO Item 5, 6
+
+
+
+* Item 1: Choose your containers with care
+- variety of containers:
+  + The *standard STL sequence containers*: vector, string, deque, list
+  + The *standard STL associative containers*: set, multiset, map, multimap
+  + The *nonstandard sequence containers*: slist, rope
+  + the *Nonstandard associative containers*: hash_set, hast_multiset, hash_map,
+    hash_multimap
+  + *vector<char> as a replacement for string*
+  + *vector as a replacement for the standard associative containers*
+  + Several *standard non-STL containers*: arrays, biset, valarray, stack, queue
+    priority_queue
+- contiguous-memory containers and node-based containers
+  + contiguous memory containers: 
+    > store their elements in one or more chunks of memory 
+    > insert, delete -> shift -> effect performance and exception safety
+  + node-based containers: 
+    > store only a single element per chunk of memory
+    > insert, delete effectively
+- questions when choosing containers:
+  + Do you need to be able to insert a new element at an arbitrary position in 
+    the container
+  + Do you care how elements are ordered in the container
+  + must the container be part of standard C++
+  + what category of iterators do you require
+  + Is it important to avoid movement of existing container elements when 
+    insertions or erasures take place
+  + Does the data in the container need to be layout-compatible w/ C
+  + Is lookup speed a critical consideration
+  + Do you mind if the underlying container uses reference counting
+  + Do you need /transactional semantics/ for insertions and erasures
+  + Do you need to /minimize iterator, pointer, and reference invalidation/
+
+* Item 2: Beware the illusion of container-independent code

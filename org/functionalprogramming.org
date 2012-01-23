@@ -1,0 +1,5 @@
+* Lazy Evaluation and $-notation
+  - Lazy evaluation strategy: first proposed by Wadsworth as an optimization of 
+    normal-order reduction in the lambda calculus.
+  - Vuillemin showed that under certain restricted conditions, lazy evaluation
+    is an optimal evaluation strategy

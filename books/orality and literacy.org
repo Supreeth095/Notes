@@ -1,0 +1,739 @@
+* Chapter 1: The orality of language
+** notes
+- The literate mind and the oral past
+  + the scholarly world has newly awakened to the oral character of language 
+    and to some of the deeper implications of the contrasts between orality 
+    and writing
+  + Ferdinand de Saussure (1857-1913), the father of modern linguistics, has
+    called attention to the primacy of oral speech, which underpins all verbal 
+    communication, as well as to the persistent tendency, even among scholars, 
+    to think of wriing as the basic form of language. 
+  + writing has simultaneously "usefulness, shortcomings, and dangers". Still he
+    thnought of writing as a kind of complement to oral speech, not as a 
+    transformer
+    of verbalization.
+  + Englishman Henry Sweet (1845-1912) had early insisted that words are made up
+    not of leters but of functional sound units or phonemes
+  + the orality centrally treated here is primary orality, that of persons 
+    totally unfamiliar with writing.
+  + the greatest awakening to the contrast between oral modes of thought and 
+    expression and written modes took place not in linguistics, descriptive or
+    cultural, but in literary studies, beginning clearly with the work of 
+    Milman Parry (1902-1935) on the text of the Iliad and Odyssey
+  + why the scholarly world had to reawaken to the oral character of language.
+    It would seem inescapably obvious that language is an oral phenomenon. Some
+    non-oral communication is exceedingly rich - gesture, for example. Yet in a
+    deep sense language, articulated sound, is paramount
+  + language is so overwhelmingly oral that of all many thousands of languages,
+    spoken in the course of human victory only around 106 have ever been 
+    committed to writing to a degree sufficient to have produced literature
+  + Writing enlarges the potentiality of language almost beyond measure,
+    restructures thought, and in the process converts a certain few dialects
+    into 'grapholects'. A grapholect is a transdialectal language formed by deep
+    commitment to writing. Writing gives a grapholect power far exceeding that
+    of any purely oral dialect
+  + in all the wonderful worlds that writing opens, the spoken word still 
+    resides and lives. Written texts all have to be related somehow, directly or
+    indirectly, to the world of sound, the natural habitat of language, to yield
+    their meanings. 'reading' a text means converting it to sound, aloud or in 
+    the imagination, syllable-by-syllable in slow reading. Writing can never 
+    dispense with orality
+  + despite the oral roots of all verbalization, the scientific and literary 
+    study of language and literature has for centuries, until quite recent years
+    shied way from orality. Texts have clamored for attention so peremptorily
+    that oral creations have tended to be regarded generally as variants of
+    written productions or, if not this, as beneath serious scholarly attention.
+    Only relatively recently have we become impatient with our obtuseness here.
+    Language study in all but recent decades has focused on writtent texts rather
+    than on orality for a readily assignable reason: the relationship of study
+    itself to writing. All thought, including that in primary oral cultures, is 
+    to some degree analytic: it breaks its materials into various components
+
+- Did you say 'Oral Literature'?
+  + the scholarly focus on texts had ideological consequences. With their
+    attention directed to texts, scholars often went on to assume, often without
+    reflection, that oral verbalization was essentially the same as the written
+    verbalization they normal dealt with, and that oral art forms were to all
+    intents and purposes simply texts, except for the fact that they were not 
+    written down. The impression grew that, apart from oration (governed by
+    written rhetorical rules), oral art forms were essentially unskillful and
+    not worth serious study.
+  + the purely oral tradition or primary orality is not easy conceive of 
+    accurately and meaningfully. Writing makes words appear similar to things
+    because we think of words as a visible marks signaling words to decoders:
+    we can see and touch such inscribed 'words' in texts and books. Written words
+    are residue
+  + oral cultures indeed produce powerful and beautiful verbal performances of
+    high artistic and human worth, which are no longer even possible once writing
+    has taken possession of the psyche. Nevertheless, without writing, human
+    conciousness cannot achieve its fuller potentials, cannot produce other 
+    beautiful and powerful creations. Literacy, as will be seen, is absolutely
+    necessary for the development not only of science but also of history, 
+    philosophy, explicative understanding of literature and of any art, and indeed
+    for the explanation of language itself.
+** words
+1. anthropology: the study of humankind, in particular
+2. verbalized
+(v) express (ideas or feelings) in words, esp. by speaking out loud
+3. primacy 
+(n) the fact of being primary, preeminent, or more important
+  + the primacy of air power in the modern war
+4. underpins
+(v) support (a building or other structure) from below by laying a solid 
+foundation below ground level or by substituting stronger for weaker materials
+5. savage 
+(a) of an animal or force of nature: fierce, violent, and uncontrolled
+- tales of a savage beast / a week of savage storms
+6. incident to
+(a) likely to happen because of; resulting from
+- the changes incident to economic development
+7. paramount
+(a) more important than anything else; supreme
+- the interests of the child are of paramount importance
+8. dispense with
+(v) manage without;get rid of
+- let's dispense with the formalities, shall we?
+9. clamor
+(n) a loud and confused noise, esp. that of people shouting vehemently
+- the questions rose to a clamor.
+(v) (of a group of people) shout loudly and insistently
+- the surging crowds clamored for attention
+10. obtuse
+(a) annoyingly insensitive or slow to understand
+- he wondered if the doctor was being deliberately obtuse
+11. unabated
+(a) without any reduction in intensity or strength
+- the storm was raging unabated
+12. meticulous
+(a) showing great attention to detail; very careful and precise
+- he had always been so meticulous about his appearance.
+13. constitute
+(v) be (a part) of a whole
+- single parents constitute a great porportion of the poor
+14. relentless
+(a) oppressively constant; incessant
+- the relentless heat of the desert
+15 incessant
+(a) (of something regarded as unpleasant) continuing without pause or 
+interruption
+- the incessant beat of the music
+16 ambience
+(n) the character and atmosphere of a place
+- the relaxed ambience of the cocktail lounge is popular with guests
+17. etymology
+(n) the study of the origin of words and the way in which their meanings have 
+changed throughout history
+18. preemptive
+(a) serving or intended to preempt or forestall something, esp. to prevent attack
+by disabling te enemy
+preemptive action, a preemptive strike
+19. arduous
+(a) involving or requiring strenuous effort; difficult and tiring
+an arduous journey
+* Chapter 2: The modern discovery of primary oral cultures
+** notes
+- early awareness of oral tradition:
+  + the new awakening in recent years to the orality of speech was not without
+    antecedents: "Qoheleth clearly adverts to the oral tradition on which his
+    writing draws: 'Besides being wise, Qoheleth taught people knowledge, and 
+    weighed, scrutinized, and arranged many proverbs. Qoheleth sought to find 
+    pleasing sayings, and to write down true sayings with precision'"
+  + Early linguists had resisted the idea of the distinctiveness of spoken and 
+    written languages.
+  + Saussure takes the view that writing simply represents spoken language in
+    visible form
+
+- the homeric question: given
+  + long-standing awareness of oral tradition among literates
+  + Lang's and others' demonstration that purely oral cultures could generate
+    sophisticated verbal art forms
+  What is new in our understanding of orality?
+  + new understanding can perhaps best be followed in the history ofthe 'Homeric
+    question'
+
+- Milman Parry's discovery
+  + 
+
+- Consequent and related work
+
+** words
+1. antecedent
+(n) a thing or event that existed before or logically precedes another
+- some antecedents to the Afican novel might exist in Africa's oral traditions
+(a) preceding in time or order;previous or preexisting
+- the antecedent events that prompt you to break a diet
+2. advert
+(v) refer to in speaking or writing
+- he had failed to advert to the consequences that his conduct was having
+3. scrutinize
+(v) examine or inspect closely and thoroughly
+- customers were warned to scrutinize the small print
+4. cull
+(v) select from a large quantity; obtain from a variety of sources
+- anecdotes culled from Greek and Roman history
+5. debris
+(n) scattered fragments, typically of something wrecked or destroyed
+- the bomb hits it, showering debris from all
+6. discredit
+(v) harm the good reputation of (someone or something)
+- his remarks were taken out of context in an effort to discredit him
+(n) loss or lack of reputation or respect
+- they committed crimes that brought discredit upon the administration
+7. antiquity
+(n) the ancient past, esp. the period before the Middle Ages
+- the great civilizations of antiquity
+8. extant
+(a) still in existence, surviving
+- the original manuscript is no longer extant.
+9 inhibition
+(n) a feeling that makes one self-conscious and unable to act in a relaxed and
+natural way
+- the children, at first shy, soon lost their inhibitions
+10. exemplary
+(a) serving as a desirable model; representing the best of its kind
+- an award for exemplary community service
+11. impute
+(v) represent (something, esp. something undesirable) as being done, caused, or
+possessed by someone; attribute:
+- the crimes imputed to Richard
+12. congenial
+(a) pleasant because of a personality, qualities, or interests that are similar
+to one's own
+- his need for some congenial company
+13. adumbrated
+(v) report or represent in outline
+- James Madison adumbrated the necessity that the Senate be somewhat insulated
+from public passions
+14. adulation
+15. rhapsody
+(n) an effusively enthusiastic or ecstatic expression of feeling
+- ecstatic fans filled the stadium
+16. spurious
+(a) not being what it purports to be; false or fake
+- separating authentic and spurious claims
+17 crude
+(a) in a natural or raw state;not yet processed or refined
+- crude oil
+18. redact
+(v) edit (text) for publication
+19. plenary
+(a) unqualified, absolute
+- crusaders were offered a plenary indulgence by the pope
+29 fuse
+(v) join or blend to form a single entity
+- intermarriage had fused the families into a large unit
+30 verse
+(n) writing arranged with a metrical rhythm, typically having a rhyme
+- a lament in verse
+31 metrical
+(a) of, relating to, or composed in poetic meter
+- metrical translations of the Psalms
+32. apposite
+33. exigency
+(n) an urgent need or demand
+- women worked long hours when the exigencies of the family economy demanded it
+34 flourish
+(v) grow or develop in a healthy or vigorous way, esp. as the result of a 
+particularly favorable environment
+35 vanquish
+(v) defeat thoroughly
+- Mexican forces vanquished the French army in a battle in Puebla
+36 despoil
+(v) steal or violently remove valuable or attractive possessions from;plunder
+- the church was despoiled of its marble wall covering
+37 obtrusive
+(a) noticable or prominent in an unwelcome or intrusive way
+- high-powered satellites can reach smaller and less obtrusive antennas
+38 peculiar
+(a) strange or odd;unusual
+- his accent was a peculiar mixture of Cockney and Irish
+39 exclude
+(v) deny (someone) access to or bar (someone) from a place, group, or privilege
+- women had been excluded from many scientific societies
+40 superficial
+(a) existing or occuring at or on the surface
+- the building suffered only superficial damage
+41 cordial
+(a) warm and friendly
+- the atmosphere was cordial and relaxed
+42 stratum
+(n) a layer or a series of layers of rock in the ground
+- a stratum of flint
+(n) a level or class to which people are assigned according to their social
+status, education, or income
+- members of other social strata
+
+* Chapter 3: Some psychodynamics of orality
+** notes
+- sounded word as power and action
+  + primary oral cultures == oral cultures
+
+- further characteristics of orally based thought and expression
+  (viii) Homeostatic
+    + oral societies can be characterized as homeostatic. That is to say, oral
+      societies live very much in a present which keeps itself in equilibrium or
+      homeostasis by sloughing off memories which no longer have present 
+      relevance.
+    + words have layers of meaning, many of them quite irrelevant to ordinary
+      present meanings. Dictionaries advertise semantic discrepancies.
+  (ix) Situational rather than abstract
+    + pre-Scratic Greeks thought of justice in operational rather than formally
+      conceptualized ways (Havelock (1978a)
+
+- proponents of intelligence tests need to recognize that our ordinary 
+intelligence test questions are tailored to a special kind of conciousness, one
+deeply conditioned by literacy and print, 'modern consciousness'
+- persons who have interiorized writing not only write but also speak literately,
+which is to say that they organize, to varying degrees, even their oral 
+expression in thought patterns and verbal patterns that they would not know of
+unless they could write.
+- oral cultures can produce amazingly complex and intelligent and beautiful
+organizations of thought and experience. To understand how they do so, it will
+be necessary to discuss some of the operations of oral memory.
+
+- Oral Memorization
+  + verbal memory skill is understandably a valued asset in oral cultures.
+  + in memorizing a written text, postponing its recitation generally weakens
+    recall. An oral poet is not working with texts or in a textual framework. He
+    needs time to let the story sink into his own store of themes and formulas, 
+    time to 'get with' the story. In recalling and retelling the story, he has
+    not in any literate sense 'memorized' its metrical rendition from the 
+    version of the other singer - a version long gone forever when the new 
+    singer is mulling over the story his own rendition. The fixed materials in 
+    the bard's memory are a float of themes and formulas out of which all stories
+    are variously built.
+- Verbomotor lifestyle
+  + 'verbomotor' cultures are cultures in which, by contrast with high-technology
+    cultures, courses of action and attitudes toward issues depend significantly
+    more on effective use of words, and thus on human interaction, and 
+    significantly less on non-verbal, often largely visual input from the 
+    'objective' world of things.
+  + in oral cultures a request for information is commonly interpreted 
+    interactively, as agonistic, and, instead of being really answered, is 
+    frequently parried.
+  + primary orality fosters personality structures that in certain ways are more
+    communal and externalized, and less introspective that those common among
+    literates
+- The noetic role of heroic 'heavy' figures and of the bizarre
+  + the heroic tradition of primary oral culture and of early literate culture,
+    with its massive oral residue, relates to the agonistic lifestyle, but it is
+    best and most radically explained in terms of the needs of oral poetic
+    processes. Oral memory works effectively with 'heavy' characters, persons,
+    whose deeds are monumental, memorable, and commonly public. Thus the noetic
+    economy of its nature generates outsize figures, that is, heroic figures,
+    not for romantic reasons or reflectively didactic reasons but for much more
+    basic reasons: to organize experience in some sort of permanently memorable
+    form.
+  + as writing and eventually print gradually alter the old oral poetic 
+    structures, narrative builds less and less on 'heavy' figures until, some 
+    three centuries after print, in can move comfortably ni the ordinary human
+    lifeworld typical of the novel.
+- The interiority of sound
+  + the principal one of other characteristics is the unique relationship of 
+    sound to interiority when sound is compared to the rest of the senses. This
+    relationship is important because of the interiority of human consciousness
+    of of human communication itself. 
+
+- Orality, community and the sacral
+  + because of its physical constitution as sound, the spoken word proceeds from
+    the human interior and manifests human beings to one another as conscious
+    interiors, as persons, the spoken word forms human beings into close-knit 
+    groups
+  + the interiorizing force of the oral world relates in a special way to the 
+    sacral, to the ultimate concerns of existence.
+- Words are not signs
+  + there is no linguistic sign before writing.
+  + thought is nested in speech, not in texts, all of which have their 
+    meanings through reference of the visible symbol to the world of sound.
+  + our complacency in thinking of words as signs is due to the tendency, 
+    perhaps incipient in oral cultures but clearly marked in chirographic 
+    cultures and far more marked in typographic and electronic cultures, to 
+    reduce all sensation and indeed all human experience to visual analogues.
+  + time is seemingly tamed if we treat it spatially on a calendar or the face
+    of a clock, where we can make it appear as divided into separate units next
+    to each other. But this also falsifies time.
+  + It's of course quite correct in rejecting the persuation that writing is no
+    more than incidental to the spoken word. But to try to construct a logic o
+    writing without investigation in depth of the orality out of which writing
+    emerged and in which writing is permantly ineluctably grounded is to limit
+    one's understanding, although it does produce at the same time effects that
+    are brilliantly intriguing but also at times psychedelic, that is, due to 
+    sensory distortions.
+** words
+1. conceivable
+(a) capable of being imagined or grasped mentally
+- a mass uprising was entirely conceivable
+2. perishable 
+(a) (of food) likely to decay or go bad quickly
+(of something abstract) having a brief life or significance;transitory
+- ballet is the most perishable of arts
+3. evanescent
+(a) soon passing out of sight, memory, or existence; quickly fading or 
+disappearing:
+- a shimmering evanescent buble
+4. homeostatic
+(n) the tendency toward a relatively stable equilibrium between interdependent
+elements, esp. as maintained by physiological processes
+5. slough off
+(v) (of an animal, esp. a snake, or a person) cast off or shed (an old skin or
+dead skin)
+- a snake sloughs off its old skin
+6. discrepancy
+(n) a lack of compatibility or similarity between two or more facts
+- there's a discrepancy between your account and his
+7. archaic
+(a) very old or old-fashioned
+- prisons are run on archaic methods
+8. noetic
+(a) of or relating to mental activity or the intellect
+9. refute
+(v) prove (a statement or theory) to be wrong or false; disprove
+- these claims have not been convincingly refuted
+10. peasant
+(n) a poor farmer of low social status who owns or rents a small piece of land 
+for cultivation
+11. proponent
+(n) a person who advocates a theory, proposal, or project
+- a collection of essays by both critics and proponents of graphology
+12. at first blush: at the first glimpse or impression.
+13. foster
+(v) encourage or promote the development of (something, typically something
+regarded as good)
+- the teacher's task is to foster learning
+(a) denoting someone that has a specified family connection through fostering
+rather than birth
+- foster parent, foster children
+14 extant
+(a) (esp. of a document) still in existence;surviving
+- the original manuscript is no longer extant
+15. vestigial
+(a) forming a very small remmant of something that was once much larger or more
+noticeable
+- he felt a vestigial flicker of anger from last night
+16. undertake
+(v) commit oneself to and begin (an enterprise or responsibility); take on:
+- a firm of builders undertook the construction work
+17. conspicuous
+(a) stading out so as to be clearly visible
+- he was very thin, with a conspicuous Adam's apple
+18. agonistic
+(a) combative, polemical
+19. parry
+(v) ward off (a weapon or attack), esp. with a countermove
+- he parried the blow by holding his sword vertically
+(v) answer (a question or accusation) evasively
+- he parried questions from reporters outside the building.
+20. didactic
+(a) intended to teach, particularly in having moral instruction as an ulterior
+motive
+- a didactic novel that set out to expose social injustice.
+21. evanescent
+(a) soon passing out of sight, memory, or existence; quickly fading or 
+disappearing
+- a shimmering evanescent bubble
+22. tavern
+(n) an establishment for the sale of beer and other drinks to be consumed on the
+premises, sometimes also serving food.
+23. complacency
+(n) a feeling of smug or uncritical satisfaction with oneself or one's
+achievements
+- the figures are better, but there are no grounds for complacency
+24. incipient
+(a) in an initial stage; beginning to happen or develop
+- he could feel incipient anger building up
+- the system detects incipeint problems early
+25. ineluctable 
+(a) unable to be resisted or avoided, inescapable
+- the ineluctable facts of history
+
+* Chapter 4: Writing restructures consciousness
+** notes
+- The new world of autonomous discourse
+  + a deeper understanding of pristine or primary orality enables us better to
+    understand the new world of writing, what it truly is, and what functionally
+    literate human beings really are: beings whose thought processes do not grow
+    out of simply natural powers but out of these powers as structured, directly
+    or indirectly, by the technology of writing. Without writing, the literate
+    mind would not and could not think as it does, not only engaged in writing
+    but normally even when it is composing its thoughts in oral form. Writing 
+    has transformed human consciousness.
+  + writing establishes what has been called "context-free" language or 
+    autonomous discours, discourse which cannot be directly questioned or 
+    contested as oral speech can be because written discourse has been detached
+    from its author.
+- Plato, writing and computers
+  + many distressed, to learn that essentially the same objections commonly 
+    urged today against computers were urged by Plato in the Phaedrus (274-7)
+    and in the Seventh Letter against writing. 
+  + Writing, Plato has Socrates say
+    in the Phaedrus, is inhuman, pretending to establish outside the mind what
+    in reality can be only in the mind.
+  + Plato's Socrates urges, writing destroys memory. Those who use writing will
+    become forgetful, relying on an external resourse for what they lack in 
+    internal resourses. Writing weakens the mind.
+  + written text is basically unresponsive
+  + Real speech and thought always exist essentially in a context of give-and-take
+    between real persons. Writing is passive, out of it, in an unreal, unnatural
+    world.
+  + One weakness in Plato's position was that, to make his objections effective,
+    he put them in writing, just as one weakness in anti-print positions is that
+    their proponents, to make their objections more effective, put the objections
+    into print.
+  + plato's philosophically analytic thought, including his critique of writing,
+    was possible only because of the effects that writing was beginning to have
+    on mental processes.
+- Writing is a technology
+  + writing is a technology, calling for the use of tools and other equipment
+  + by contrast with natural, oral speech, writing is completely artificial.
+    There is no way to write 'naturally'. Talk implements conscious life but it
+    wells up into consciousness out of unconscious depths
+  + writing or script differs as such from speech in that it does not inevitably
+    well up out of the unconscious.
+  + to say writing is artificial is not to condemn it but to praise it. writing
+    is utterly invaluable and indeed essential for the realization of fuller, 
+    interior, human potentials.
+  + technologies are artificial, but - paradox again - artificiality is natural
+    to human beings. Technology, properly interiorized, does not degrade human
+    life but on the contratry enhances it.... What do you think the sounds of an
+    organ come out of? the fact is that by using mechanical contrivance, a
+    violinist or an organist can express something poignantly human that cannot
+    be expressed without the mechanical contrivance. To achieve such expression
+    of course the violinist or organist has to have interiorized the technology,
+    made the tool or machine a second nature, a psychological part of himself or    
+    herself. This calls for years of 'practice', learning how to make the tool
+    do what it can do. Such shaping of a tool to oneself, learning a technological
+    skill, is hardly dehumanizing. The use of technology can enrich the human
+    psyche, enlarge the human spirit, intensify its interior life.
+- what is 'writing' or 'script'
+  + writing, in the strict sense of the word, the technology which has shaped
+    and powered the intellectual activity of modern man, was a very late
+    development in human history.
+  + a script in the sense of true writing, as understood here, does not consist
+    of mere pictures, of representations of things, but is a representation of
+    an utterance, of words that someone says or is imagined to say
+  + It is of course possible to count as 'writing' any semiotic mark, that is,
+    any visible or sensible mark which an individual makes and assigns a meaning
+    to. However, using the term 'writing' in this extended sense to include any
+    simple semiotic marking trivializes its meaning. The critical and unique 
+    breakthrough into new worlds of knowledge was achived within human 
+    consciousness not when simple semiotic marking was devised but when a coded
+    system of visible marks was invented whereby a writer could determine the
+    exact words that the reader would generate from the text.
+- Many scripts but only one alphabet
+  + Pictures can serve simply as aides-memoire. Chinese character writing is
+    still today basically made up of pictures, but pictures stylized and 
+    codified in intricate ways which make it certainly the most complex writing
+    system the world has ever known.
+  + pictographs
+  + ideograph: the meaning is a concept not directly represented by the picture
+    but established by code (Chinese)
+  + rebus writing: kind of phonogram (sound-symbol), but only mediately: the 
+    sound is designated not by an abstract coded sign, as a letter of the
+    alphabet, but by a picture of one of the several things the sound signifies.
+  + one advantage of a basically pictographic system is that persons speaking
+    different Chinese 'dialects' (really different Chinese languages, mutually
+    incomprehensible, though basically of the same structure) who are unable to
+    understand one another's speech can understand one another's writing. 
+  + some languages are writting in syllabaries, in which each sign represents a
+    consonant and a following vowel sound.
+  + many writing systems are in fact hybrid systems, mixing two or more 
+    principles
+  + Indeed, because of the tendency of scripts to start with pictographs and 
+    move to ideographs and rebuses, perhaps most writing systems other than 
+    alphabet are to some degree hybrid. And even alphabetic writing becomes 
+    hybrid when it writes 1 instead of one.
+  + Greeks did something of major psychological importance when they developed
+    the first alphabet complete with vowels. 
+  + Greek language turned out to be a perhaps accidental but crucial 
+    intellectual advantage. Kerckhove (1981) has suggested that, more than other
+    writing systems, the completely phonetic alphabet favors left-hemisphere
+    activity in the brain, and thus on neurophysiological grounds fosters 
+    abstract, analytic thought.
+  + The reason why the alphabet was invented so late and why it was invented only
+    once can be sensed if we reflect on the nature of sound. It represents sound
+    itself as a thing, transforming the evanescent world of sound to the 
+    quiescent quasi-permanent of world of space. The phonetic alphabet invented
+    by ancient Semites and perfected by ancient Greeks, is by far the most 
+    adaptable of all writing systems in reducing sound to visible form.
+  + Phonetic alphabet is perhaps also the least aesthetic of all major writing
+    systems: it can be beautifully designed, but never so exquisitely as Chinese
+    characters. Chinese character writing like many other writing systems, is
+    intrinsically elitist: to master it thoroughly requires protracted leisure.
+- The onset of literacy
+  + When a fully formed script of any sort, alphabetic or other, first makes its
+    way from outside into a particular society, it does so neccessarily at first
+    in restricted sectors and with varying effects and implications. Writing is
+    often regarded at first as an instrument of secret and magic power.
+  + Some societies of limited literacy have regarded writing as dangerous to the
+    unwary reader, demanding a guru-like figure to mediate between reader and
+    text.
+- From memory to written records.
+  + A present-day literate usually assumes that written records have more force
+    than spoken words as evidence of a long-past state of affairs, especially in
+    court. Earlier cultures that knew literacy but had not so fully interiorized
+    it, have often assumed quite the opposite. The amount of credence accorded 
+    to written records undoubtedly varied from culture to culture.
+  + texts are thing-like, immobilized in visual space, subject to what Goody
+    calls 'backward scanning'
+  + Lists of the sort Goody discusses are of course useful if we are 
+    reflectively aware of the distortion they inevitably introduce.
+- Some dynamics of textuality
+  + words are alone in a text. writing is a solipsistic operation.
+  + in a text even the words that are there lack their full phonetic qualities.
+  + extratextual context is missing not only for readers but also for the writer
+    Lack of verifiable context is what makes writing normally so much more 
+    agonizing an activity that oral presentation to a real audience.
+  + the way in which readers are fictionalized is the underside of literary 
+    history.
+- Distance, precision, Grapholects and magnavocabularies
+  + wisdom has to do with a total and relatively infrangible social context.
+    Orally managed language and thought are not noted for analytic precision.
+  + Written words sharpen analysis, for the individual words are called on to do
+    more. To make yourself clear without gesture, without facial expression, 
+    without intonation, without a real hearer, you have to foresee circumspectly
+    all possible meanings a statement may have for any possible reader in any
+    possible situation, and you have to make your language work so as to come
+    clear all by itself, with no existential context. The need for this 
+    exquisite circumspection makes writing the agonizing work it commonly is.
+  + Corrections in oral performance tend to be counterproductive, to render the
+    speaker unconvincing. So you keep them to a minimum or avoid them altogether
+    In writing, corrections can be tremendously productive, for how can the
+    reader know they have even been made.
+  + Although Plato's thought is couched in dialogue form, its exquisite 
+    precision is due to the effecs of writing on the noetic processes, for the
+    dialogues are in fact written texts. The exquisitely analytic oral 
+    disputations in medieval universities and in later scholastic tradition into
+    the present century were the work of minds honed by writing texts and by
+    reading and commenting on texts, orally and in writing.
+- Interactions: rhetoric and the places
+  + 2 special major developments in the West derive from and affect the 
+    interaction of writing and orality. These are academic rhetoric and Learned
+    Latin
+  + rhetoric was at root the art of public speaking, of oral address, for
+    persuasion (forensic and deliberative rhetoric) or exposition (epideictic
+    rhetoric). The rhetorical tradition represented the old oral world and the
+    philosophical tradition the new chirographic structures of thought.
+  + the art of rhetoric, though concerned with oral speech, was, like other arts
+    the product of writing
+  + For its first discoverers or inventors, the Sophists of fith-century Greece,
+    rhetoric was a marvelous thing. It provided a rationale for what was dearest
+    to their hearts, effective and often showy oral performance, something which
+    had been a distinctively human part of human existence for ages but which,
+    before writing, could never have been so reflectively prepared for or 
+    accounted for.
+- Interactions: Learned Languages
+  + The second massive development in the West affecting the interaction of
+    writing and orality was Learned Latin. 
+- Tenaciousness of orality
+** words
+1. pristine
+(a) in its orinal condition; unspoiled
+- pristine copies of an early magazine
+(a) clean and fresh as if new; spotless
+- a pristine white shirt
+2. vatic
+(a) describing or predicting what will happen in the future
+- vatic utterances.
+3. misgive
+(v) (of a person's mind or heart) fill (that person) with doubt, apprehension,
+or foreboding
+- my heart misgave me when I saw him.
+4. misgiving
+a feeling of doubt or apprehension about the outcome or consequences of 
+something
+- we have misgivings about the way the campaign is being run.
+5. circumstantial
+(a) (of evidence or a legal case) pointing indirectly toward someone's guilt
+but not conclusively proving it
+(a) (of a description) containing full of details
+- the picture was circumstantial and therefore convincing
+6. drastic
+(a) likely to have a strong or far-reaching effect; radical and extreme
+- a drastic reduction of staffing levels
+7. quiescent
+(a) in a state or period of inactivity or dormancy
+- strikes were headed by groups of workers who had previously been quiescent
+8. proximity
+(n) nearness in space, time, or relationship
+- do not operate microphone in close proximity to television sets.
+9. contrivance
+(n) a thing that is created skillfully and inventively to serve a particular
+purpose
+- an assortment of electronic equipment and mechanical contrivances.
+10. poignant
+(a) evoking a keen sense of sadness or regret
+- a poignant reminder of the passing of time
+11. exquisite
+(a) extremely beautiful and, typically, delicate
+- exquisite, jewellike portraits
+12. aesthetic
+(a) concerned with beauty or the appreciation of beauty
+- the pictures give great aesthetic pleasure.
+13. amulet
+(n) an ornament or small piece of jewelry thought to give protection against
+evil, danger, or disease.
+14. linger
+(v) stay in a place longer than necessary, typically because of a reluctance to 
+leave
+- she lingered in the yard, enjoying the warm sunshine
+15. milieu
+(n) a person's social environment
+- he grew up in a military milieu
+16. impinge
+(v) have an effect or impact, esp. a negative one
+- Nora was determined that the tragedy would impinge as little as possible on
+Constance's life
+17. charter
+(n) a written grant by a country's legislative or sovereign power, by which an
+institution such as a company, college, or city is created and its rights and 
+privileges defined.
+18. assimilate
+(v) take in (information, ideas, or culture) to understand fully
+- Marie tried to assimilate the week's events
+(v) (usu be assimilated) absorb and integrate (people, ideas, or culture) into a 
+wider society or culture.
+- pop trends are assimilated into the mainstream with alarming speed
+(v) absorb or integrate and use for one's own benefit
+- the music business assimilated whatever aspects of punk it could turn into 
+profit.
+(v) come to resemble
+- the churches assimilated to a certain cultural norm
+- philosophers had assimilated thought to perception
+19. forge
+(v) make a shape (a metal object) by heating it in a fire or furnace and beating
+or hammering it
+(v) produce a copy or imitation of (a document, signature, banknote, or work or
+art) for the purpose of deception
+20. anguish
+(n) severe mental or physical pain or suffering
+- she shut her eyes in anguish
+21 agonize
+(v) undergo greate mental anguish through worrying about something
+- I didn't agonize over the problem
+22. infrangible
+(a) unbreakable, inviolable
+23. continuum
+(n) a continuous sequences in which adjacent elements are not perceptibly
+different from each other, although the extremes are quite distinct
+- at the fast end of the fast-slow continuum
+24 gloss over
+(v) try to conceal or disguise (something embarrassing or unfavorable) by 
+treating it briefly or representing it misleadingly
+- the social costs of this growth are glossed over.
+25. magnitude
+(n) the great size extent of something
+- they may feel discouraged at the magnitude of the task before them
+* Chapter 5: Print, Space and Closure
+** notes
+- Hearing dominance yeilds to sight-dominance
+  + 
+** words
+* Chapter 6: Oral Memory, The story line and characterization
+** notes
+- The primacy of the story line
+- Narrative of oral cultures
+- Oral memory and the story line
+** words
+* Chapter 7: Some theorems
+- Literary history
+

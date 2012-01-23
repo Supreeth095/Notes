@@ -1,0 +1,49 @@
+\documentclass [11pt]{article}
+\usepackage{amssymb}
+\title{Introduction to Number Theory}
+\author{Bui Hong Ha}
+\date{\today}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  Introduction to Number Theory's note. On this note, I summerize many main ideas, important definition, and critical exercises when reading the book: ``introduction to number theory `` of professor Victor Shoup.
+\addcontentsline{toc}{section}{abstract}
+\end{abstract}
+
+\tableofcontents
+
+\section{Premilinaries}
+Some terminology, notation, and simple facts that will bed used throughout the text\\
+\begin{center}
+ \textbf{ Logarithms and exponentials}
+\end{center}
+We write $\log x$ for the natural logarithm, and $\log_b x $ for the logarithm of x to the base b.\\
+We write $e^x$ for the usual exponential function, where $e \approx 2.71828 $ is the base of the natural logarithm. $ exp[x] \approx e^x $
+
+\begin{center}
+  \textbf{Sets and families}
+\end{center}
+We use standard set-theoretic notation: \\
+\begin{itemize} 
+\item $\emptyset$ denotes the empty set
+\item $x \in A$ means that x is an element, or member, of the set A 
+\item For two sets $A, B, A \subset B $ means that $A$ is a subset of $B$ (with $A$ possibly equal to $B$), and $A \subsetneq B$ means that $A$ is a proper subset of $B$
+\item $A \cup B$ denotes the union of $A$ and $B$
+\item $A \cap B$ denotes the intersection of $A$ and $B$
+\item $A / B$ denotes the set of all elements of $A$ that are not in $B$
+\item if A is a set with a finite number of elements, then we write |A| for its \textbf{size}, or \textbf{cardinality}
+\item $S_1 \times \ldots \times S_n$ for the \textbf{Cartesian product} of sets $S_1 ,\ldots,S_n$, which is the set of all \textit{n}-tuples $(a_1, \ldots, a_n)$, where $a_i \in S_i$ for $i = 1,\ldots,n$. We write $S^{\times n}$ for the Cartesian product of n copies of a set S, and for $x \in S$, we write $x^{\times n}$ for the element of $S^{\times n}$ consisting of n copies of x.
+\item A \textbf{family} is a collection of objects, indexed by some set \textit{I}, called an \textbf{index set}. If for each $i \in I$ we have an associated object $x_i$, the family of all such objects is denoted by $\{x_i\}_{i \in I}$. Unlike a set, a family may contain duplicates,: that is we may have $x_i = x_j$ for some pair of indices $i,j$ with $i \neq j$. 
+\end{itemize}
+
+\begin{center}
+\textbf{Functions}
+\end{center}
+\begin{itemize}
+\item $f \colon A \rightarrow B $ indicates that $f$ is a function (also called a \textbf{map}) from a set $A$ to a set $B$
+\item If $A' \subseteq A$, then $f(A') := \{ f(a) : a \in A' \}$ is the \textbf{image} of $A'$ undef $f$, and $f(A)$ is simply referred to as the \textbf{image} of $f$; if $B' \subseteq B$, then $f^{-1}(B'):= \{ a \in A: f(a) \in B' \}$ is the \textbf{pre-image} of $B'$ under $f$
+\end{itemize}
+
+\section{Ideals and greatest common divisors}
+\end{document}

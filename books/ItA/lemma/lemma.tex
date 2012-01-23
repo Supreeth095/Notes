@@ -1,0 +1,36 @@
+\documentclass[12pt]{article}
+\usepackage{newlfont}
+
+\title{Introduction to Algorithm 2ed 's Lemma and Solution}
+\author{Bui Hong Ha}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This page consists of lemmas and solutions from the book "Introduction to Algorithm 2nd" of MIT. This document is used as my private notebook.
+
+\addcontentsline{toc}{section}{Abstract} 
+\end{abstract}
+
+\tableofcontents
+
+\section{String Matching}
+	\subsection{Overlapping-Suffix Lemma}
+	Suppose that x, y, and z are strings such that $x \sqsupset z$ and $y \sqsupset z$. If $|x| \leq |y|$ then $x \sqsupset y$. If $|x| \geq |y|$, the $y \sqsupset x$. If $|x| = |y|$ then $x = y$.
+
+	\subsection{The naive string-matching algorithm}
+	$
+	NAIVE-STRING-MATCHER(T,P)\\
+	\mbox{1. } n \leftarrow length[T]\\
+	\mbox{2. } m \leftarrow length[P] \\
+	\mbox{3. } for \mbox{ s} \leftarrow 0 to \mbox{ n-m} \\ 
+	\mbox{4. }\mbox{       do if } P[1 \ldots m] = T[s+1 \ldots s+m] \\
+	\mbox{5.  }\mbox{      then print "Patern occurs with shift" s }\\
+	$ \\
+	Suppose that pattern P and text T are randomly chosen strings of length m and n , respectively, from the $ d-ary \mbox{ alphabet } \sum_{d} = {0,1,\ldots,d-1} $, where $ d \geq 2 $. Show that the expected number of character-to-character comparisons made by the implicit loop in line 4 of the naive algorithm is \\
+$$(n-m+1)\frac{1-d^{-m}}{1-d^{-1}} \leq 2(n-m+1)$$
+over all executions of this loop. (Assume that the naive algorithm stops comparing character for a given shift once a mismatch is found or the entire pattern is matched.) Thus, for randomly chosen strings, the naive algorithm is quite efficient.
+			
+\end{document}

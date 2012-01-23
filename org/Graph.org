@@ -1,0 +1,13 @@
+* Representaions of Graphs
+- 2 standard ways to represent a graph G = (V, E)
+  + collection of adjacency lists: 
+    compact way to represent sparse graphs E is much less than V^2
+    desirable property: amount of memory it requires is O(V+E)
+  + an adjacency matrix
+    preferred when graph is dense, E is close to V^2
+    when we need to tell quickly if there is an edge connecting 2 given vertices
+
+
+- adjacency matrix: 
+  + Let A be adjacency matrix which represents G, we have A^2 counts 2 steps 
+    paths from i to any node j

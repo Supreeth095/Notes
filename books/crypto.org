@@ -1,0 +1,415 @@
+* Chapter 1: Foundations
+** Terminology
+*** Messages and Encryption
+  + message = plaintext
+  + *encryption* is the process of disguising a message in such a way as to 
+    hide is substance
+  + *decryption* the process of turning ciphertext back into plaintext
+  + *cryptography*: the art and science of keeping messages secure
+  + *cryptanalysis*: the art and science of breaking ciphertext
+  + Denotion: 
+    - message M, plaintext P, ciphertext C, encryption function E,
+      operates on M to produce C
+      E(M) = C
+    - decryption function D operates on C to produce M
+      D(C) = M
+    - D(E(M)) = M
+
+*** Authentication, Integrity and Nonrepudiation
+  + Authentication: possible for the receiver of a message to ascertain its
+    origins
+  + Integrity: possible for the receiver of a message to verify that is has not
+    been modified in transit
+  + Nonrepudiation: a sender should not be able to falsely deny later that he
+    sent a message
+
+*** Algorithms and Keys
+  + A *cryptographic algorithm* is the mathematical function used for encryption
+    and decryption
+  + the security == keeping the way that algorithm works a secret 
+    --> *restricted algorithm* 
+    - inadequate by today's standards
+    - allow no quality control and standardization
+  + modern cryptography solve this problem with a *key*. The range of possible
+    values of the key is called *key space*
+    Ek(M) = C, Dk(C) = M, Dk(Ek(M)) = M
+
+*** Symmetric algorithms
+  + conventional algorithms
+  + encryption key can be calculated from the decryption key and vice versa.
+  + two categories
+    - stream algorithms / stream ciphers
+    - block algorithms / block ciphers
+
+*** Public-Key algorithms
+  + Encryption key is different from decryption key. impossible to calculated 
+    each other.
+  + *encryption key* == *public key*
+    *decryption key* == *private key*
+
+*** Cryptanalysis
+  + attacks
+    - *Ciphertext-only attack*: cryptanalyst has the ciphertext of several 
+      messages, encrypted using the same encryption algorithm. The cryptanalyst's
+      job is to recover the plaintext of as many messages as possible, or better
+      yet to deduce the key (or keys) used to encrypt the messages
+      /Given/: C1 = Ek(P1), C2 = Ek(P2),..., Ci = Ek(Pi)
+      /Deduce/: P1,P2,..Pi; k; algorithm to infer Pi+1 from Ci+1 = Ek(Pi+1)
+    - *Known-plaintext attack*: the cryptanalyst not only has access to the 
+      ciphertext and associated plaintext for several messages, but he also 
+      chooses the plaintext that gets encrypted. His job is to deduce the key or
+      an algorithm to decrypt any new messages encrypted with the same key
+      /Given/: P1,C1=Ek(P1),P2,C2=Ek(P2),...,Pi,Ci=Ek(Pi)
+      /Deduce/: Either k, or an algorithm to infer Pi+1 from Ci+1=Ek(Pi+1)
+    - *Chosen-plaintext attack*: the cryptanalyst not only has access to the 
+      ciphertext and associated plaintext for several messages, but he also 
+      chooses the plaintext that gets encrypted. His job is to deduce the key
+      used to encrypt that messages or an algorithm to decrypt any new messages
+      /Given/: P1,C1=Ek(P1),P2,C2=Ek(P2),...,Pi,Ci=Ek(Pi), where the 
+      cryptanalyst gets to choose P1,P2,...Pi
+      /Deduce/: Either k, or an algorithm to infer Pi+1 from Ci+1=Ek(Pi+1)
+    - *Adaptive-chosen-plaintext attack*: special case of a chosen-plaintext
+      attack
+    - *Chosen-cipher attack*
+    - *Chosen-key attack*
+    - *Rubber-hose cryptanalysis*
+
+** Steganography
+** Substitution Ciphers and Transposition Ciphers
+- In classical cryptography, there are four types of substitution ciphers:
+  + A simple substitution cipher
+  + A homophonic substitution cipher
+  + A polygram substitution cipher
+  + A polyalphabetic substitution cipher
+** Simple XOR
+How to break:
+    1. Discover the length of the key by a procedure known as 
+       *counting coincidences*. 
+    2. Shift the cipher text by that length and XOR it with itself. This removes
+       the key and leaves you with plaintext XORed with the plaintext shifted 
+       the length of the key. Since English has 1.3 bits of real information 
+       per byte, there is plenty of redundancy for determining a unique
+       decryption
+** Computer Algorithms
+3 common crytographic algorithms
+  - DES (Data Encryption Standard): symmetric algorithm, same key
+  - RSA : both encryption and digital signatures
+  - DSA (Digital signature algorithm) 
+
+** Large Numbers
+
+* Chapter 2: Protocol Building Blocks
+
+** Introduction to Protocols
+- *protocol* is a series of steps, involving 2 or more parties, designed to
+  accomplish a task.
+- protocols hasve other characteristics:
+  + everyone involved in the protocol must know the protocol and all of the 
+    steps to follow in advance
+  + everyone involved in the protocol must agree to follow it
+  + the protocol must be unambiguous; each step must be well defined and there
+    must be no chance of a misunderstanding
+  + the protocol must be complete; there must be a specified action for every
+    possible situation.
+- *cryptographic protocol*: a protocol that uses cryptography
+
+*** Arbitrated Protocols
+- An *arbitrator* is a disinterested third party trusted to complete a protocol
+  + disinterested = no vested interest in the protocol and no particular 
+    allegiance to any of the parties involved
+  + trusted = all people involved in the protocol accept what he says as true, 
+    what he does as correct, and that he will complete his part of the protocol
+  + arbitrators can help complete protocols between two mutually distrustful 
+    parties
+- examples: 
+  + lawyers are often used as arbitrators
+  + bankers also arbitrate protocols
+
+*** Adjudicated protocols
+- adjudicator is also a disinterested and trusted third party
+- adjudicated subprotocol (executed only in case of a dispute)
+  + Alice and Bob appear before a judge
+  + Alice presents her evidence
+  + Bob presents his evidence
+  + The judge rules on the evidence
+
+*** Self-enforcing protocols
+- best type of protocol
+- If one of the parties tries to cheat, the other party immediately detects the
+  cheating and the protocol stops
+- there's not a self-enforcing protocol for every situation.
+
+*** Attacks against protocols
+- *passive attack*: eavedrop on all of the protocol
+- *active attack*: require active intervention: introduce new messages, delete 
+  existing messages, substitute one message for another, replay old messages ...
+- *cheater* may lie during protocol or not follow the protocol at all.
+  + *passive cheaters* follow the protocol, but try to obtain more information
+    than the protocol intends them to
+  + *active cheaters* disrupt the protocol in progress in an attempt to cheat
+
+** Communications using symmetric cryptography
+- The Protocol:
+  1. Alice and Bob agree on a cryptosystem
+  2. Alice and Bob agree on a key
+  3. Alice takes her plaintext message and encrypts it using the encryption 
+     algorithm and the key. This creates a ciphertext message
+  4. Alice sends the ciphertext message to Bob
+  5. Bob decrypts the ciphertext message with the same algorithm and key and 
+     reads it
+
+- Eve hears transmission in step (4) and try to cryptanalyze the ciphertext
+  + listen in on steps (1) and (2)
+   --> key management is important and the key must remain secret
+
+- Mallory:
+  + break the communications path in step (4)
+  + encrypt his own message and send it to Bob in place of the intercepted
+    message
+
+- Symmetric cryptosystems have the following problems:
+  + Key must be distributed in secret
+  + the total number of keys increases rapidly as the number of users increases
+
+** One-way functions
+- building block for most of the protocol
+- *one-way function* relative easy to compute, but significantly harder to 
+  reverse.
+- *trapdoor one-way function*: special type of one-way function.
+  there is some secret information y, such that given f(x) and y it is easy to
+  compute x
+
+** One-way Hash functions
+- other names: compression function, contraction function, message digest,
+  fingerprint, cryptographic checksum, message integrity check (MIC), and 
+  manipulation detection code (MDC)
+- good one-way hash function is also *collision-free*
+
+** Communications using public-key cryptography
+*** Hybrid Cryptosystems
+- public-key algorithms are not a substitute for symmetric algorithms
+  + public-key algorithm are slow
+  + public-key cryptosystems are vulnerable to chosen-plaintext attacks
+- practical implementations public-key cryptography is used to secure and
+  distribute session keys 
+  
+  1. Bob sends Alice his public key
+  2. Alice generates a random session key, K, encrypts it using Bob's public key
+     and sends it to Bob
+          E_B(K)
+  3. Bob decrypts Alice's message using his private key to recover the session
+     key
+          D_B(E_B(K)) = K
+  4. Both of them encrypt their communications using the same session key.
+
+*** Merkle's Puzzles
+
+** Digital Signatures
+*** Digital Signature Trees
+*** Signing Documents with Public-key cryptography
+*** Signing Documents and Timestamps
+*** Signing Documents with Public-key cryptography and one-way hash function
+*** Multiple signatures
+
+* Chapter 3: Basic Protocols
+** Key Exchange
+*** Key exchange with symmetric cryptography
+ 1. Alice calls Trent and requests a session key to communicate with Bob
+ 2. Trent generates a random session key. He encrypts two copies of it: one in Alice
+    key and the other in Bob's key. Trent sends both copies to Alice.
+ 3. Alice decrypts her copy of the session key
+ 4. Alice sends Bob his copy of the session key.
+ 5. Bob decrypts his copy of the session key
+ 6. Both Alice and Bob use this session key to communicate securely
+
+- characteristics:
+  + rely on security of Trent
+  + Trent is a potential bottleneck
+
+*** Key exchange with public-key cryptography
+ 1. Alice gets Bob's public key from the KDC
+ 2. Alice generates a random session key, encrypts it using Bob's public key, and
+    sends it to Bob
+ 3. Bob then decrypts Alice's message using his private key
+ 4. Both of them encrypt their communications using the same session key
+
+- characteristics:
+  + keys will be available on a database --> key exchange protocol easier
+  + Alice can send a secure message to Bob even if he has never heard of her
+
+*** Man-in-the-Middle Attack
+ 1. Alice sends Bob her public key. Mallory intercepts this key and sends Bob his 
+    own public key
+ 2. Bob sends Alice his public key. Mallory intercepts this key and sends Alice his
+    own public key
+ 3. When Alice sends a message to Bob, encrypted in "Bob's" public key, Mallory 
+    intercepts it. Since the message is really encrypted with his own public key, he
+    decrypts it with his private key, re-encrypts it with Bob's public key, and 
+    sends it on to Bob
+ 4. When Bob sends a message to Alice, encrypted in "Alice's" public key, Mallory 
+    intercepts it. Since the message is really encrypted with his own public key, he
+    decrypts it with his private key, re-encrypts it with Alice's public key, and 
+    sends it on to Alice
+
+- *man-in-the-middle attack* works because Alice and Bob have no way to verify that
+  they are talking to each other
+
+*** Interlock protocol
+ 1. Alice sends Bob her public key
+ 2. Bob sends Alice his public key
+ 3. Alice encrypts her message using Bob's public key. She sends half of the 
+    encrypted message to Bob
+ 4. Bob encrypts his message using Alice's public key. He sends half of the 
+    encrypted message to Alice
+ 5. Alice sends the other half of her encrypted message to Bob
+ 6. Bob puts the two halves of Alice's message together and decrypts it with his 
+    private key. Bob sends the other half of his encrypted message to Alice.
+ 7. Alice puts the two halves of Bob's message together and decrypts it with her
+    private key.
+
+*** Key Exchange with Digital Signatures
+
+*** Key and Message transmission
+ 1. Alice generates a random session key, K, and encrypts M using K
+     E_K(M)
+ 2. Alice gets Bob's public key from the database
+ 3. Alice encrypts K with Bob's public key
+    E_B(K)
+ 4. Alice sends both the encrypted message and encrypted session key to Bob
+    E_K(M), E_B(K)
+ 5. Bob decrypts Alice's session key, K, using his private key
+ 6. Bob decrypts Alice's message using the session key.
+
+*** Key and Message Broadcast
+- same as above (broadcast key for over 3 people instead)
+- can be implemented on a store-and-forward network. 
+
+** Authentication
+*** Authentication using one-way functions
+ 1. Alice sends the host her password
+ 2. the host performs a one-way function on the password
+ 3. The host compares the result of the one-way function to the value it previously
+    stored
+
+*** Dictionary attacks and salt
+*** SKEY
+- an authentication program that relies on a one-way function for its security
+- Alice enters a random number R. The computer computes f(R), f(f(R)), f(f(f(R)))
+- Computer computes about 100 times, store x_101. Alice store x_100 and her name.
+- the first time Alice wants to log in, she types her name and x_100. The computer
+  calculate f(x_100) and compares it with x_101; if they match, Alice is 
+  authenticated
+- Alice crossess x_100 off her list, computer uses x_100 for next login session
+
+*** Authentication Using public-key cryptography
+*** Mutual Authentication using interlock protocol
+*** SKID
+
+*** Message Authentication
+
+** Authentication and Key exchange
+*** Wide-Mouth Frog
+*** yahalom
+*** Needham-Schroeder
+*** Otway-Rees
+*** Kerberos
+*** Neuman-stubblebine
+*** DASS
+*** Denning-Sacco
+*** Woo-Lam
+
+** Formal analysis of Authentication and Key-Exchange protocol
+- 4 basic approaches to the analysis of cryptographic protocols
+  + Model and verify the protocol using specification languages and verification
+    tools not specifically designed for the analysis of cryptographic protocols
+  + Develop expert systems that a protocol designer can use to develop and 
+    investigate different scenarios
+  + Model the requirements of a protocol family using logics for the analysis of 
+    knowledge and belief
+  + Develop a formal method based on the algebraic term-rewritting properties of
+    cryptographic systems
+
+** Secret Splitting
+- divide message up into pieces, each piece means nothing, but put them together and
+  the message appears
+- Simplest sharing scheme:
+  + Trent generates a random-bit string, R, the same length as the message, M
+  + Trent XORs M with R to generate S
+    M ^ R = S
+  + Trent gives R to Alice and S to Bob
+  + Alice and Bob XOR their pieces together to reconstruct the message:
+    R ^ S = M
+
+** Secret Sharing
+- *(m,n)-threshold scheme*: divide message into n pieces (called *shadows or shares*)
+  such that any m of them can be used to reconstruct the message
+
+*** Secret sharing with cheaters
+*** Secret sharing without trent
+*** Sharing a secret without revealing the shares
+*** Verifiable secret sharing
+*** Secret-sharing schemes with prevention
+*** Secret sharing with disenrollment
+
+** Cryptographic protection of databases
+* Chapter 4: Intermediate Protocols
+** Timestamping Services
+- a mechanism to verify date-time, timestamp in documents
+- properties:
+  + the data itself must be timestamped, without any regard to physical 
+    medium
+  + impossible to change a single bit of the document without that change
+    being apparent
+  + impossible to timestamp a document with a date and time different from
+    the present one.
+
+*** Arbitrated Solution
+- Uses Trent
+  + Alice transmits a copy of the document to Trent
+  + Trent records the date and time he received the document and retains a
+    copy of the document for safekeeping
+- Problems:
+  + no privacy. Trent must store a copy of Alice's documents
+  + huge database + bandwidth
+  + potential errors: transmission + electromagnetic bombs
+  + untrustable Trent
+
+*** Improved Arbitrated Solution
+- Use one-way hash function
+  + Alice produces a one-way hash of the document
+  + Alice transmits the hash to Trent
+  + Trent appends the date and time he received the hash onto the hash and
+    then digitally signs the result
+  + Trent sends the signed hash with timestamp back to Alice
+
+*** Linking Protocol
+- If A is Alice's name, the hash value that Alice wants to timestamp is Hn
+  and the previous time stamp is Tn-1, then the protocol is:
+  + Alice sends Trent Hn and A
+  + Trend sends back to Alice:
+    Tn = Sk(n, A, Hn, tn, In-1, Hn-1, Tn-1, Ln)
+    where Ln consists of the following hashed linking information
+    Ln = H(In-1, Hn-1, Tn-1, Ln-1)
+
+*** Subliminal Channel
+** Undeniable Digital Signature
+- *Undeniable signatures* [343, 327]. mathematics @ 23.4
+  + Alice presents Bob with a signature
+  + Bob generates a random number and sends it to Alice
+  + Alice does a calculation using the random number and her private key and sends
+    Bob the result. Alice could only do this calculation if the signature is valid
+  + Bob confirms this
+- *entrusted undeniable signature [1229]
+
+** Designated Confirmer Signatures
+** Proxy Signatures
+- Give other people the power to sign message, without giving out the private key
+- *Proxy signatures* [1001] properties
+  + Distinguishability
+  + Unforgeability
+  + Proxy signer's deviation
+  + Verifiability
+  + Identifiability
+  + Undeniability
+
+** Group Signatures

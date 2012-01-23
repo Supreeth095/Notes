@@ -1,0 +1,143 @@
+* Chapter 1: The seven stages of Visualizing Data		    :7stages:
+
+** Notes:
+*** Data display requires planning
++ Each set of data has particular display needs
++ the purpose for which you're using the data set has just as much of an effect
+  on those needs as the data itself. 
+
+*** Too much information
++ we are living in "information overload" era.
++ The capability of modern machines is astounding --> easy to perform sophisticated
+  data analysis.
++ high-end 2D, 3D graphics hardware no longer requires dedicated machines. 
+
+*** Data Collection
++ we're getting better at collecting data, but we lag in what we can do w/ it.
++ still don't have many satisfactory answers to the sort of questions that we
+  started w/
+
+*** Thinking about data
++ we also do very little sophisticated thinking about information itself.
++ W/ so few ppl addressing data, our understanding remains quite narrow, boiling
+  down to things like, "My credit card number might be stolen"
+
+*** Data never stays the same
++ we might be accustomed to thinking abt data as fixed values to be analyzed, 
+  but data is a moving target.
+
+*** What is the question?
++ As machines have enormously increased the capacity w/ which we can create and store
+  data from the original reason for collecting it. 
++ this leads to an all-too-frequent situation: approaching visualization problems w/
+  the question, "How can we possibly understand so much data?"
+
++ Greate information visualization never starts from the standpoint of the data set;
+  it starts w/ questions. Why was the data collected, what's interesting abt it, and
+  what stories can it tell?
++ One of the most important skills in understanding data is asking good questions.
++ A proper visualization is a kind of narrative, providing a clear answer to a
+  question w/o extranous details.
+
+*** A Combination of Manu Disciplines
++ providing a meaningful solution requires insights from diverse fields:
+  - statistics
+  - data mining
+  - graphic design
+  - information visualization
++ Visual design -- the field of mapping data to a visual form -- typically does not
+  address how to handle thousands or tens of thousands of items of data. Data mining
+  techniques have such capabilities, but they are disconnected from the means to 
+  interact w/ the data.
+
+*** Process
+The process of understand data begins w/ a set of numbers and a question. The following
+steps form a path to the answer:
+**** Acquire
+     obtain the data, whether from a file on a disk or a source over a network
+**** Parse
+     Provide some structure for the data's meaning, and order it into categories
+**** Filter
+     Remove all but the data of interest
+**** Mine
+     Apply methods from statistics or data mining as a way to discern patterns or
+     replace the data in mathematical context.
+**** Represent
+     Choose a basic visual model, such as a bar graph, list, or tree.
+**** Refine
+     Improve the basic representation to make it clearer and more visually engaging
+**** Interact
+     Add methods for manipulating the data or controlling what features are visible
+
+** Principles
+*** Each project has unique requirements
+*** Avoid the All-You-Can-Eat buffet
+*** Know your Audience
+
+** newword
++ deluge
++ reconcile
+
+
+
+* Chapter 2: Processing					      :abtProcessing:
+
+** Notes
++ p24: Learning pattern: running - altering - breaking, and enhancing until we can
+  reshape it into something new.
++ The point is to delay engineering work until it's appropriate.
+
+** newword
+
+* Chapter 3: Mapping						    :mapping:
+** Notes
+*** functions
++ map() function used to convert from a range to another
++ norm() maps value from a user-specified range to a normalized range between 0.0
+  and 1.0
+
+*** notices (p39)
++ Map data to color range: 
+  to make color interpolation work, it's better to employ a pair of similar colors.
++ RGB and HSB Color Spaces:
+  The HSB color space defines colors based on hue, saturation, and brightness instead
+  of the reg, green, and blue values used in RGB. The RGB color space has more to do
+  w/ how color is represented by computer screens than how we actually perceive color.
+  Intermediate steps in each of the hue, saturation, and brightness components of a 
+  color provide better interpolation because each of the perceptual aspects of the 
+  color are broken apart -- The shift in the hue component is separated from the shift
+  in saturation and the shift in brightness.
+  In the RGB color space, a gray value occurs whenever the R,G, and B components are
+  identical (or at least similar). In RGB space, the color halfway between orange
+  (255,128,0) and light blue (0,128,255) is gray (128,128,128). So using lerpColor()
+  in RGB mode would cause the orange to become more gray at each step, until it 
+  reaches gray;then, it would slowly move from gray to blue. Not too pleasing to look
+  at.
+  On the other hand, RGB mode is preferred when there are significant changes in hue.
+  For instance, if you begin at red and interpolate to green in HSB space, you'll 
+  iterate through all the spectrum colors in between; from red, to orange, then to 
+  yellow, and finally to green.
+
+*** Two-Sided Data Ranges
++ p41: 
+  Map size & color (1 variable 2 ways) can be helpful for reinforcing the meaning of
+  the value, but it's often done w/o consideration.
++ option: map the transparency of the ellipses to their relative values
+
+*** Provide more information w/ a mouse rollover
+It's useful to introduce the idea of joining multiple sets of data. Joining data 
+frequently is necessary, and the opportunity to combine data sets from different
+sources is a powerful aspect of data visualization.
+
+*** Updating Vales over Time (Acquire, Mine)
+** newword
++ interpolate
+* Chapter 4: Time Series
+** Drawig Axis labels
+- There are clever means of selecting intervals?
+- Choosing a proper interval and deciding whether
+  to include major and minor tick marks depends on the data, but a general rule
+  of thumb is that five intervals is at the low end, and more than ten is likely
+  a problem.
+- The most important consideration is the way the data is used. Determining the
+  correct level of detail usually requires a little trial and error.

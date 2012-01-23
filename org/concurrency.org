@@ -1,0 +1,251 @@
+* Concurrency 
+
+** Tasks
+*** TODO Read concurrency chapter in java
+*** TODO Describe the importance of concurrecy (in Java & computing)
+*** TODO Write a demo of concurrency
+
+** The many faces of concurrency
+- A primary reason why concurrent programming can be confusing is that there is
+  more than one problem to solve using concurrency, and more than one approach
+  to implementing concurrency, and no clean mapping between the two issuses.
+- the problems that you solve w/ concurrency can be roughly classified as "speed"
+  and "design manageability"
+*** Faster execution
+- the speed issue sounds simple at first: if you want a program to run faster, 
+  break it into pieces and run each piece on a separate processor. Concurrency is
+  a fundamental tool for multiprocessor programming.
+- Moore's Law running out of steam: to make programs run faster, we'll have to 
+  take advantage of extra processors
+- concurrency can often improve the performance of programs running on a single
+  processor
+- counterintuitive: a concurrent program running on a single processor should 
+  actually have more overhead than if the parts of the program ran sequentially
+  because of the added cost of so the called context-switch
+- the issue that can make a difference is blocking. If your program is unable
+  to continue because of some condition outside of the control of the program
+  (typically I/O), we say the task or the thread blocks. If the program is
+  written using concurrency, however, the other tasks in the program can continue
+  to move forward
+- A very common example of performance improvements in single-processor systems
+  is event-driven programming.
+- fundamental difficulty in writing multithreaded programs is coordinating the
+  use of these resources between different thread-driven tasks, so that they
+  cant be accessed by more than one task at a time.
+*** Improving code design
+- concurrency provides an important organization benefit: the design of your 
+  program can be greatly simplified. Some type of problems, such as simulation,
+  are difficult to solve w/o support for concurrency.
+- a full-fledged simulation may involve a very large number of tasks, corresponding
+  to the fact that each element in a simulation can act independently. 
+- a typical approach to solving this problem is the use of cooperative
+  multithreading. Java's threading is preemptive, which means that a scheduling
+  mechanism provides time slices for each thread, periodically interrupting a
+  thread and context switching to another thread so that each is given a reasonable 
+  amount of time to drive its task. In a cooperative system, each task voluntarily
+  gives up control, which requires the programmer to consciously insert some kind
+  of yielding statement into each task.
+- concurrency is a very useful model - because it's what is actually happening - when
+  you working w/ modern messaging system, which involve many independent computers
+  distributed across a network.
+- concurrency imposes costs, including complexity costs, but there are usually outweighed
+  by improvements in program design, resource balancing, and user convenience.
+
+** Basic threading
+*** The Thread class
+*** Using Executors
+- CachedThreadPools
+- FixedThreadPools
+  do expensive thread allocation once, up front, and you thus limit the number
+  of threads. In an event-driven system, event handlers that require threads
+  can be serviced as quickly as you want by simply fetching threads from the pool
+- SingleThreadExecutor
+  if more than one task is submitted to a SingleThreadExecutor, the tasks will
+  be queued and each task will run to completion before the next task is begun
+*** Producing return values from tasks
+- want to produce a value when it's done, you can implement the Callable interface
+  rather than Runnable interface.
+- Callable is a generic w/ a type parameter representing the return value from
+  the method call(), and must be invoked using an ExecutorService submit()
+*** Sleeping
+- a simple way to affect the behavior of your tasks.
+
+*** Priority 
+- setPriority / getPriority
+- the only portable approach is to stick to MAX_PRIORITY, NORM_PRIORITY,
+  MIN_PRIORITY
+
+*** Yielding
+- when you call yeild(), you are suggesting that other threads of the same
+  priority might be run
+
+*** Daemon threads
+- a "daemon" thread is intented to provide a general service in the background
+  as long as the program is running, but is not part of the essence of the 
+  program.
+** Terminology
+- there's a distinction between the task that's being executed and the thread
+  that drives it; 
+- In Java, the Thread class by itself does nothing. It drives the task that it's
+  given
+- The problem is that the levels of abstraction are mixed together. Conceptually
+  we want to create a task that runs independently of other tasks, so we ought
+  to be able to define a task, and then say "go", and not worry about details. 
+  But physically, threads can be expensive to create, so you must conserve and
+  manage them. Thus, it makes sense from an implementation standpoint to
+  separate tasks from threads. In addition, java threading is based on the low-
+  level pthreads approach which comes from C, where you are immersed in, and must
+  thoroughtly understand, the nuts and bolts of everything that's going on.
+
+*** Joining a thread
+*** Creating responsive user interfaces
+- put the calculation inside a task and thus can be performing the calculation
+  and listening for console input.
+*** Thread groups
+- a thread group holds a collection of threads.
+- quote from Joshua Bloch, the software architect who, while he was at Sun, fixed
+  and greatly improved the Java collection
+  "Thread groups are best viewed as an unsuccessful experiment, and you may
+  simply ignore their existence."
+
+*** Sharing resources
+**** Improperly accessing resources
+**** Resolving shared resource contention
+- To solve the problem of thread collision, virtually all concurrency schemes
+  "serialize access to shared resources". This means that only one task at a time
+  is allowed to access the shared resource. This is ordinarily accomplished by 
+  putting a clause around a piece of code that only allows one task at a time
+  to pass through that piece of code. Because this clause produces
+  "mutual exclusion", a common name for such a mechanism is mutex.
+- Java has built-in support in the form of the "synchronized". When a task
+  wished to execute a piece of code guarded by the synchronized keyword, it 
+  checks to see if the lock is available, then acquires it, executes the code,
+  and releases it.
+- The shared resource is typically just a piece of memory in the form of an
+  object, but may also a file, an I/O port, or something like a printer. To 
+  control access to a shared resource, you first put it inside an object.Then 
+  any method that uses the resourse can be made synchronized. If a task is in a
+  call to one of the synchronized methods, all other tasks are blocked from 
+  entering any of the synchronized methods.
+- When should you synchronize? Apply Brian's Rule of Synchronization
+  "If you are writing a variable that might next be read by another thread, or 
+  threading a variable that might have last been written by another thread, you
+  must use synchronization, and further, both the reader and the writer must 
+  synchronize using the same monitor lock"
+***** Synchronized
+***** Using explicit Lock object
+***** Atomicity and volatility
+- The Goetz Test: If you can write a high-performance JVM for a modern processor
+  then you are qualified to think about whether you can avoid synchronizing.
+- Atomicity applies to "simple operations" on primitive type except for longs 
+  and doubles.
+- Atomic operations are thus not interruptible by the threading mechanism. 
+  Expert programmers can take advantage of this to write lock-free code.
+- visibility rather than atomicity is much more of an issue than on single-
+  processor systems. Changes made by one task, even if they're atomic in the
+  sense of not being interruptible, migh not be visible to other tasks, so
+  different tasks will have a different view of the application's state. The
+  synchronization mechanism, on the other hande, forces changes by one task on
+  a multiprocessor system to be visible across the application. W/o synchronization,
+  it's indetermininate when changes become visible.
+- volatile fields are immediately written through to main memory, and reads occur
+  from main memory -> volatile is not cached.
+*** Atomic classes
+- JavaSE5 introduces special atomic variable classes such as AtomicInteger, 
+  AtomicLong, AtomicReference, that provide an atomic condition update operation
+  of the form
+  boolean compareAndSet(expectedValue, updateValue)
+- It should be emphasized that the Atomic classes were designed to build the 
+  classes in java.util.concurrent, and that you should use them in your own code
+  by only under special circumstances, and even then only when you can ensure 
+  that there are no other posible problems. It's generally safer to reply on
+  locks (either the synchronized keyword or explicit Lock objects)
+*** Critical sections
+- sometimes you only want to prevent multiple thread access to part of the code
+  inside a method instead of the entire method. The section of code you want to 
+  isolate this way is called a "critical section"
+*** Synchronizing on other objects
+- Sometimes you must synchronize on another object, but if you do this you must
+  ensure that all relevant tasks are synchronizing on the same object.
+
+*** Thread local storage
+- A second way to prevent tasks from colliding over sharing resourses is to 
+  eliminate the sharing of variables. "Thread local storage" is a mechanism 
+  that autonomically creates different storage for the same variable, for each
+  different thread that uses an object.
+*** Terminating tasks
+**** Terminating when blocked
+- Thread states: a thread can be in any one of four states:
+  + New: a thread remains in this state only mementarily, as it is being created.
+    It allocates any necessary system resources and performs initialization. At
+    this point it becomes eligible to receive CPU time. The scheduler will then 
+    transition this thread to the runnable or blocked state.
+  + Runnable: this means that a thread can be run when the time-sliciing mechanism
+    has CPU cycles available for the thread. Thus, the thread might or might not
+    be running at any moment, but there's nothing to prevent it from being run
+    if the scheduler can arrange it. That is, it's not dead or blocked.
+  + Blocked: The thread can be run, but something prevents it. While a thread is
+    in the blocked state, the scheduler will simply skip it and not give it any 
+    CPU time. Until a thread reenters the runnable state, it won't perform any
+    operations.
+  + Dead: a thread in the dead or terminated state is no longer schedulable and
+    will not receive any CPU time. Its task is completed, and it is no longer
+    runnable. One way for a task to die is by returning from its run() method,
+    but a task's thread can also be interrupted.
+
+- Becoming blocked: a task can become blocked for the following reasons
+  + You've put the task to sleep by calling sleep(miliseconds), in which case it
+    will not be run for the specified time.
+  + You've suspended the execution of the thread with wait(). It will not become
+    runnable again until the thread gets the notify() or notifyAll() message (or
+    the equivalent signal() or signalAll() for the javaSE5 java.util.concurrent
+    library tools).
+  + The task is waiting for some I/O to complete
+  + The task is trying to call a synchronized method or another object, and that
+    object's lock is not available because it has already been acquired by
+    another task.
+
+- The problem we need to look at now is this: sometimes you want to terminate a
+  task that is in a blocked state. If you can't wait for it to get to a point in
+  the code where it can check a state value and decide to terminate on its own, 
+  you have to force the task out of its blocked state.
+
+**** Interruption
+- When you break out of a blocked task, you might need to clean up resources.
+- To return to a known good state when terminating a task this way, you must 
+  carefully consider the execution paths of your code and write your catch clause
+  to properly clean everything up.
+- We can not interrupt a task that is trying to acquire a synchronized lock or
+  one that is trying to perform I/O. This is a little bit disconcerting,
+  especially if you're creating a task that perform I/O, because i means that I/O
+  has the potential of locking your multithreaded program.
+  -> a heavy-handed but sometimes effective solution to this problem is to close
+  the underlying resource on which the task is blocked
+*** Cooperation between tasks
+- The key issue when tasks are cooperating is handshaking between those tasks. 
+  To accomplish this handshaking, we use the same foundation: the mutex.
+- When the task enters a call to wait() inside a method, that thread's execution
+  is suspended, and the lock on that object is released --> The lock can be 
+  acquired by another task, so the synchronized methods in the (now unlocked) 
+  obj can be called during a wait.
+- The previous example emphasizes that you must surround a wait() w/ a while loop
+  that checks the conditions of interest. 
+  + You may have multiple tasks waiting on the same lock for the same reason, 
+    and the first task that wakes up might change the situation. If that is the
+    case, this task should be suspended again until its condition of interest
+    changes.
+  + By the time this task awakens from its wait(), it's possible that some other
+    task will have changed things such that this task is unable to perform or is
+    uninterested in performing its operation at this time. Again, it should be 
+    resuspended by calling wait() again.
+  + It's also possible that tasks could be waiting on your object's lock for 
+    different reasons. In this case, you need to check whether you've been woken
+    up for the right reason, and if not, call wait() again.
+**** Using explicit Lock and Condition object
+- The basic class that uses a mutex and allow task suspension is the Condition
+  and you can suspend a task by calling await() on a Condition.
+
+*** Producer-consumers and queues
+- We can move up a level of abstraction and solve task cooperation problems
+  using a synchronized queue, which only allows one task at a time to insert or
+  remove an element.

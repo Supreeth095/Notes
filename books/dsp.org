@@ -1,0 +1,653 @@
+* The Breadth and Depth of DSP
+- DSP education:
+  + learning general concepts that apply to the field as a whole
+  + learning specialized techniques for your particular area of interest
+** The roots of DSP
+- type of data: /signals/. originate as sensory data from the real world:
+  + seismic vibrations, visual images, sound waves, etc
+- DSP is the mathematics, the algorithms, and the techniques used to manipulate
+  thest signals after they have been converted into digital form.
+- wide variety of goals: 
+  + enhancement of visual images
+  + recognition
+  + generation of speech
+  + compression of data for storage and transmission
+- the roots of DSP: 
+  + in the 1960s and 1970s when computer first became available.
+  + the technological revolution occurred from the top-down (graduate level 
+    in 1980s, undergraduated level a decade later, basic skill today)
+- DSP problems, literature is intended for a very specialized audience (who have
+  firm background in the detailed mathematics to understand the theoretical 
+  implications of the work)
+- DSP is very /interdisciplinary/. It relies on:
+  + communication theory
+  + numerical analysis
+  + probability and statistics
+  + analog signal processing
+  + decision theory
+  + digital electronics
+  + analog electronics
+
+** Telecommunications
+- Multiplexing
+- Compression (32 --> 16 --> 8 --> 2 kilobits/sec)
+- Echo control
+** Audio Processing
+- speech generation
+- music
+- speech recognition
+  + feature extraction
+  + feature matching
+** Echo location
+- Radar
+- Sonar (sound navigation and ranging)
+** Image processing
+* Statistics, Probability and Noise
+** Signal and Graph Terminology
+- /signal/ is a description of how one parameter is related to another parameter
+  + voltage ~ time: *continuous signal*. pass this signal through an analog to
+    digital converter forces each of two parameters to be /quantized/
+  + signal formed from parameters that are quantized are said to be 
+    *discrete signals* or *digitized signals*
+  + y-axis == dependent variable == amplitude == range == ordinate
+  + x-axis == independent variable == domain == abscissa. keep simple --> label 
+    the horizontal axis: *sample number*
+  + pay particular attention to the word: /domain/. A signal that uses time as
+    the independent variable is said to be in *time domain*. Another common
+    signal in DSP uses frequency as the independent variable, resulting in the 
+    term, *frequency domain*. Likewise, signals that use distance as the 
+    independent parameter are said to be in the *spatial domain*
+
+** Mean and standard deviation
+- *mean* (mu): is the statistician's jargon for the average value of a signal
+- abs(x_i - mu) describes how far the i sample /deviates/ from the mean. The 
+  /average deviation/ of a signal is found by summing the deviations of all the
+  individual samples, and then dividing by the number of a samples N.
+  + In most cases, the important parameter is not the deviation from the mean
+    but the power represented by the deviation from the mean.
+  + standard deviation ~ average deviation, except the averaging is done with
+    power instead of amplitude
+- This method of calculating the mean and standard deviation is adequate for 
+  many applications; however, it has two limitations:
+  + subtracting two numbers that are very close in value -> result in excessive
+    round off error in the calculations
+  + it is desirable to recalculate the mean and standard deviation as samples
+    are acquired and added to the signal (*running statistics*)
+- In some situations, the mean describes what is being measured, while the
+  /standard deviation/ represents noise and the interference. In these cases
+  standard deviation is important in comparison to the mean. This give rise to
+  the term: *signal-to-noise ratio* (SNR), which is equal to the mean divided by
+  the standard deviation.
+- *coefficient of variation* (CV) is defined as the standard deviation divided
+  by the mean, multiplied by 100 percents. 
+- Better data means a higher value for SNR and a lower value for the CV
+
+** Signal vs Underlying Process
+- the distinction between the *acquired signal* and the *underlying process* is 
+  key to many DSP techniques.
+- signal derivated by flipping a coin 1000 times. if the coin flip is heads, the
+  sample is made a value of one. On tails, the sample is set to zero. The 
+  /process/ that created this signal has a mean of exactly 0.5. However, the
+  actual 1000 point signal will have a mean of exactly 0.5. The /probabilities/
+  of the underlying process are constant, but the /statistics/ of the acquired
+  signal change each time the experiment is repeated. This random irregularity
+  found in actual data is called by such names as: *statistical variation*, 
+  *statistical fluctuation*, *statistical noise*
+- For random signals, the typical error between the mean of the N points, and 
+  the mean of the underlying process is given by:
+  typical error = sigma / N^(1/2)
+- the question: are the variations in these signals a result of statistical 
+  noise, or is the underlying process changing (*nonstationary*, *stationary*)
+
+** The Histogram, Pmf and Pdf
+- Suppose we attach an 8 bit analog-to-digital converter to a computer, and 
+  acquire 256000 samples of some signal. The value of each sample will be one of
+  256 possibilities, 0 through 255. The *histogram* display the number of samples
+  there are in the signal that have each of these possible values.
+- Represent histogram by H_i, where i is an index that runs from 0 to M-1, and M
+  is the number of possible values that each sample can take on.
+- As with the mean, the statistical noise (roughness) of the histogram is
+  inversely proportional to the square root of the number of samples used.
+- mean and standard deviation are calculated from the histogram by the equations
+  mu = 1/N * sum(0, M-1, i*H_i)
+  sigma^2 = 1/(N-1) * sum(0,M-1,(i-mu)^2*H_i)
+- the corresponding curve for the underlying process is called probability mass
+  function (pmf). 
+  + pmf is important because it describes the /probability/ that a
+  certain value will be generated. 
+  + the histogram and pmf can only be used with discrete data.
+- *probability density function (pdf)* or *probability distribution function* is
+  to continous signals what the pmf is to discrete signals.
+- the vertical axis of the pdf is in units of *probability density*. To calculate
+  a /probability/, the /probability density/ is multiplied by a range of values.
+- *binning* technique: arbitrarily selecting the length of the histogram to be 
+  some convenient number, often called *bins*. The number of bins controls the 
+  tradeoff between resolution along the y-axis, and resolution along the x-axis.
+
+** The Normal Distribution
+- integral of the pdf important enough that it is given its name the cdf
+  *cumulative distribution function*
+
+** Digital Noise Generation						:rrn:
+   
+** Precision and Accuracy
+* ADC and DAC
+- ADC and DAC are the processes that allow digital computers to interact with 
+  continous signals
+- Digital information is /sampled/ and /quantized/
+- Topics: selection of the sampling frequency (number of bits, type of analog
+  filtering)
+
+** Quantization
+- It is important that we analyze them separately because they degrade the 
+  signal in different ways, as well as being controlled by different parameters
+  in the electronics.
+- *sampling* converts the /independent variable/ from continous to discrete
+- *quantization* converts the /dependent variable/ from continous to discrete
+- Effects of quantization:
+  + Any one sample in the digitized signal can have a maximum error of +- 1/2LSB
+    (*Least Significant Bit*)
+  + digital output = continous input + a quantization error (like *random noise*)
+  + quantization results is nothing more than the addition of a specific amount
+    of random noise to the signal
+  + /number of bits/ determines the /precision/ of the data
+- When faced with the decision of how many bits are needed in a system, ask 2
+  questions:
+  + how much noise is already present in the analog signal
+  + how much noise can be tolerated in the digital signal
+- an analog sisnal that varies less than +-1/2 LSB can become stuck on the same
+  quantization level during digitization. *Dithering* improves this situations 
+  by adding a small amount of random noise to the analog signal. strange 
+  situation: adding noise provides more information
+
+** The Sampling Theorem
+- /proper sampling/: able to reconstruct the signal from the samples
+- The phenomenon of sinusoids changing frequency during sampling is called
+  *aliasing*
+- *Samplign theorem* (Shannon sampling theorem): a continuous signal can be 
+  properly sampled, only if it does not contain frequency components above one
+  half of the sampling rate.
+- *Nyquist frequency* (*Nyquist rate*): one-half sampling rate
+- aliasing can also change the /phase/. Aliasing changed the frequency and 
+  introduced a 180 phase shift (inverted)
+- *impulse train*: continuous signal consisting of a series of narrow spikes 
+  that match the original signal at the sampling instants.
+
+** Digital-to-Analog Conversion
+- The simplest method for digital-to-analog conversion is to pull the samples 
+  from memory and convert them into an /impulse train/
+- sin(pi*x) / pi*x called *sinc function*
+
+** Analog Filters for Data Conversion
+- Before encountering the analog-to-digital converter, the input signal is
+  processed with an electronic low-pass filter to remove all frequencies above 
+  the Nyquist frequency (to prevent aliasing during sampling)
+- 3 types of analog filters:
+  + Chebysev
+  + Butterworth
+  + Bessel (Thompson filter)
+- Characteristics of the three classic filter types:
+  + *cutoff frequency sharpness*: block all frequencies above the cutoff 
+    frequency (*stopband*), while passing all frequencies below (*bassband*)
+  + *elliptic filter*
+  + *step response*
+
+** Selecting the Antialias Filter
+- Chebyshev optimizes the roll-off, the Butterworth optimizes the passband flatness
+  the Bessel optimizes the step response
+- There're 2 common methods in an analog waveform
+  + *time domain encoding*
+  + *frequency domain encoding*
+- frequency domain: the information is contained in sinusoidal waves that 
+  combine to form the signal
+- time domain: uses the /shape of the waveform/ to store information
+  example: Images encode information in the shape of a waveform that varies over
+  /distance/
+
+** Multirate Data Conversion
+- trend: replace /analog circuitry/ with /digital algorithms/
+- *multirate technique*:
+  + replace analog components with software
+  + achieve higher levels of performance in critical applications
+
+** Single Bit Data Conversion
+- higher sampling rate is traded for a lower number of bits. different circuit 
+  configuration, most are based on the use of *delta modulation*
+
+* DSP Software
+** Computer Numbers
+- the process of storing and recalling numbers of computer isn't without error
+- everyone accessing the data must understand what value each bit pattern represents
+- 2 common schemes for number representation:
+  + fixed point
+  + floating point
+- two important characteristics:
+  + *range*
+  + *precision*
+** Fixed Point (Integers)
+- *Offset binary*
+- *Sign and magnitude* 
+- *Two's complement*
+** Floating Point (Real number)
+- same as scientific notation: a *mantissa* is multiplied by ten raised to some *exponent*
+- most common formats: ANSI/IEEE Std 754-1985
+  + 32 bit numbers: *single precision*
+  + 64 bit numbers: *double precision*
+- *single precision*: 
+  + bits 0 -> 22 from the mantissa
+  + bits 23 -> 30 form the exponent
+  + bits 31 is the sign bit
+  + v = (-1)^S * M * 2 ^ (E-127)
+  + the mantissa is formed from the 23 bits as a /binary fraction/
+  + M = 1 + m_22 * 2^-1 + m_21 * 2^-2 ....
+  + largest number that can be represented:
+    -- +- (2 - 2^-23) * 2^128 = +- 6.8 * 10^38
+  + The smallest number:
+    -- +- 1. x 2^-127 = +- 5.9 x 10^-39
+  + 0 <-> all matissa bits and exponent bits are zero
+  + infinitive <-> matissa bits == 0 and exponent bits 1
+
+** Number Precision
+- in floating point notation, the gaps between adjacent numbers vary over the represented
+  number range.
+- large number has large gaps between them, while small numbers have small gaps
+- /additive error/ is much worse than /random error/
+- random error only increases in proportion to the /square root/ of the number of operations
+- Every single precision number will have an error of about one part in forty million, 
+  multiplied by the number of operations it has been through
+- If you must use a floating point variable as a loop index, try to use fractions that are
+  a power of two
+- useful fact: single precision floating point has an exact binary representation for every
+  whole number between +- 16.8 million 
+
+** Execution Speed: Program language
+- 3 levels of sophistication:
+  + Assembly
+  + Compiled
+  + Application Specific
+
+* Linear System
+- Most DSP techniques are based on a divide-and-conquer strategy called /superposition/
+  + the signal is broken into simple components
+  + /superposition/ can only be used with /linear systems/
+- Foundation of DSP:
+  + what it means for a system to be linear
+  + various ways for breaking signals into simpler components
+  + how superposition provides a variety of signal processing techniques
+
+** Signals and Systems
+- a *signal* is a description of how one parameter varies with another parameter
+- a *system* is any process that produces an /output signal/ in response to an /input signal/
+- Continuous systems input and output continuous signals
+  Discrete systems input and output discrete signals
+- Reasons for wanting to understand /systems/
+  + /design/ a system to remove noise in an electrocardiogram, sharpen an out-of-focus image
+  + remove echoes in an audio recording
+
+** Requirements for Linearity
+- A system is called /linear/ if it has two mathematical properties:
+  + *homogeniety*
+  + *additivity*
+- *shift invariance* is not strict requirement for linearity but it is a mandatory property
+- Formal mathematical properties:
+  + *homogeniety*: x[n] -> y[n] --> kx[n] -> ky[n]
+  + *additivity*: x1[n] -> y1[n] && x2[n] -> y2[n] => x1[n] + x2[n] -> y1[n] + y2[n]
+  + *shift invariance* x[n] -> y[n] => x[n+s] -> y[n+s]
+    characteristics of the system do not change with time
+
+** Static Linearity and Sinusoidal Fidelity
+- *static linearity* defines how a linear system reacts when the signals aren't
+  changing, when they are DC or /static/
+  + /static/: the output is the input multiplied by a constant
+- all linear systems have the property of /static linearity/
+- *memoryless*: output depends only on the present state of the input
+
+- *sinusoidal fidelity*: if the input to a linear system is a sinusoidal wave, the
+  output will also be a sinusoidal wave, and at exactly the same frequency as the
+  input
+
+** Examples of linear and nonlinear systems
+*** Examples of Linear systems
+- Wave propagation
+- electrical circuits: composed of resistors, capacitors, and inductors
+- electronic circuits: such as amplifiers and filters
+- mechanical motion: from the interaction of masses, springs and dashpots
+- systems described by differential equations: such as resistor-capacitor-inductor
+  networks
+- multiplication by a constant
+- signal changes: echoes, resonances, and image blurring
+- the unity system: output is always equal to the input
+- the null system: where the output is always equal to the zero
+- differentiation and integration, and the analogous operations of /first difference/ 
+  and /running sum/ for discrete signals
+- small perturbations
+- convolution
+*** Examples of nonlinear systems
+- systems that do not have static linearity
+- systems that do not have sinusoidal fidelity
+- common electronic distortion
+- multipliction
+- hysteresis
+- saturation
+- systems with a threshold
+
+** Special properties of linearity
+- *commutative*
+- composed of linear subsystems and additions of signals
+- multiplication can be either linear or nonlinear. Multiplying the input signal 
+  by a /constant/ is linear. Multiplying a signal by /another signal/ is nonlinear
+- contaminating signals:
+  + coming from within the system: the process is nonlinear
+  + externally entering the system: the process is linear
+
+** Superposition: the foundation of DSP
+- the only way signals can be combined in linear systems: /scaling/ and /addition/
+  the process of combining signals through scaling and addition is called
+  *synthesis*
+- *decomposition* is the inverse operation of synthesis
+- the heart of DSP
+  + x[n] = x0[n] + x1[n] + x2[n] x0,x1,x2: *input signal components*
+  + x0 -> y0, x1 -> y1, x2 -> y2: *output signal components*
+  + y[n] = y0[n] + y1[n] + y2[n]
+  + the output signal is identical to the one produced by directly passing the
+    input signal through the system.
+
+** Common decompositions
+- there are 2 main ways to decompose signals in signal processing:
+  + /impulse decomposition/
+  + /fourier decomposition/
+- *impulse decomposition*: break N samples signal into N component signals, each
+  containing N samples. Each of the component signals contains one point from the
+  original signal, with the remainder of the values being zero. A single nonzero 
+  point in a string of zeros is called an /impulse/
+- *step decomposition*: break N samples signal into N component signals, each 
+  composed of N samples. Each component signal is a step, that is, the first 
+  samples have a value of zero, while the last samples are some constant value.
+  x[n] => x0[n], x1[n], x2[n].... The kth component signal, xk[n] is composed of 
+  zeros for points 0 through k-1, while the remain points have a value of 
+  x[k] - x[k-1]
+- *even/odd decomposition*: break signals into 2 component signals, one having
+  *even symmetry* and the other having *odd symmetry*
+  + even symmetry: x[n/2+1] = x[n/2-1]
+  + odd symmetry: x[n/2+1] = -x[n/2-1]
+  + number of samples must be even
+    xe[n] = (x[n] + x[N-n]) / 2
+    xo[n] = (x[n] - x[N-n]) / 2
+  + this decomposition is part of an important concept in DSP called circular 
+    symmetry
+- *interlaced decomposition*: break the signal into 2 component signals, the 
+  even/odd sample signal and the odd sample signal. To find the even sample signal
+  , start with the original signal and set all the odd/even numbered samples to 
+  zeros
+  + the basis for Fast Fourier Transform (FFT)
+- *fourier decomposition*
+
+** Alternatives to Linearity
+- strategy for analyzing systems that are nonlinear: make the nonlinear system
+  resemble a linear system
+  + ignore the nonlinearity
+  + keep the signals very small
+  + apply a linearizing transform: 
+    ~ a[n] = b[n] x c[n] -> log(a[n]) = log(b[n]) + log(c[n])
+    ~ homomorphic signal processing
+* Convolution
+- mathematical way of combining two signals to form a third signal. 
+- mathematical framework for DSP
+- using the strategy of impulse decomposition, systems are described by a signal
+  called the /impulse response/
+- convolution from 2 different viewpoints:
+  + input side algorithm
+  + output side algorithm
+- low-pass filter vs high-pass filter
+- inverting attenuator - discrete derivative
+
+** The Delta function and Impulse Response
+- Many different decompositions are possible, two form the backbone of signal
+  processing: /impulse decomposition/ and /Fourier decomposition/
+- when /impulse decomposition/ is used, the procedure can be described by a 
+  mathematical operation called *convolution*
+- *delta function*: a /normalized/ impulse. *unit impulse*: sample number zero
+- *impulse response*: is the signal that exits a system when a delta function is
+  the input. Symbol: *h[n]*
+- Any impulse can be represented as a /shifted/ and /scaled/ delta function
+
+** Convolution
+- summary: the way how a system changes an input signal into an output signal
+  + the input signal can be decomposed into a set of impulses, each of which can
+    be viewed as a scaled and shifted delta function
+  + the output resulting from each impulse is a scaled and shifted version of 
+    the impulse response
+  + the overall output signal can be found by adding these scaled and shifted 
+    impulse response
+- impulse response goes by different name:
+  + filter: *filter kernel*, *convolution kernel*, *kernel*
+  + image processing: *point spread function*
+- the length of the output signal is equal to the length of the input signal, 
+  plus the length of the impulse response, minus one.
+- 2 viewpoints of convolution:
+  + *input signal*: analyze how each sample in the input signal /contributes/ to
+    many points in the output signal. It provides a conceptual understanding of
+    how convolution pertains to DSP
+  + *output signal*: how each sample in the output signal has /received/ 
+    information from many points in the input signal. it describes the mathematics
+    of convolution
+
+** The input side algorithm
+- convolution is /commutative/ a[n]*b[n] = b[n]*a[n]
+
+** The output side algorithm
+- /convolution machine/
+- padding the signal with zeros
+- DSP jargon: *the impulse response is not fully immersed in the input signal*. 
+  This is analogous to an electronic circuit requiring a certain amount of time 
+  to stabilize after the power is applied. The different is that this transient 
+  is easy to ignore in electronics, but very prominent in DSP
+- the math: If x[n] is an N point signal running from 0 to N-1, and h[n] is an M
+  point signal running from 0 to M-1, the convolution of the two: 
+  y[n] = x[n]*h[n], is an N+M-1 point signal running from 0 to N+M-2, given by:
+     y[i] = sum(j, M-1, h[j]*x[i-j]) (*convolution sum*)
+
+** The sum of weighted inputs
+- think of /impulse response/ as a set of *weighing coefficients*. In this view,
+  each sample in the output signal is equal to a /sum of weighted inputs/
+* Properties of Convolution
+- A linear system's characteristics are completely specified by the system's impulse
+  response. Basic signal processing technique:
+  + Digital filters are created by /designing/ an appropriate impulse response
+  + Enemy aircraft are detected with radar by /analyzing/ a measured impulse response
+- this chapter:
+  + properties and usage of convolution in several areas.
+  + methods are presented for dealing with cascade and parallel combinations of 
+    linear systems.
+  + the technique of /correlation/
+  + nasty problem with convolution
+
+** Common Impulse Responses
+- Simplest impulse response is nothing more than a delta function. This means that 
+  all signals are passed through the system /without change/
+  + Math: x[n] * delta[n] = x[n]. This property makes the delta function the 
+    *identity* for convolution.
+  + Such systems are the ideal for: data storage, communication, and measurement.
+
+- If the delta function is made larger or smaller in amplitude, the resulting system
+  is an *amplifier* or *attenuator*
+  + math: x[n] * k delta[n] = k x[n]
+
+- delta function w/ a *shift*. This results in a system that introduces an identical
+  shift between the input and output signals. This could be described as a 
+  *signal delay*, or a signal *advance*
+  + math: x[n] * delta[n+s] = x[n+s]
+
+- an impulse response composed of a delta function plus a shifted and scaled delta
+  function. By superposition, the output of this system is the input signal plus a 
+  delayed version of the input signal, i.e an echo. Echoes are important in many DSP
+  applications.
+
+*** Calculus-like Operations
+- the discrete operation that mimics the /first derivative/ is called the 
+  *first difference*. The discrete form of the /integral/ is called the *running sum*
+- running sum math: y[n] = x[n] + y[n-1] -> *recursion equations* and 
+  *difference equations*
+
+- the important idea: these relations are /identical/ to convolution using the 
+  impulse responses
+
+*** Low-pass and High-pass Filters
+- low pass filter kernels are composed of a group of /adjacent positive points/. This
+  results in each sample in the output signal being a weighted average of many 
+  adjacent points from the input signal. This average /smoothes/ the signal, thereby
+  removing high-frequency components.
+  + used for noise reduction, signal separation, wave shaping, etc
+  + the cutoff frequency of the filter is changed by making filter kernel wider or 
+    narrower. If a low-pass filter has a gain of one at DC (zero frequency), then the
+    sum of all the points in the impulse response must be equal to one.
+
+- high-pass filter:
+  + common strategy in filter design: first devise a low-pass filter and then 
+    transform it to what you need: high-pass, band-pass, band-reject
+  + low-pass -> high-pass transform: a delta function impulse response passes the 
+    entire signal, while a low-pass impulse response passes only the low-frequency
+    components. By superposition, a filter kernel consisting of a delta function 
+    minus the low-pass filter kernel will pass the entire signal minus the low
+    frequency componenets.
+
+*** Causal and Noncausal Signals
+- to be causal, an impulse in the input signal at sample number n must only affect 
+  those points in the output signal with a sample number n or greater.
+
+*** Zero phase, Linear phase, and nonlinear phase
+- a signal is said to be *zero phase* if it has left-right symmetry around sample 
+  number zero.
+- a signal is sade to be *linear phase* if it has left-right symmetry, but around 
+  some point other than zero.
+- a signal is said to be *nonlinear phase* if it does not have left-right symmetry.
+
+- what does /phase/ have to do with /symmetry/?
+  + frequency spectrum: composed of 2 parts the magnitude and the phase
+
+** Mathematical Properties
+*** Commutative Property
+- a[n] * b[n] = b[n] * a[n]
+
+*** Associative Property
+- (a[n] * b[n]) * c[n] = a[n] * (b[n] * c[n])
+- is used in system theory to describe how *cascaded systems* behave
+
+*** Distributive Property
+- a[n] * b[n] + a[n] * c[n] = a[n] * (b[n] + c[n])
+- *parallel system with added outputs*
+
+*** Transference between the Input and Output
+- the output signal is changed in exactly the same linear way that the input signal 
+  was changed
+
+*** The Central Limit Theorem
+- The central limit theorem states that a Gaussian distribution results when the 
+  observed variable is the sum of many random processes. Even if the component 
+  processes do no have a Gaussian distribution, the sum of them will.
+- interesting implication for convolution: If a pulse-like signal is convolved with
+  itself many times, a Gaussian is produced.
+- the procedure /converges/ to a Gaussian /very quickly/
+- the width of the resulting Gaussian is equal to the width of the original pulse
+  multiplied by the square root of the number of convolutions.
+
+** Correlation
+- correlation uses 2 signals to produce a third signal. This third signal is called 
+  the *cross-correlation* of the two input signals. If a signal is correlated with 
+  itself, the resulting signal is called the *autocorrelation*
+- the amplitude of each sample in the cross-correlation signal is a measure of how 
+  much the received signal /resembles/ the target signal, /at that location/. This 
+  means that a peak will occur in the cross-correlation signal for every target 
+  signal that is present in the received signal.
+- correlation is the /optimal/ technique for detecting a known waveform in random
+  noise.
+
+** Speed
+- the problem of excessive execution time is commonly handled:
+  + keep the signals as short as possible, and use integers instead of floating point
+  + use a computer designed for DSP
+* The Discrete Fourier Transform
+- Fourier analysis is a *family* of mathematical techniques, all based on decomposing
+  signals to sinusoids.
+- DFT is the family member used with /digitized/ signals
+- *real DFT*, a version of the discrete Fourier transform that uses real numbers to
+  represent the input and output signals
+
+** The family of Fourier Transform
+- a summation of sinusoids cannot form a signal with a corner. However, we can get
+  close that the difference between the two has /zero energy/. This phenomenon now 
+  goes by the name: Gibbs Effect
+- The component sine and cosine waves are simpler than the original signal because
+  they have property that the original signal doesn't have: /sinusoidal fidelity/
+- Fourier Transform can be broken into 4 categories:
+  + continuous or discrete
+  + periodic or aperiodic
+- The combination of these 2 features generates the four categories:
+  + *aperiodic - continuous*: decaying exponentials and the Gaussian curve. These 
+    signals extend to both positive and negative infinity without repeating in a 
+    periodic pattern. The Fourier Transform for this type of signal is simply called
+    the *Fourier Transform*
+  + *periodic - continuous*: sine waves, square waves, and any waveform that repeats
+    itself in a regular pattern from negative to positive infinity. This version of
+    the Fourier transform is called *Fourier Series*
+  + aperiodic - discrete: These signals are only defined at discrete points between 
+    positive and negative infinity, and do not repeat themselves in a periodic 
+    fashion. This type of Fourier transform is called the Discrete Time Fourier 
+    Transform
+  + *periodic - discrete*: These are discrete signals that repeat themselves in a 
+    periodic fashion from negative to positive infinity. This class of Fourier
+    Transform is called: *Discrete Fourier Transform
+- An /infinite/ number of sinusoids are required to synthesize a signal that is
+  /aperiodic/. This makes it impossible to calculate the Discrete Time Fourier 
+  Transform. The only type of Fourier transform that can be used is: DFT. In other 
+  words, digital computers can only work with information that is /discrete/ and 
+  /finite/ in length.
+- EAch of 4 Fourier Transforms can be divided into *real* and *complex* version.
+
+** Notation and Format of the Real DFT
+- DFT changes an N point input signal into 2 N/2 + 1 point output signals
+- the input signal contains the signal being decomposed, while the 2 output signals 
+  contain the amplitudes of the component sine and cosine waves
+- the input signal is said to be in the *time domain*
+- the *frequency domain* is used to describe the amplitudes of the sine and cosine
+  waves
+- 2 processes:
+  + decomposition, analysis, the forward DFT
+  + synthesis, inverse DFT
+- the number of samples in the time domain is usually represented by the *variable* N
+  N is usually chosen as a power of two.
+- DSP notation uses lower case letters to represent time domain signals x[], y[]
+  uses upper case letters to represent frequency domain signals X[], Y[]
+- *Real part of X[]* (ReX[]) and the *Imaginary part of X[]* (ImX[])
+  ReX[] are the amplitudes of the cosine waves. ImX[] are the amplitudes of the sine
+  waves
+
+** The Frequency Domain's independent Variable
+- 4 *different ways* to refer the horizontal axis:
+  + the number of samples. Index is the integer k
+  + fraction of the sampling rates. The index (frequency f) runs between 0 and 0.5. 
+    f = k / N
+  + similar to the second, except the horizontal axis is multiplied by 2*pi. The
+    index is w (omega). Real and Imaginary parts are written as ReX[w], and 
+    ImX[w], where w takes on N/2+1 equally spaced values between 0 and pi. w is 
+    called *natural frequency* or *radians*
+  + label the horizontal axis in terms of an analog frequencies used in a 
+    particular application.
+
+** DFT Basis Functions
+- DFT basis functions are generated from the equations:
+  ck[i] = cos(2pi*k*i/N)
+  sk[i] = sin(2pi*k*i/N)
+- c1[] is the cosine wave that makes one complete cycle in N points. c5[] is
+  the cosine wave that makes five complete cycles in N points, etc.
+- ReX[0] hold the average value of all the point in the time domain signal. In
+  electronics, it would be said that ReX[0] holds the *DC offset*. LmX[0] is 
+  /irrelevant/ and always be set to zero.
+** Synthesis, Calculating the Inverse DFT
+- x[i] = sum(k=0->N/2, ReX~[k] * cos(2*pi*k*i/N) + sum(k=0->N/2, ImX~[k]*sin(2*pi*k*i/N))
+- ImX~ and ReX~ are slightly different from the *frequency domain of a signal*
+- ReX~[k] = ReX[k] / N/2
+  ImX~[k] = ImX[k] / N/2
+  except for 2 cases:
+  ReX~[0] = ReX[0] / N
+  ReX~[N/2] = ReX[N/2] / N

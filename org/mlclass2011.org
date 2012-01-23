@@ -1,0 +1,41 @@
+* Introduction
+** Supervised Learning
+- give dataset and "right answers" -> produce more right answers
+- *Regression*: produce continuous valued output
+  ex: housing price
+- *Classification*: 
+  ex: breast cancer predicts
+
+** Unsupervised Learning
+- given a dataset, can you find some structure in the data
+- unsupervised learning algorithm is expected to separate data in groups
+  ex: google news, genes understanding problems
+- application: 
+  + organize computing clusters
+  + social network analysis
+  + market segmentation
+  + astronomical data analysis
+
+- Cocktail party problem
+
+
+* Linear regression with one variable
+** Model Representation
+- Notation
+  m: number of training examples
+  x: input variable / features
+  y: output variable / target variable
+- h: hypothesis. size of house -> h -> estimated value of y
+  h: map from x's to y's
+- h(x) = a0 + a1*x
+  + Linear regression with one variable
+  + univariate linear regression
+
+** Cost function
+- how to choose parameters a0, a1?
+- Idea: choose h so that h(x) is close to y for our training examples (x,y)
+  cost function: J(a0, a1) = 1/2m * sum(1, m, h(xi) - yi^2)
+  we need to minimize J
+
+** Cost function intuition 1
+** Cost function intuition 2

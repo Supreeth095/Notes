@@ -1,0 +1,5 @@
+Integration test, system test are written based on user requirements. Conversely, Unit Test is written based on design documents
+
+Process is a tool to aid people against calamities.
+
+

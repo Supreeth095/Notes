@@ -1,0 +1,70 @@
+* Bayesian Thinking
+  In the Bayesian viewpoint, a person's beliefs about the uncertainty in this
+  proportion are represented by a probability distribution placed on this
+  parameter. This distribution reflects the person's subjective prior opinion
+  about plausible values of /p/
+* 3 choices of the prior density
+** Using a Discrete prior
+** Using a Beta prior
+   - Proportion is a continuous parameter, an alternative approach is to construct a
+     density g(p) on the interval (0,1) that represents the person's initial beliefs.
+   - A convenient family of densities for a proportion is the beta with kernel
+     proportional to
+           g(p) ~ p^{a-1}(1-p)^{b-1}
+   - a,b are chosen to reflect the user's prior beliefs about p. The /mean/ of a beta
+     prior is m = a/(a+b) and the /variance/ of the prior is v = m(1-m)/(a+b+1)
+   - *beta* cdf and inverse cdf functions *pbeta* and *qbeta* are useful in computing
+     probabilities and constructing interval estimates for p.
+        + Is it likely that the proportion of heavy sleepers is greater than .5?
+	  P(p>=.5|data) = 1 - pbeta(.5,a+s,b+f)
+	+ 90% interval estimate for p is found by computing the 5th and 95th 
+	  percentiles of the beta density: qbeta(c(.05,.95), a+s, b+f)
+   - An alternative method of summarization of a posterior density is based on 
+     simulation.
+        + rbeta(1000,a+s,b+f)
+** Using a Histogram prior
+   - "brute-force" method of summarizing posterior computations for an arbitrary 
+     prior density g(p)
+        + Choose a grid of values of p over an interval that covers the posterior
+	  density
+	+ Compute the product of the likelihood L(p) and the prior g(p) on the grid
+	+ Normalize by dividing each product by the sum of the products. In this step
+	  we are approximating the posterior density by a discrete probability 
+	  distribution on the grid
+	+ Using the R command /sample/, take a random sample with replacement from
+	  the discrete distribution
+** Prediction
+   - predict number in a future sample. If the current beliefs about /p/ are 
+     contained in the density g(p), then the predictive density of y' is given by
+          f(y') = Integral f(y'|p)g(p)dp
+   - if g is a prior/posterior density, then we refer to this as the 
+     /prior(posterior)/ predictive density
+   - 2 ways to compute density probability
+     + using pbetap, pdiscp
+     + using simulation
+
+
+* Single-Parameter Models
+** Introduction
+- Bayesian inference for a variance for
+  + normal population
+  + Poisson mean
+when informative prior information is available
+- In Bayesian analyses, one may have limited beliefs about a parameter and there
+  may be several priors that provide suitable matches to these beliefs
+- In estimating a normal mean, we illustrate the use of two distinct priors in
+  modeling beliefs, and show that inference may or may not be sensitive to the
+  choice of prior.
+** Normal Distribution with Known Mean but Unknown Variance
+- *Problem*: estimating an unknown variance using American football scores. The focus
+  is on the difference d between a game outcome (winning score minus losing score). 
+  We observe d_1,...,d_n, the observed differences between game outcomes and point
+  spreads for n football games
+
+** Estimating a Heart Transplant Morality Rate
+- *Problem*: learning about the rate of success of heart transplant surgery of a 
+  particular hospital in the United States. We observe the number of transplant 
+  surgeries n and the number of deaths within 30 days of surgery y. We can predict the 
+  probability of death for an individual patient.
+- A standard model assumes that the number of deaths y follows a Poisson distribution 
+  with mean e*lambda

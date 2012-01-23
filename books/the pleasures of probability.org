@@ -1,0 +1,54 @@
+* Cars, Goats, Sample Spaces
+
+** Nutshell history and philosophy lesson
+- probability can be described as the mathematical theory of uncertainty
+- an event is just a suggestive word probabilists use to talk about a set, namely
+  a collection of objects which, in the probability situation, is a collection 
+  of outcomes from a random experiment
+  + we use the word "experiment" to describe the happening that gives rise to 
+    the sample space
+  + a sample space provides what is called a mathematical model of the real-life
+    situation for which it is supposed to be an abstraction.
+
+** Discrete sample spaces. Probability distributions and spaces	    :uniform:
+- discrete sample space: can be counted off using the positive integers.
+- To each of the outcomes in such a sample space associate a number between 0
+  and 1 such that the sum of all these number over all outcomes is equal to 1.
+  The number associated w/ a particular outcome is called the probability of
+  that outcome, and the entire assignment is called a probability distribution,
+  probability measure or probability mass on sample space.
+- the usefulness of a probability distribution is not a mathematical question;
+  it is determined by what you want the sample space to model in the real world.
+- In the case of n outcomes, the uniform distribution assigns probability 1/n to
+  each outcome 
+
+** The car-goat problem solved
+
+* Baseball cards, The law of large numbers and Bad news for gramblers
+** The coupon collector's problem
+- The bubbleburst bubble gum company includes a picture card of a famous
+  baseball player in each pack of bubble gum it sells. A complete set of 
+  cards consists of ten players. The distribution of the cards is uniform;
+  that is, a pack of gum is just as likely to contain a picture of any one
+  of the ten players. How many packs of bubble gum does anyone have to buy,
+  on the average, to get a complete set?
+- the solution requires: sums, expectations of sums and random variables,
+  idea of independence of random variables
+- Suppose we are interested in E(X+Y). To give such expressions meaning, it
+  is not enough to know the probability distributions of X and of Y separately
+  We must know what is called the /joint probability distribution/ of X,Y.
+  --> E(X+Y) = (a1+b1)P(X=a1,Y=b1) + (a2+b2)P(X=a2,Y=b2) + ...
+  The result of the addition on the right-hand side always give EX + EY
+  --> E(X1 + X2 + ... + Xn) = EX1 + EX2 + ... + EXn
+  --> E(aX + bY) = aEX + bEY
+** Indicator variables and the expectation of a binomial variable
+- Suppose there are n Bernoulli trials with success probability p. We now 
+  define a sequence of random variables, called /indicator/ variables; the 
+  idea behind this sequence is very important
+- For each i between 1 and n, we define the random variable Xi to be 1 if
+  success occurs and 0 if failure occurs on the ith trial.
+  Sn = X1 + X2 + ... + Xn is the total number of success occuring in the n 
+  trials and so Sn has the binomial distribution. Each Xi has the same 
+  distribution EXi = 1*p + 0*(1-p) = p. Therefore we get:
+  ESn = EX1 + EX2 + ... + EXn = p + p + ... + p = np
+** Independent random variables

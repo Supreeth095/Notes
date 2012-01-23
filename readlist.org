@@ -1,0 +1,40 @@
+* BOOKS
+** Misc
+- Speed Memory - Tony Buzan
+- Focus Free
+** Memoir
+- Surely you're joking, Mr Feynman - Richard Feynman
+** Design
+*** Design Theory
+- The Timeless way of building - Christopher Alexander
+- The Order of Nature 1, 2  - Christopher Alexander
+  
+*** Software
+- Design Patterns: Elements of Reusable Object-Oriented Software - 
+- The Mythical Man-Month
+
+** Technical
+*** C++
+[Mey96] Scott Meyers. More Effective C++: 35 New Ways to Improve Your Programs and Designs. Addison-Wesley, Reading, MA, 1996.
+
+[Mey97a] Scott Meyers. Effective C++: 50 Specific Ways to Improve Your Programs and Designs. Addison Wesley Longman, Reading, MA, second edition, 1997.
+
+*** Javascript
+- Pro javascript techniques - John Resig
+- Javascript the good parts - Douglas Couford
+*** Software Engineering  
+[Bro95] Frederick P. Brooks Jr. The Mythical Man Month: Essays on Software Engineering. Addison-Wesley, Reading, MA, anniversary edition, 1995.
+
+
+
+* RFC - Technical Writings
+- [[http://www.ietf.org/rfc/rfc2468.txt][RFC2468]]: a remembrance of Jonathan B Posten by Vin Cerf.
+- [[http://www.boost.org/doc/libs/1_47_0/libs/bind/bind.html#Interface][bind.hpp]]: boost::bind document
+
+* Papers
+** Technical
+- Why functional programming matters - John Hughes
+
+
+* Essays
+- [[http://www.cs.utexas.edu/~EWD/transcriptions/EWD03xx/EWD340.html][The humble programmer]] - Edsger W. Dijkstra

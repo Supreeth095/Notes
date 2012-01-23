@@ -1,0 +1,19 @@
+
+* DONE Read and write summary for chapter one
+* TODO Finish introduction for chap 2
+
+* Introduction
+- Learning from /data/. Typical scenario: 
+  + outcome measurement (quantitative or categorial) that we wish to predict 
+    based on a set of /features/. 
+  + /training set/ of data
+  + prediction model
+this model is called /supervised learning/
+- examples:
+  + email spam filter
+  + prostate cancer
+  + handwritten digit recognition
+  + DNA expression microarrays
+
+* Overview of Supervised Learning
+** Introduction

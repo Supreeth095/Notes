@@ -1,0 +1,60 @@
+
+* Introduction
+- special characteristics and advantages of functional programming: contain no side-effects
+  + a function call can have no effect other than to compute its result
+  + order of execution irrelevant
+  + more tractable mathematically
+
+- a functional programmer is an order of magnitude more productive than his conventional counterpart
+
+* An analogy with Structured Programming
+- The most important difference between structured and unstructured programs is that structured programs are designed in a modular way. Modular design brings with it great productivity improvements
+  + small modules can be coded quickly and easily
+  + general purpose modules can be re-used
+  + the modules of a program can be tested independently, helping to reduce the time spent debugging
+- Functional programming languages provide 2 new important kinds of glue:
+  + programs can be modularized in new ways, and thereby greatly simplified
+  + smaller, simpler and more general modules
+
+* Glueing Functions Together
+- new kinds of glue enables simple functions to be glued together to make more complex ones
+  listof X ::= nil | cons X (listof X)
+- The elements of a list can be added up by a recursive function /sum/
+  sum nil = 0
+  sum (cons num list) = num + sum list 
+- This means that the computation of a sum can be modularized by glueing together a general recursive pattern and the boxed parts. This recursive pattern is conventionally called /reduce/ and so sum can be expressed as:
+  sum = reduce add 0
+
+- Functional languages allow functions which are indivisible in conventional programming languages to be expressed as a combination of parts - a general /higher order function/ and some particular specialising functions
+
+* Glueing Programs Together
+- a complete functional program is just a function from its input to its output. If f and g are such programs then (g.f) is a program which, when applied to its input, computes
+  g (f input)
+
+- This might be implemented conventionally by storing the output from f in a temprorary file
+- Functional languages provide a solution to this problem:
+  + f and g are run together in strict synchronisation. f is started once g tries to read some input
+  + if g terminates w/o reading all of f's ouput then f is aborted. This allows termination conditions to be separated from loop bodies - a powerful modularisation
+
+- Since this method of evaluation runs f as little as possible, it is called *lazy evaluation*
+
+* Newton-Raphson Square Roots
+- illustrate the power of lazy evaluation by programming some numerical algorithms
+- Since the Newton-Raphson algorithm computes a sequence of approximations it is natural to represent this explicitly in the program by a list of approximations. Each approximation is derived from the previous one by the function
+  next N x = (x + N/x) / 2
+- Calling this function f, the sequence of approximations is
+  [ a0, f a0, f(f a0), f(f(f a0)), ... ]
+
+- we can define a function to compute this:
+  repeat f a = cons a (repeat f (f a))
+
+* Numerical Differentiation
+* Numerical Integration
+* An Example from Artificial Intelligence
+* Conclusion
+- modularity is the key to successful programming. Languages which aim to improve productivity must support modular programming well.
+- Our ability to decompose a problem into parts depends directly on our ability to glue solutions together. To assist modular programming, a language must provide a glue solutions
+- Function programming languages provide 2 new kinds of glue:
+  + higher-order functions
+  + lazy evaluation
+- lazy evaluation is too important to be relegated to second class citizenship

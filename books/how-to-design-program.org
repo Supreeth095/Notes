@@ -1,0 +1,5 @@
+* Development through Iterative refinement
+When we develop real functions, we are often confronted with the task of 
+designing a data representation for complicated forms of information. The best
+strategy to approach this task is apply a well-known scientific technique:
+/iterative refinement/

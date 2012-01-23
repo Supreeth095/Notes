@@ -1,0 +1,160 @@
+
+* Abstract
+- the history of Haskell
+  + genesis
+  + principles
+  + technical contributions
+  + implementations
+  + tools
+  + applications 
+  + impact
+
+* Introduction
+- Part 1: how Haskell came to be and the process and principes that guide its evolution
+- Part 2: Reflect aspects of the language and its evolution (distinctive, unexpected, surprising ways) on 5 areas:
+  + syntax
+  + algebraic data types
+  + type system and type classes
+  + monads, input/output
+  + modules/packages
+- Part 3: implementations and tools: GHC, hbc, hugs, nhc, Yale Haskell. Profiling and debugging tools
+- Part 4: applications and impact
+
+* Part 1: Genesis and Principle
+** The genesis of Haskell
+- In 1978, John Backus delivered his Turing Award lecture, "Can programming be liberated from the Von Neumann style" (Backus1978a) and that put functional programming on the map in a new way, as a practical programming tool rather than a mathematical curiosity
+- FPL had a long history
+  + beginning with John MacCarthy's invention of Lisp
+  + Peter Ladin + Christopher Strachey: fundamental importance of the lambda calculus for modelling programming languages
+  + program transformation in a first-order fp
+- Late 70, Sussman and Guy Steele developed Scheme that adhered more closely to the lambda calculus by implementing lexical scoping. Robert Miller invented ML. Milner's polymorphic type system for ML would prove to be particularly influential. Both Scheme and ML were strict, and although they contained imperative features, they did much to promote the functional programming style and the use of higher-order functions
+
+** The call of laziness
+- Late '70s and early '80s, a series of seminal publications ignited an explosion of interest in the idea of /lazy/. Lazy evaluation appears to have been invented independently 3 times:
+  + Dan Friedman and David Wise published: "Cons should not evaluate its arguments"
+  + Peter Henderson and James H.Morris published "a lazy evaluator"
+  + David Turner introduced a series of influential languages
+- symbiotic effort on exciting new ways to /implement/ lazy languages
+  + variety techniques based on /graph reduction/
+  + projects to build /dataflow/ and /graph reduction/ machines of various sorts
+
+** A tower of Babel
+- By the mid-1980s there were a number of researchers, who were keenly interested in both design and implementation techniques for pure, lazy languages. Languages that contributed to this lazy Tower of Babel include:
+  + Miranda, a successor to SASL and KRC: SK combinator reduction, strong polymorphic typing and type inference
+  + Lazy ML: included the influential development of the /G-machine/, which showed that one could /compile/ lazy functional programs
+  + Orwell: 
+  + Alfl
+  + Id: a non-strict dataflow language
+  + Clean: a lazy language based explicitly on graph reduction 
+  + Ponder
+  + Daisy
+- all of these were essentially single-site languages, each individual lacked critical mass in terms of language-design effort, implementations, and users
+
+** The birth of Haskell
+- Peyton Jones and Hudak decided to initiate a meeting during FPCA, to garner interest in designing a new, common functional language
+
+** The first meetings
+*** The Yale Meeting
+- 9 -> 12 / 1 / 1988: at Yale. The first order of business was to establish the following goals for the language:
+  + /suitable for teaching, research, and applications, including building large systems/
+  + /completely described via the publication of a formal syntax and semantics/
+  + /freely available/
+  + /usable as a basis for further language research/
+  + /based on ideas that enjoy a wide consensus/
+  + /reduce unnecessary diversity in functional programming languages/
+*** The Glasgow Meeting
+- Hudak and Wadler would be the editors of the first Haskell Report
+*** IFIP WG2.8 Meetings
+
+** Refining the design
+** Was Haskell a joke?
+- The first edition of the Haskell Report was published on April 1, 1990. Haskell was no joke, but the release did lead to a number of subsequent April Fool's jokes.
+  
+** Goals, Principles, and processes
+- principles that underlay our thinking, the big choices that we made, processes that led to them   
+
+*** Haskell is lazy
+- Haskell is a language with a non-strict semantics; lazy evaluation is simply one implementation technique for a non-strict language
+- Laziness has its costs. Call-by-need is usually less efficient than call-by-value, because of the extra bookkeeping required to delay evaluation until a term is required
+- hard ot predict the /space/ behaviour of lazy programs
+
+*** Haskell is pure
+- evaluation order is demand-driven. It's become more or less impossible to reliably perform input/output or other side effects as the result of a function call
+- Once we were commited to a /lazy/ language, a pure one was inescapable
+- Purity is a big bet, with pervasive consequences. Unrestricted side effects are undoubtedly very convinient. Lacking side effects, Haskell's input/output was initially painfully clumsy, which was a source of considerable embarrassment. The embarrassment untimately led to the invention of /monadic IO/
+
+*** Haskell has type classes
+- type classes were introduced to the Haskell Committe by Wadler. Initially, type classes were motivated by the narrow problem of overloading of numeric operators and equality
+  + SML used overloading for the built-in numeric operators, resolved at some point of call
+
+*** Haskell has no formal semantics
+
+*** Haskell is a committee language
+- Haskell is a language designed by committee, and conventional wisdom would say that a committee language will be full of warts and awkward compromises.
+- Haskell is often described as "beautiful", "elegant" -- even "cool" by several factors:
+  + individual goals were well aligned
+  + mathematical elegance was extremely important to us
+  + several multi-day face-to-face meetings
+  + at each moment in the design process, one or two members of the committee served as /The Editor/
+  + At each moment in the design process, one member of the committee served as the /Syntax Czar/
+
+*** Haskell is a big language
+- A major source of tension both within and between members of the committee was the competition between beauty and utility.
+- There are 2 ways of constructing a software design: one way is to make it so simple that there are obviously no deficiencies, and the other way is to make it so complicated that there are no obvious deficiencies. The first method is far more difficult
+
+*** Haskell and Haskell 98
+- The goal of using Haskell for research demands /evolution/, while using the language for teaching and applications requires /stability/
+- Haskell 98 was a particular instance of the language. Haskell 98 was regarded as a reasonably conservative design.
+- In the absense of a language committee, Haskell has continued to evolve apace, in 2 quite different ways:
+  + Haskell has become a mature language w/ thousands of users
+  + At the same time, the language has simultaneously served as highly effective laboratory in which to explore advanced language design ideas, especially in the area of type systems and meta-programming
+
+- The fact that Haskell managed the tension between these 2 strands of development is perhaps due to an accidental virtue: Haskell has not become too successfully. Haskell community is small enough, and agile enough, that is usually not only absorbs language changes but positively welcome them
+
+*** Haskell and Miranda
+* Part 2: Technical Contributions
+** Syntax
+- The phrase "syntax is not important" is often heard in dicussion about programming languages, because there was so much interest at the time in developing the theory behind, and emphasising the importane of, the /formal semantics/ of programming languages
+- syntax is the user interface of a language
+
+*** Layout
+- Exploiting the physical layout of the program text is a simple and elegant way to avoid syntactic clutter
+- The layout rules needed to be very simple, otherwise users would object, and we explored many variations
+
+*** Functions and function application
+- *Currying*: Following a tradition going back to Frege, a function of 2 arguments may be represented as a function of one argument that itself returns a function of one argument.
+- Function application is denoted by juxtaposition and associates to the left. Thus f x y is parsed (f x) y
+- *Anonymous functions*: the syntax for anonymous functions \x -> exp, was chosen to resemble lambda expressions
+- *Prefix operators*: Haskell has only one prefix operator: arithmetic negation
+- *Infix operators*:
+- *Sections*
+- *Namespaces and keywords*:
+  + a set of lexemes for each namespace that were /orthogonal/ when they needed to be, and /overlapped/ when context was sufficient to distinguish their meaning.
+- *Declaration style vs expression style*
+    + haskell provided full syntactic support for both styles
+    + different constructs have different nuances
+- *List comprehension*
+  + provide a very convenient notation for maps, filters, and Cartesian products
+  + For some reasons, list comprehensions seem to be more popular in lazy languages
+
+- *Comments*: 2 types of comments 
+  + -- for short comments
+  + {- -} for long comments
+
+** Data types and pattern matching
+- Fundamental to most modern functional languages
+- the inclusion of basic algebraic type was straight forward, but interesting issues arose for pattern matching, abstract types, tuples, new types, records, n+k patterns, and views
+*** Algebraic types
+*** Pattern matching
+- the semantics of pattern matching in lazy languages is more complex than in strict languages, because laziness means than whether one chooses to first match against a variable (doesn't force evaluation) or a constructor (does force evaluation) can change the semantics of a program, in particular, whether or not the program terminates
+  + tightest match
+  + sequential equations
+  + uniform patterns
+
+*** Abstract types
+*** Tuples and irrefutable patterns
+*** Newtype
+*** Records
+*** n+k patterns
+*** Views
+*** Type classes

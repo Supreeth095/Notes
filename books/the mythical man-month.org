@@ -1,0 +1,765 @@
+* The Tar pit
+A ship on the beach is a lighthouse to the sea
+- large system programming has over the decade been a tar pit, and many greate and powerful beasts have thrashed violently in it. Most have emerged running systems, few have met goals, schedules, and budgets. 
+- The accumulation of simultaneous and interacting factors brings slower and slower motion
+
+** The Programming Systems Product
+- One occasionally reads newspaper accounts of how 2 programmers in a remodeled garage have built an important program that surpasses the best efforts of large teams. And every programmer is prepared to believe such tales, for he knows that he could build any program much faster than the 100 statements/year reported for industrial teams
+- Why then have not all industrial programming teams be replaced by dedicated garage duos? One must looks at /what/ 's being produced
+
+- A *program*: it is complete in itself, ready to be run by the author on the system on which it was developed. That is produced in garages, and the object an individual programmer uses in estimating productivity
+
+- 2 ways a program can be converted into a more useful, but more costly, object
+  + become a /programming product/: 
+    ~ a program that can be run, tested, repaired and extended by anyone
+    ~ must be written in generalized fashion, w/ a wide range and form of inputs
+    ~ must be thoroughly tested: a substantial bank of test cases, exploring the input range and probing its boundaries, must be prepared, run, and recorded
+    ~ a thorough documentation
+    ~ costs at least 3 times as much as a debugged program with the same function
+
+  + become a component in a /programming system/
+    ~ must be written so that every input and output conforms in syntax and semantics w/ precisely defined interfaces
+    ~ must be designed so that it uses only a prescribed budget of resources
+    ~ must be tested with other system components, in all expected combinations
+    ~ costs at least 3 times as much as a stand-alone program of the same function
+
+  + programming systems product: cost 9 times but the most useful object, the intended product of most system programming efforts
+
+** The Joys of the Craft
+- The sheer joy of making things
+- the pleasure of making things that are useful to other people.
+- the fascination of fashioning complex puzzle-like objects of interlocking moving parts and watching them work in subtle cycles, playing out the consequences of principles built in from the beginning.
+- The joy of always learning, which springs from the nonrepeating nature of the task
+- the delight of working in such a tractable medium. The programmer, like the poet, works only slightly removed from pure thought-stuff. He builds his castles in the air, from air, creating by exertion of the imagination. Few media of creation are so flexible, so easy to polish and rework, so readily capable of realizing grand conceptual structures
+- Programming is fun because it gratifies creative longings built deep within us and delights sensibilities we have in common with all men.
+
+** The Woes of the Craft
+knowing the inherent woes makes it easier to bear them when they appear
+- One must perform perfectly. The computer resembles the magic of legend in this respect. If one character, one pause of the incatation is not strictly in proper form, the magic doesn't work. Adjusting to the requirements for perfection is the most difficult part of learning to program.
+- designing grand concepts is fun; finding nitty little bugs is just work. With any creative activity come dreary hours of tedious, painstaking labor, and programming is no exception.
+- the product over which one has labored so long appears to be obsolete upon completion. Colleagues and competitors are in hot pursuit of new and better ideas. Already the displacement of one's thought-child is not only conceived, but scheduled. 
+  worse, the new and better product is generally not available when one completes his own; it is only talked about. The real tiger is never a match for the paper one, unless actualy use is wanted
+- implementation of real products demands phasing and quantizing. The obsolescence of an implementation must be measured against other existing implementations, not against unrealized concepts. The challenge and the mission are to find real solutions to real problems on actual schedules with available resources.
+
+* The mythical man month
+Good cooking takes time. If you are made to wait, it is to serve you better, and to please you
+- More software projects have gone awry for lack of calendar time than for all other causes combined. Why is this cause of disaster so common?
+  + our techniques of estimating are poorly developed
+  + our estimating techniques fallaciously confuse effort with progress, hiding the assumption that men and month are interchangeable
+  + we are uncertain of our estimates, software managers often lack the courteous stubborness of Atonie's chef.
+  + schedule progress is poorly monitored. Techniques proven and routine in other engineering disciplines are considered radical innovations in software engineering
+  + when schedule slippage is recognized, the natural (traditional) response is to add manpower
+
+** Optimism
+- The first false assumption that underlies the scheduling of systems programming is that all /will go well/, that each tasks will hike only as long as it "ought" to take.
+- The pervasiveness of optimism among programmers deserves more than a flip analysis
+  + Dorothy Sayers: creative activity 3 stages:
+    ~ the idea
+    ~ the implementation
+    ~ the interaction
+    the incompleteness and inconsistencies of our ideas become clear only during implementation. Thus it is writing, experimentation, working out are essential disciplines for the theoretician.
+    ~ In many creative activities the medium of execution is intractable. These physical limitations of the medium constrain the ideas that may be expressed, and they also create unexpected difficulties in the implementation.
+    ~ implementation takes time and sweat both because of the physical media and because of the inadequacies of the underlying ideas.
+
+- In a single task, the assumption that all will go well has a probabilistic effect on the schedule. It might indeed go as planed. A large programming effort, however, consists of many tasks, some chained end-to-end. The probability that each will go well becomes vanishinly small.
+
+** The Man-Month
+- The second fallacious thought mode is expressed in the very unit of effort used in estimating and scheduling: the man-month.
+- Progress does not vary as the product of the number of men and the number of months -> The man-month as a unit for measuring the size of a job is a dangerous and deceptive myth.
+- Men and months are interchangeable commodities only when a task can be partitioned among many workers with no communication among them. When a task cannot be partitioned because of sequential constraints, the application of more effort has no effect on the schedule
+- In tasks that can be partitioned but which require communication among the subtasks, the effort of communication must be added to the amount of work to be done. The added burden of communication is made up of 2 parts
+  + training: technology, goals of the effort, the overall strategy, the plan of work
+    ~ vary linear with the number of workers
+  + intercommunication
+    ~ if each part of the task must be separately coordinated with each other part/ the effort increases as n(n-I)/2
+- Software construction is inherently a system effort - an exercise in complex interrelationships - communication effort is great and it quickly dominates the decrease in individual task time brought about by partitioning.
+
+** Systems Test
+- component debugging and system test are thoroughly affected by sequential constraints
+- the time required depends on the number and subtlety of the errors encountered. Theoretically this number should be zero. Because of optimism, we usually expect the number of bugs to be smaller than it turns out to be. Therefore, testing is usually the most mis-scheduled part of programming.
+- Rule of thumb for scheduling a software task:
+  + 1/3 planning
+  + 1/6 coding
+  + 1/4 component test and early system test
+  + 1/4 system test, all components in hand
+
+- This differs from conventional scheduling in several important ways:
+  + the fraction devoted to planning is larger than normal
+    ~ barely enough to produce detailed and solid specification
+    ~ barely enough to research or exploration of totally new techniques
+  + the half of the schedule devoted to debugging of completed code is much larger than normal
+  + the part that is easy to estimate, is given only one-sixth of the schedule
+
+** Gutless Estimating
+- for the programmer, the urgency of the patron may govern the scheduled completion of the task, but it cannot govern the actual completion of the task.
+- false scheduling to match the patron's desired date is much more common in our displine than anywhere else in engineering. It is very difficult to make a vigorous, plausible, and job-risking defense of an estimate that is derived by no quantitative method, supported by little data, and certified chiefly by the hunches of the managers
+- We need to develop and publicize productivity figures, bug-incidence figures, estimating rules and so on. The whole profession can only profit from sharing such data.
+- Until estimating is on a sounder basis, individual managers will need to stiffen their backbones and defend their estimates with the assurance that their poor hunches are better than wish-derived estimates.
+
+** Regenerative Schedule Disaster
+- What does one do when an essential software project is behind schedule?
+- Example: a task is estimated at 12 man-months and assigned to 3 men for 4 months. There are measurable mileposts A, B, C, D, which are scheduled to fall at the end of each month
+  Suppose the first milepost is not reached until 2 months have elapsed. What are the alternatives facing the manager
+  + Assume that the task must be done on time. Assume that only the first part of the task was misestimated. The 9 man months of effort remain, and 2 months --> 4.5 mm will be needed --> add 2 men
+  + Assume that the task must be done on time. Assume that the whole estimate was uniformly low. Then 18 mm of effort remain, 2 months -> add 6 men
+  + Reschedule: allow enough time in the new schedule to ensure that the work can be successfully and thoroughly done, and reschedule will not have to be done again
+  + Trim the task: the manager's only alternative is to trim it formally and carefully, to reschedule or to watch the task get silently trimmed by hasty design and imcomplete testing.
+- In first 2 cases, insisting that the unaltered task can be completed in 4 months is disastrous, considering the regenerative effects
+- Oversimplifying outrageously, we state Brook's law
+  "Adding manpower to a late software project makes it later"
+
+* The Surgical Team
+These studies revealed large individual differences between high and low performers, often by an order of magnitude
+
+- At computer society meetings, one continually hears young programming managers assert that they favor a small, sharp team of first-class people, rather than a project with hundreds of programmers, and those by implication mediocre.
+  This naive statement of the alternatives avoids the hard problem - how does one build /large system/ on a meaningful schedule
+
+- Programming managers have long recognized wide productivity variations between good programmers and poor ones. But the actual measured magnitudes have astounded all of us.
+  + the ratios between best and worse performances averaged about 10:1 on productivity measurements and 5:1 on program speed and space measurements
+
+- The conclusion is simple: if a 200-man project has 25 managers who are the most competent and experienced programmers, fire the 175 troops and put the managers back to programming
+- Examine the above solution:
+  + it fails to approach the ideal of the /small/ sharp team, which by common consensus shouldn't exceed 10 ppl.
+  + the original 200-man team was not large enough to build really large systems by brute-force methods
+-> the problem with the small, sharp team concept: /it is too slow for really big systems/
+- The dilemma is a cruel one. For large systems one wants a way to bring considerable manpower to bear, so that the product can make a timely appearance. How can these needs be reconciled?
+
+** Mill's Proposal
+- each segment of a large job be tackled by a team, but that the team be organized like a surgical team rather than a hog-butchering team. That is, instead of each member cutting away on the problem, one does the cutting and the others give him every support that will enhances his effectiveness and productivity.
+- The surgeon: Mills calls him a /chief programmer/
+  personally defines the functional and performance specifications, designs the program, codes it, tests it and writes its documentation. Have access to a computing system which not only runs his tests but also stores the various versions of his programs. Need great talent, ten years experience, and considerable systems and application knowledge
+- The copilot: alter ego of the surgeon, able to do any part of the job, but is less experienced. represents his team in discussions of function and interface w/ other teams. researches alternative design strategies. 
+- The administrator: the surgeon needs a professional administrator who handles money, people, space and machines and who interfaces with the administrative machinery of the rest of the organization.
+- The editor: The surgeon is responsible for generating the documentation - for maximum clarity he must write it. The editor takes the draft or dictated manuscript and criticizes it, reworks it, provides it with references and biography
+- 2 secretaries: the administrator and the editor will each need a secretary
+- The program clerk: is responsible for maintaining all the technical records of the team in a programming-product library
+
+
+! absolutely vital to Mills's concept is the transformation of programming "from private art to public practice"
+
+- the toolsmith: the tool builder often construct speciliazed utilities, catalogued procedures, macro libraries
+- The tester: an adversary who devises system test cases from the functional specs
+- The language lawyer: people begain to recognize that most computer installations have one or two people who delight in mastery of the intricacies of a programming language
+
+** How it works
+- the surgeon and copilot are each cognizant of all of the design and all of the code
+- there are no differences of interest, and differences of judgement are settled by the surgeon unilaterally
+
+* Aristocracy, Democracy, and System Design
+  This great church is an incomparable work of art. There is neither aridity nor confusion in the tenets it sets forth...
+  it is the zenith of a style, the work of artists who had understood and assimilated all their predecessors' successes, in complete possession of the techniques of their times, but using them without indiscreet display nor gratuitous feats of skills
+  It was Jean d' Orbais who undoubtedly conceived the general plan of the building, a plan which was respected at least in its essential elements, by his successors. This is one of the reasons for the extreme coherence and unity of the edifice
+
+** Conceptual Integrity
+- Most programming systems reflect conceptual disunity for worse than that of cathedrals. Usually this arises not from a serial succession of master designers, but from the separation of design into many tasks done by many men.
+- Conceptual integrity is the most important consideration in system design
+  + how is conceptual integrity to be achieved?
+  + Does not this argument imply an elite, or aristocracy of architects, and a horde of plebeian implements whose creative talents and ideas are suppressed?
+  + How does one keep the architects from drifting off into the blue with unimplementable or costly specifications
+  + How does one ensure that every trifling detail of an architectural specification gets communicated to the implementer, properly understood by him, and accurately incorported into the product
+
+** Achieving Conceptual Integrity
+- Ease of use is enhanced only if the time gained in functional specification exceeds the time lost in learning, remembering, and searching manuals
+- Because ease of use is the purpose, this ratio of function to conceptual complexity is the ultimate test of system design. Neither function alone nor simplicity alone defines a good design.
+- For a given level of function, that system is best in which one can specify things with the most simplicity and straightforwardness. The expression of the things one wants to do often requires involuted and unexpected combinations of the basic facilities. It is not enough to learn the elements and rules of combination; one must also learn the idiomatic usage, a whole lore of how the elements are combined in practice. Simplicity and straightforwardness proceed from conceptual integrity. Every part must reflect the same philocophies and the same techniques in syntax and analogous notions in semantics. Ease of use, then, dictates unity of design, conceptual integrity.
+
+** Aristocracy and Democracy
+- Conceptual integrity in turn dictates that the design must proceed from one mind, or from a very small number of agreeing resonant minds.
+- Schedule pressures dictate that system building needs many hands. 2 techniques are available for resolving this dilemma
+  + a careful division of labor between architecture and implementation.
+  + new way of structuring programming implementation teams.
+- /architecture of a system/: the complete and detailed specification of the user interface. 
+- Not only the architects will have good architectural ideas. Often the fresh concept does come from an implementer or from a user. Good features and ideas that do not integrate with a system's basic concepts are best left out. If there appear many such important but incompatible ideas, one scraps the whole system and starts again on an integrated system with different basic concepts.
+- there must be few architects. If a system is to have conceptual integrity, someone must control the concepts. That is an aristocracy that needs no apology. However, the settting of external specifications is not more creative work than the desinging of implementations. It's just different creative work.
+- discipline is good for art
+  + an artists's aphorism asserts: "Form is liberating"
+  + the external provision of an architecture enhances, the creative style of an implementing group. 
+
+** What does the implementer do while waiting?
+- when it is proposed that a small architecture team write all the external specifications for a computer or a programming system, the implementers raise three objections:
+  + The specifications will be too rich in function and will not reflect practical cost considerations
+  + the architects will get all the creative fun and shut out the inventiveness of the implementers
+  + The many implementers will have to sit idly by while the specifications come through the narrow funnel that is the architecture team.
+
+--> the other two are illusions, pure and simple. Implementation is also a creative activity of the first order. The opportunity to be creative and inventive in implementation is not significantly diminished by working within a given external specification, and the order of creativity may even be enhanced by that discipline. The last object is one of timing and phasing. A quick answer is to refrain from hiring implementers until the specifications are complete.
+
+- The total creative effort involves three distinct phases:
+  + architecture
+  + implementation
+  + realization
+--> These can be begun in parallel and proceed simultaneously.
+
+- In computer design, the implementer can start as soon as he has relatively vague assumptions about the manual, somewhat clearer ideas about the technology, and well-defined cost and performance objectives. He can begin design:
+  + data flows
+  + control sequences
+  + gross packaging concepts
+devises or adapts the tools he will need
+
+* The Second-System effect
+- If one separates responsibility for functional specification from responsibility for building a fast, cheap product, what discipline bounds the architect's inventive enthusiasm. 
+- The fundamental answer is thoroughgoing, careful and sympathetic communication between architect and builder. 
+
+** Interactive Discipline for the Architect
+- the architect has 2 possible answers when confronted with an estimate that is too high:
+  + cut the design
+  + challenge the estimate by suggesting cheapter implementations
+- The architect is now challenging the builder's way of doing the builder's job. For it to be successful, the architect must
+  + remember that the builder has the inventive and creative responsibility for the implementation; so the architect suggests; not dictates
+  + always be prepared to suggest a way of implementing anything he specifies, and he prepared to accept any other way that meets the objectives as well;
+  + deal quietly and privately in such suggestions;
+  + be ready to forego credit for suggested improvements
+
+** Self-Discipline - The Second-System Effect
+- How does the architect avoid the second-system effect? 
+  + he can be conscious of the peculiar hazards of that system, and exert extra self-discipline to avoid functional ornamentation and to avoid extrapolation of functions that are obviated by changes in assumptions and purposes
+- How does the project manager avoid the second-system effect? 
+  + By insisting on a senior architect who has at least two systems under his belt. 
+  + he can ask the right questions to ensure that the philosophical concepts and objectives are fully reflected in the detailed design.
+
+
+* Passing the word
+Hell sit here and he'll say, "Do this! Do that" And nothing will happen
+- Assuming that he has the disciplined, experienced architects and that there are many implementers, how shall the manager ensure that everyone hears, understands, and implements the architects' decisions
+- how can a group of 10 architects maintain the conceptual integrity of a system which 1000 men are building?
+
+** Written Specifications - the manual
+- the manual is the external specification of the product. It describes and prescribes every detail of what the user sees.
+- the manual must not only describe everything the user does see, including all interfaces, it must also refrain from describing what the user does not see. 
+- the style must be precise, full and accurately detailed
+
+** Formal Definitions
+- The manual writer must strain himself and his language to achieve the precision needed. An attractive alternative is to use a formal notation for such definitions
+- the merits and weaknesses of formal definitions
+  + formal definitions are precise but they lack comprehensibility
+- Many tools are available for formal definition. The Backus-Naur Form is familiar for language definition. 
+- Not only is a formal definition an implementation, an implementation can serve as a formal definition. 
+
+** Direct Incorporation
+** Conferences and Courts
+- 2 levels of meetings to be useful:
+  + weekly half-day conference of all the architects, plus official representatives of the hardware and software implementers, and the market planers
+    ~ anyone can propose problems or changes, but proposals are usually distributed in writing before the meeting
+    ~ detailed change proposals then come up for decisions.
+
+** Multiple Implementations
+** The Telephone Log
+- It is essential to encourage the puzzled implementer to telephone the responsible architect and ask his question, rather than to guess and proceed. 
+** Product Test
+- The project manager's best friend is his daily adversary, the independent product-testing organization. This group checks machines and programs against specifications and serves as a devil's advocate, pinpointing every conceivable defect 
+
+* Why did the Tower of Babel Fail?
+** A Management Audit of the Babel Project
+- why did the project fail?
+  + communication
+  + organization
+** Communication in the Large Programming Project
+- Schedule diaster, functional misfits, and system bugs all arise because the left hand doesn't know what the right hand is doing. Teams should communicate with one another as many ways as possible:
+  + Informally: good telephone service and a clear definition of intergroup dependencies 
+  + Meetings
+  + Workbook
+** The Project Workbook
+- What: All the documents of the project need to be part of this structure. This includes objectives, external specifications, interface specifications, technical standards, internal specifications and administrative memoranda.
+- Why: Technical prose is almost immortal. The early design of the project workbook ensures that the document structure itself is crafted, not haphazard
+  + control the distribution of information.
+- *Mechanics*: 
+
+** Organization in the Large programming Project
+- The means by which communication is obviated are /division of labor/ and /specialization of function/ 
+
+- A tree-like programming organization:
+  + a mission
+  + a producer
+  + a technical director or architect
+  + a schedule
+  + a division of labor
+  + interface definitions among the parts
+
+- The producer and the technical director may be the same man
+  + This is readily workable on very small teams, perhaps 3 to 6 programmers. On larger projects it is very rarely workable. 
+    ~ the man with strong management talent and strong technical talent is rarely found. Thinkers are rare, doers are rarer, and thinker-doers are rarest. 
+    ~ on the larger project each of the roles is necessarily a full-time job
+
+- The producer may be boss, the director his right-hand man.
+
+- The director may be boss, and the producer his righ-hand man
+  + this account hardly needs any analytic commentary
+* Calling the Shot
+- Practice is the best of all instructors
+- Experience is a dear teacher, but fools will learn at no other
+- How long will a system programming job take? How much effort will be required? How does one estimate?
+- one doesn't estimate the entire task by estimating the coding portion and then applying the ratios. The coding is only one-sixth or so of the problem, and errors in its estimate or in the ratios could lead to ridiculous result
+- data for building isolated small programs are not applicable to programming system products. Planning, documentation, testing, system integration, and training times must be added. The linear extrapolation of such sprint figures is meaningless. 
+- effort goes as a power of size even when no communication is involved except that of a man with his memories. 
+
+  effort = (const) * (number of instructions)^15
+
+** Portman's Data
+- show that the estimating error could be entirely accounted for by the fact that his teams were only realizing 50 percent of the working week as actual programming and debugging time. Machine downtime, higher-priority short unrelated jobs, meetings, paperwork, company business, sickness, personal time accounted for the rest
+
+** Aron's Data
+| interactions          | productivity                    |
+|-----------------------+---------------------------------|
+| very few interactions | 10000 instructions per man-year |
+| some interactions     | 5000                            |
+| many interactions     | 1500                            |
+
+** Harr's Data
+|             | prog  | No of       | Years | Man   | Program | Words/man-yf |
+|             | units | Programmers |       | Years | Words   |              |
+|-------------+-------+-------------+-------+-------+---------+--------------|
+| operational | 50    | 63          | 4     | 101   | 52000   | 515          |
+| maintenance | 36    | 60          | 4     | 81    | 51000   | 630          |
+| compiler    | 13    | 9           | 2     | 1?    | 38000   |              |
+| translator  | 15    | 13          | 2%    | 11    | 25000   | 2270         |
+
+** OS/360 Data
+** Corbato's Data
+- Both Hair's data and OS360 data are for assembly language
+- Corbato's number is lines per man-year. This suggests 2 important conclusions:
+  + productivity seems constant in tenns of elementary statements, a conclusion that is reasonable in terms of the thought a statement requires and the errors in may include
+  + programming productivity may be increased as much as five times when a suitable high-level language is used
+
+* Ten Pounds in a Five-Pound Sack
+** Program Space as Cost
+- Aside from running time, the space occupied by a program is a principal cost
+- Since size is such a large part of the user cost of a programming system product, the builder must set size targets, control size, and devise size-reduction techniques, just as the hardware builder sets component-count targets, controls component count, and devise count-reduction techniques. 
+
+** Size Control
+- For the PM, size control is partly a technical job and partly a managerial one. One has to study users and their applications to set the sizes of the systems to be offered. Then these systems have to be subdivided, and each component given a size target. Since size-speed trade-offs come in rather big quantum jumps, setting size-speed targets is a tricky business, requiring knowledge of the available trade-offs w/i each piece
+- OS/360, even though all of this was done very carefully, still other lessons had to be painfully learned:
+  + setting size targets for core is not enough; one has to budget all aspects of size. 
+  + the space budgets were set before precise functional allocations were made to each module
+  + define exactly what a module must do when you specify how big it must be
+
+** Space Techniques
+- No amount of space budgeting and control can make a program small. That requires invention and craftmanship.
+- more functions means more space, speed being held constant. 
+  So the first area of craftmanship is in trading function for size. 
+- the second area of craftsmanship is space-time trade-offs. For a given function, the more space, the faster
+- The manager can do 2 things to help his team make good space-time trade-offs:
+  + ensure they are trained in programming technique (not just left to rely on native wit and previous experience)
+  + programming has a technology and components need to be fabricated
+
+** Representation is the Essence of Programming
+- Beyond craftmanship lies invention, and it is here that lean, spare, fast programs are born. Almost always these are the result of strategic breakthrough will be a new algorithm
+- Much more often, strategic breakthrough will come from redoing the representation of the data or tables. 
+- Representation is the essence of programming. 
+
+* The Documentary Hypothesis
+The hypothesis:
+- amid a wash of paper, a small number of documents become the critical pivots around which every project's management resolves. These are the manager's chief personal tools. 
+- The technology, the surrounding organization, and the traditions of the craft conspire to define certain items of paperwork that a project must prepare. To the new manager, fresh from operating as a craftman himself, these seem an unmitigated nuisanse, an unnecessary distraction, and a white tide that threatens to engulf him And indeed, most of them are exactly that. 
+
+** Documents for a Computer Product                             :interesting:
+- What are the critical documents?
+- *Objectives*: this defines the need to be met and the goals, desiderata, constraints, and priorities
+- *Specifications*: a computer manual + performance specifications
+- *Schedule*
+- *Budget*: one of the manager's most useful documents. Existence of the budget forces 
+  + technical decisions
+  + forces and clarifies policy decisions
+- *Organization chart*
+- *Space allocations*
+
+- *Estimate, forecast, prices*: these three have cyclic Interlocking, which determines the success or failure of the project
+
+  Forecast --> Estimate --> Prices
+     ^
+     |________________________|
+  + To generate a market forecast, one needs performance specifications and postulated prices. The quantities from the forecast combine with component counts from the design to determine the manufacturing cost estimate, and they determine the per-unit share of development and fixed costs. These costs in turn determine prices
+
+- If the price are below postulated, a joyous success spiral begins. Forecasts rise, unit costs drop, and prices drop yet further.
+- If the prices are above those postulated, a disastrous spiral begins and all hands must struggle to break it. Performance must be squeezed up and new applications developed to support larger forecasts. Costs must be squeeezed down to yield lower estimates. The stress of this cycle is a discipline that often evokes the best work of marketer and engineer. 
+- It can also bring about ridiculous vacillation.
+
+** Documents for a University Department
+- Almost every decision of dean, faculty meeting, or chairman is a specification or change of these documents:
+  + Objectives
+  + Course descriptions
+  + Degree requirements
+  + Research proposals (hence plans, when funded)
+  + Class schedule and teaching assignments
+  + Budget
+  + Space allocation
+  + Assignment of staff and graduate students
+
+** Documents for a Software Project
+- What: objectives: 
+- What: product specifications: begins as a proposal and ends up as the manual and internal documentation. Speed and space specifications are a critical part
+- When: schedule
+- How much: budget
+- Where: space allocation
+- Who: organization chart. Organization which design systems are constrained to produce systems which are copies of the communication structures of these organizations
+
+** Why Have Formal Documents?
+- writing the decisions down is essential. Only when one writes do the gaps appear and the inconsistencies protrude
+- the documents will communicate the decisions to others
+- a manager's documents give him a database and a checklist
+
+
+* Plan to Throw One Away
+- There is nothing in this world constant but inconstant
+- It is common sense to take a method and try it. If it fails, admit it frankly and try another. But above all try *something*
+** Pilot Plants and Scaling Up
+- a process that works in the laboratory cannot be implemented in a factory in only one step. An intermediate step called the *pilot plant* is necessary to give experience in scaling quantities up and in operating in nonprotective environments
+- the management question, therefore is not whether to build a pilot system and throw it away. *You will do that*. The only question is whether to plan in advance to build a throwaway, or to promise to deliver the throwaway to customers. 
+  delivering that thrownaway to customers buys time, but it does so only at the cost of agony for the user, distraction for the builders while they do the redesign, and a bad reputaion for the product that the best redesign will find hard to live down.
+
+  Hence /plan to thrown on away; you will, anyhow/
+
+** The Only Constancy is Change itself
+- the first step is to accept the fact of change as a way of life, rather than an untoward and annoying exception. 
+- all changes in customer objectives and requirements must, can, or should be incorporated in the design. Clearly a threshold has to be established, and it must get higher and higher as development proceeds, or no product ever appears
+- Nevertheless, some changes in objectives are inevitable, and it is better to be prepared for them than to assume that they won't come. Not only are changes in objective inevitable, changes in development strategy and technique are also inevitable. The thrown-one-away concept is itself just an acceptance of the fact that as one learns, he changes the design
+
+** Plan the System for Change
+- The ways of designing a system for such change include
+  + careful modularization
+  + extensive subroutining
+  + precise and complete definition of intermodule interfaces
+  + complete documentation of these
+- most important is the use of a high-level programming language and self-documenting techniques so as to reduce errors induced by changes. Using compile-time operation to incorporate standard declarations helps powerfully in making changes
+- Quantization of change is an essential technique. Every product should have numbered versions, and each version must have its own schedule and a freeze date.
+
+** Plan the Organization for Change
+- Structuring an organization for change is much harder than designing a system for change. Each man must be assigned jobs that broaden him, so that the whole force is technically flexible. 
+- On a large project, the manager needs to keep 2 or 3 top programmers as a technical cavalry that can gallop to the rescue wherever the battle is thickest.
+- management structures also need to be changed as the system changes. This means that the boss must give a great deal of attention to keeping his managers and his technical people as interchangeable as their talents allow.
+  The bariers are sociological, and they must be fought with constant vigilance
+
+- Why aren't defects fixed more cleanly
+  + even a subtle defect show inself as a local failure of some kind. In fact it often has system-wide ramifications, usually nonobvious. Any attempt to fix with minimum effort will repair the local and obvious
+  + the repairer is usually not the man who wrote the code. 
+
+** One step forward and one step backward
+- System program building is an entropy-decreasing process, hence inherently metastable. Program maintenance is an entropy increasing process, and even its most skillful execution only delays the subsidence of the system into unfixable obsolesence
+
+* Sharp Tools
+- A good workman is known by his tools
+- The manager of a project needs to establish a philosophy and set aside resources for the building of common tools. 
+- What are the tools about which the manager must philosophize, plan, and organize?
+  + a computer facility 
+  + an operating system
+  + language
+  + utilities, debugging aids, testcase generators
+  + a text-processing system
+** Target Machines
+- Machine support
+  + target machines: the one for which software is being written
+  + vehicle machines: those that provide the services used in building the system
+** What kind of target facility?
+  + system-heart software & system programmer
+  + a fast machine
+  + a debugging machine and its software: memory-use patterns are powerful diagnostics of the causes of weird logical behavior or unexpectedly slow performance
+** Scheduling
+** Vehicle Machines and Data Services
+- Simulators gives a debugging vehicle long before the real target exists. It gives access to a dependable debugging vehicle
+- /Dependable/ is not the same as /accurate/
+** Compiler and assembler vehicles
+** Program libraries and accounting
+- 2 notions are important here:
+  + control: the idea of program copies belonging to managers who alone can authorize their change
+  + formal separation and progression from the playpen, to integration, to release
+** Program tools
+** Documentation system
+- text editing system, operating on a dependable vehicle
+
+** High-Level Language and Interactive Programming
+- High-level language: the chief reasons for using a high-level language are productivity and debugging speed
+- an interactive facility at least doubles productivity in system programming
+
+* The Whole and the Parts
+- I can call spirits from the vasty deep
+  Why so can I, or so can any man; but will they come when you do call for them?
+
+- the modern magic, like the old, has its boastful practitioners: "I can write programs that control air traffic, intercept ballistic missiles, reconcile bank accounts, control production lines." To which the answer comes, "So can I, and so can any man, but do they work, when you do write them?"
+
+** Designing the Bugs Out
+- *Bug-proofing the definition*: 
+  + the most pernicious and subtle bugs are system bugs arising from mismatched assumption made by the authors of various components.
+  + V.A. Vyssotsuky: "The crucial task is to get the product defined. Many, many failures concern exactly those aspects that were never quite specified"
+  + careful function definition, careful specification, and the disciplined exorcism of frills of functions and flights of technique all reduce the number of system bugs
+
+- *Testing the specification*
+  + long before any code exists, the specification must be scrutinized for completeness and clarity
+
+- *Top-down design*
+  + Wirth's procedure is to identify design as a sequence of /refinement steps/
+  + a good top-down design avoid bugs in several ways:
+    ~ the clarity of structure and representation makes the precise statement of requirements and functions of the modules easier.
+    ~ the partitioning and independence of modules avoids system bugs
+    ~ the suppression of detail makes flaws in the structure more apparent
+    ~ the design can be tested at each of its refinement steps
+
+- *Structured programming*
+  + the one vital to constructing bug-free programs, is that one wants to think about the control structure of a system as control structures, not as individual branch statements.
+
+** Component Debugging
+- *On-machine debugging*
+- *Memory dumps*
+- *Snapshots*
+- *Interactive debugging*
+
+** System Debugging
+- *Use debugged components*
+- *Build plenty of scaffolding*
+  + dummy component
+  + miniature file
+  + auxiliary program
+- *Control changes*: tight control during test is one of the impressive techniques of hardware debugging, and it applies as well to software systems
+- *Add one component at a time*
+- *Quantize updates*
+
+* Hatching a Catastrophe
+- None love the bearer of bad news
+- How does a project get to be a year late?
+  .., one day at a time
+
+  Usually the disaster is due to termites, not tornadoes; and the schedule has slipped imperceptibly but inexorably. Indeed, major calamities are easier to handle; one responds with major force, radical reorganization, the invention of new approaches. The whole team rises to the occasion.
+  But the day-by-day slippage is harder to recognize; harder to prevent, harder to make up
+
+** Milestones or Millstones?
+   How does one control a big project on a tight schedule? to have a schedule. Each of a list of events, call milestones, has a date. Picking the dates is an estimating problem, discussed already and crucially dependent on experience.
+  + Milestones must be concrete, specific, measurable events, defined with knife-edge sharpness. "Planning complete" is an event one can proclaim almost at will.
+  + It is more important that milestones be sharp-edged and unambiguous than that they be easily verifiable by the boss. 
+  + 2 interesting studies of estimating behavior by government contractors on large-scale development projects show that:
+    ~ Estimates of the length of an activity, made and revised carefully every two weeks before the activity starts, do not significantly change as the start time draws near, no matter how wrong they turn out to be
+    ~ During the activity, overestimates of duration com steadily down as the activity proceeds
+    ~ Underestimates do not change significantly during the activity until about 3 weeks before the scheduled completion. 
+
+** The Other Piece Is Late, Anyway
+   "Hustle, an essential gift of great players and great teams". It is the characteristic of running faster than necessary, moving sooner than necessary, trying harder than necessary. 
+   Hustle provides the cushion , the reserve capacity, that enables a team to cope with routine mishaps, to anticipate and forfend minor calamities. 
+   One-day slips are elements of catastrophe
+- Not all one-day slips are equally disastrous. So some calculation of response is necessary, though hustle be dampened. The PERT technique, strictly speaking, is an elaboration of critical-path scheduling in which one estimates 3 times for every event, times corresponding to different probabilities of meeting the estimated dates. 
+
+** Under the Rug
+- Every boss needs two kinds of information, exceptions to plan that require action and a status picture for education. For that purpose he needs to know the status of all his teams. The first line manager's interests and those of the boss have an inherent conflict here. 
+- 2 rug-lifting techniques are open to the boss. 
+  + *Reducing the role conflict*: The boss must first distinguish between action information and status information. He must discipline himself not to act on problems his managers can solve and never to act on problems when he is explicitly reviewing status. Conversely, when the manager knows his boss will accept status reports w/o panic or preemption, he comes to give honest appraisals.
+  + *Yanking the rug off*: it is necessary to have review techniques by which the true status is made known, whether cooperatively or not. THe PERT chart with its frequent sharp milestones is the basis for such review. 
+    ~ A report showing milestones and actual completions is the key document. 
+    ~ Plans and Controls team is invaluable for a large project. It has no authority except to ask all the line managers when they will have set or changed milestones, and whether milestones have been met. Since the plans and Controls group handles all paperwork, burden on the line managers is reduced to the essentials - making decisions.
+
+* The Other Face
+What we do not understand we do not possess
+O give me commentators plain, who with no deep researches vex the brain
+
+** What Documentation Is Required?
+To write a useful prose description, stand way back and come in slowly:
+- Purpose
+- Environment
+- Domain and range
+- Functions realized and algorithms used
+- Input-output formats
+- Operating instructions
+- Options
+- Running time
+- Accuracy and checking
+
+*To believe a program*: The description of how it is used must be supplemented with some description of how one knows it is working. 
+Then one needs more thorough test cases, which are normally run only after a program is modified. These fall into three parts of the input data domain:
+- Mainline cases that test the program's chief functions for commonly encountered data
+- Barely legitimate cases that probe the edge of the input data domain, ensuring that largest possible values, smallest possible values and all kinds of valid exceptions work
+- Barely illegitimate cases that probe the domain boundary from the other side, ensuring that invalid inputs raise proper diagnostic messages
+
+*To modify a program*: adapting a program or fixing it requires considerably more information. For the modifier, as well as the more casual user, the crying need is for a clear, sharp overview, this time of the internal structure. What are the componens of such an overview?
+- a flow chart or subprogram structure graph. 
+- Complete descriptions of the algorithms used. or else references to such descriptions in the literature.
+- An explanation of the layout of all files used
+- An overview of the pass structure - the sequence in which data or programs are brought from tape or disk -- and what is accomplished on each pass.
+- A discussion of modifications contemplated in the original design, the nature and location of hooks and exits, and discursive discussion of the ideas of the original author about what modifications might be desirable and how one might proceed. His observations on hidden pitfalls are also useful.
+
+** The Flow-Chart Curse
+- The detailed blow-by-blow flow chart, however, is obsolete nuisance, suitable only for initiating beginners into algorithmic thinking. 
+- FLow charting is more preached than practiced. 
+
+** Self-Documenting Programs
+- We typically attempt to maintain a machine readable form of a program and an independent set of human readable documentation, consisting of prose and flow charts. The results: program documentation is notoriously poor, and its maintenance is worse. Changes made in the program do not promptly, accurately, and invariably appear in the paper. 
+- The solution is to merge the files to incorporate the documentation in the source program. 
+
+
+* No Silver Bullet - Essense and Accident in Software Engineering
+There is no single development, in either technology or management technique, which by itself promises even one order-of-magnitude improvement within a decade in productivity, in reliability, in simplicity. 
+
+** Abstract
+All software construction involves essential tasks, the fashioning of the complex conceptual structures that compose the abstract software entity, and accidental tasks, the representation of these abstract entities in programming languages and the mapping of these onto machine languages w/i space and speed constraints. 
+Essential parts of the software task, those concerned with fashioning abstract conceptual structures of great complexity
+  - Exploiting the mass market to avoid constructing what can be bought
+  - Using rapid prototyping as part of a planned iteration in establishing software requirements
+  - Growing software organically, adding more and more function to systems as they are run, used and tested
+  - Identifying and developing the great conceptual designers of the rising generation.
+
+** Introduction
+werefolves is terrifying because they transform unexpectedly from the familiar into horrors. 
+- The familiar software project has something of this character, usually innocent and straightforward, but capable of becoming a monster of missed schedules, blown budgets, and flawed products. So we hear dessperate cries for a silver bullet, something to make software costs drop rapidly as computer hardware costs do. 
+- We see no development, in either technology or management technique.
+** Does it have to be hard? - Essential difficulties
+- No other technology since civilization began has seen six orders of magnitude price-performance gain in 30 years. In no other technology can one choose to gain in either improved performance or in reduced costs. 
+- Essense - the difficulties inherent in the nature of the software - and accidents - those difficulties that today attend its production but that are not inherent. 
+
+- The essense of a software entity is a construct of interlocking concepts: data sets, relationships among data items, algorithms, and invocations of functions. This essence is abstract, in that the conceptual construct is the same under many different representations. It is nonetheless highly precise and richly detailed. 
+
+- The hard part of building software to be the specification design, and testing of this conceptual construct, not the labor of representing it and testing the fidelity of the representation.
+- Inherent properties of this irreducible essence of modern software systems:
+  + complexity
+  + conformity
+  + changeability
+  + invisibility
+
+- *Complexity*: software entities are more complex for their size than perhaps any other human construct, because no two parts are alike. 
+  + Digital computers are themselves more complex than most things people build; they have very large numbers of states. This makes conceiving, describing, and testing them hard. Software systems have orders of magnitude more states than computers do.
+  + a scaling-up of a software entity is not merely a repetition of the same elements in larger size; it is necessarily an increase in the number of different elements. 
+  + the complexity of software is an essential property. Hence descriptions of a software entity that abstract away its complexity often abstract away its essence. 
+  + many of the classical problems of developing software products derive from this essential complexity and its nonlinear increases w/ size:
+    ~ from the complexity comes the difficulty of communication among team members, which leads to product flaws, cost overruns, schedule delays. 
+    ~ from the complexity comes the difficulty of enumerating, much less understanding all the possible states of the program, and from that comes the unreliability. 
+    ~ from theh complexity of the functions comes the difficulty of invoking those functions, which makes programs hard to use
+    ~ from complexity of structure comes the difficulty of extending programs to new functions w/o creating side effects
+    ~ from complexity of structure comes the unvisualized states that constitute security trapdoors
+
+- *Conformity*: much complexity he must master is arbitrary complexity, forced with out rhyme or reason by the many human institutions and sytems to which his interfaces must conform. These differ from interface to interface, and from time to time, not because of necessity but only because they were designed by different people rather than by God.
+
+- *Changeability*: The software entity is constantly subject to pressures for change. Partly because the software in a system embodies its function and the function is the part that most feels the pressures of change. Partly it is because software can be changed more easily. 
+  ~ the software product is embedded in a cultural matrix of applications, users, laws, and machine vehicles. These all change continually, and their changes inexorably force change upon the software product.
+
+- *Invisibility*: software is invisible and unvisualizable. The reality of software is not inherently embedded in space. Hence it has no ready geometric representation
+
+** Past Breakthroughs Solved Accidental Difficulties
+3 steps in software technology that have been most fruitful in the past. Each attacks different major difficulty in building software, but they have been the accidental
+- High-level languages
+- Time-sharing
+- Unified programming environments
+
+** Hopes for the Silver
+technical developments that are most advanced as potential silver bullets
+- Object-oriented programming
+- Artificial intelligence
+- Expert systems
+- Automatic programming
+- Graphical programming
+- Program verification
+- Environments and tools
+- Workstations
+
+** Promising Attacks on the Conceptual Essence
+All of the technological attacks on the accidents of the software process are fundamentally limited by the productivity equation:
+   Time of task = Sum_i (Frequency)_i x (Time)_i
+The conceptual components of the task are now taking most of the time, then no amount of activity on the task components that are merely the expression of the concepts can give large productivity gains.
+
+- *Buy vs build*: The most radical possible solution for constructing software is not to construct it at all. Any product is cheaper to buy than to build a fresh
+  + The development of the mass market is, the mos profound long-run trend in software engineering. The cost of software has alwasy been development cost, not replication cost. Sharing that cost among even a few users cuts the per-user cost. The use of n copies of a software system effectively multiplies the productivity of its developers by n. That is an enhancement of the productivity of the discipline and of the nation. 
+  + The key issue is applicability. 1950s, 1960s users would not use off-the-shelf packages for payroll, inventory control, accounts receivable. 
+  + There are dramatic exceptions to my argument that the generalization of the software packages has changed little over the years: electronic spreadsheets and simple database system. These powerful tools lend themselves to myriad uses, some quite unorthodox. 
+- *Requirements refinement and rapid prototyping*: THe hardest single part of building a software system is deciding precisely what to build. No other part of the conceptual work is so difficult as establishing the detailed technical requirements, including all the interfaces to people, to machines, and to other software systems.
+  + therefore the most important function that software builders do for their clients is the iterative extraction and refinement of the product requirements. 
+  + users don't know what they wnat. They usually don't know what questions must be answered, and they almost never have thought of the problem in the detail that must be specified. 
+  + In planning the software activity, it is necessary to allow for an extensive iteration between the client and the designer as part of the system definition. It is really impossible for clients, even those working with software engineers, to specify completely, precisely, and correctly the exact requirements of a modern software product before having built and tried some versions of the product. Therefore one of the most promising of the current technological efforts, and one which attacks the essence, not the accidents, of the software problem, is the development of approaches of tools for rapid prototyping of systems as part of iterative specification of requirements.
+  + the purpose of the prototype is to make real the conceptual structure specified, so that the clients can test it for consistency and usability. 
+  + Much of present-day software acquisition procedures rests upon the assumption that one can specify a satisfactory system in advance, get bids for its construction, have it built, and install it. This assumption is fundamental wrong, and that many software acquisition problems spring from that fallacy. Hence they cannot be fixed without fundamental revision, one that provides for iterative development and specification of prototypes and products.
+- *Incremental development*: any software system should be grown by incremental development. That is, the system should first be made to run, even though it does nothing useful except call the proper set of dummy subprograms. 
+- *Great designers*: we can get good designs by following good practices. Nevertheless, we can make the next step upward in the same way. Whereas the difference between poor conceptual designs and good ones may lie in the soundness of design method, the difference between good designs and great ones surely does not. Software construction is a /creative/ process. 
+   + The most important single effort we can mount is to develop ways to grow great designers. No software organization can ignore this challange. Great managers are scare, but not scarer than great designers. Great designers and great managers are both very rare. Most organizations spend considerable effort in finding and cultivating the management prospects; I know none that spends equal effort in finding and developing the great designers upon whom the technical excellence of the products will ultimately depend. 
+   + How to grow great designers?
+     ~ systematically identify top designers as early as possible. The best are often not the most experienced. 
+     ~ Assign a career mentor to be responsible for the development of the prospect, and keep a careful career file.
+     ~ Devise and maintain a career development plan for each prospect, including carefully selected apprenticeships with top designers, episodes of advanced formal education, and short courses, all interspersed with solo design and technical leadership assignments. 
+     ~ Provide opportunities for growing designers to interact with and stimulate each other.
+
+* No Silver Bullet - Refined
+- Every bullet has its billet
+- Whoever thinks a faultless piece to see, Thinks what ne'er was, nor is, nor e'er shall be
+** There is too a Silver Bullet - AND HERE IT IS!
+"No Silver Bullet" asserts and argues that no single software engineering development will produce an order-of-magnitude improvement in programming productivity withing ten years"
+
+** Obscure Writing Will Be Misunderstood
+- Accident: more nearly incidental or appurtenant
+- all creative activity to consist of:
+  + the formulation of the conceptual constructs
+  + implementation in real media
+  + interactivity with users in real uses
+- The part of software building he called /essence/ is the mental crafting of the conceptual construct; the part he called /accident/ is its immplementation process.
+- NSB argues that if the accidental part of the work is less than 9/10 of the total, shrinking it to zero will not give an order of magnitude productivity improvement. One must attack the essence.
+- *Complexity is by levels*: 
+
+*
+* Propositions of The Mythical Man-Month True or False
+For brevity is very good, Where we are, or are no understood
+
+
+
+* The Mythical Man-Month after 20 years
+I know no way of judging the future but by the past
+
+You can never plan the future by the past
+- managing a software project is more like other management that most programmers initially believe.
+- Human history is a drama in which the stories stay the same, the scripts of those stories change slowly with evolving cultures, and the stage settings change all the time.
+
+** The Central Argument: Conceptual Integrity and the Architect
+- *Conceptual Integrity*: a clean, elegant programming product must present to each of its users a coherent mental model of the application, of strategies for doing the application, and of the user-interface tactics to be used in specifying action and parameters.
+  + product-development processes in many industries cannot afford this straightforward approach to conceptual integrity. Competitive pressures force urgency; in many modern technologies the end product is quite complex, and the design inherently requires many man-month of effort. Software products are both complex and fiercely competitive in schedule.
+
+- *The architect*: the product's architect, who is responsible for the conceptual integrity of all aspects of the product perceivable by the user. The architect forms and owns the public mental model of product that will be used to explain its use to the user. This includes the detailed specification of all of its function and the means for invoking and controlling it. The architect is also the user's agent, knowledgeably representing the user's interest in the inevitable tradeoffs among function, performance, size, cost, and schedule. 
+
+- *Separation of architecture from implementation and realization*: to make the architect's crucial task even conceivable, it is necessary to separate the architect, the definition of the product as perceivable by the user, from its implementation.
+
+- *Recursion of architects*: it is necessary for the system master architect to partition the system into subsystems. The subsystem boundaries must be at those places where interfaces between the subsystems are minimal and easiest to define rigorously. Then each piece will have its own architect, who must report to the system master architect with respect to the architecture. Clearly this process can proceed recursively as required.
+  + Conceptual Integrity is central to product quality. Having a system architect is the most important single step toward conceptual integrity. These principles are by no means limited to software systems, but to design of any complex construct, whether a computar, airplane...
+
+** The Second-System Effect: Featuritis and Frequency-Guessing
+It's difficult to design a general purpose tool than it is to design a special-purpose tool, precisely because one has to assign weights to differing needs of the diverse users.
+- *Featuritis*: the besetting temptation for the architect of a general purpose tool such as a spreadsheet or a word processor is to overload the product with features of marginal utility, at the expense of performance and even of ease of use. 
+- *Defining the user set*: the larger and more amorphous the user set, the more necessary it is to define it explicitly if one is to achieve conceptual integrity. an architect's image of the user consciously or subconsciousy affects every architectural decision, it is essential for a design team to arrive at a single shared image. And that requires writing down the attributes of the expected user set, including:
+  + who they are
+  + what they need
+  + what they think they need
+  + what they want
+- *Frequencies*: any of the attributes of the user set is in fact a distribution, with many possible values, each with its own frequency. An architect should guess or postulate a complete set of attributes and values with their frequencies, in order to develop a complete, explicit, and shared description of the user set.
+  + the process of carefully guessing the frequencies will cause the architect to think very carefully about the expected user set
+  + writing frequencies down will subject them to debate
+  + enumerating the frequencies explicitly helsp every one recognize which decisions depend upon which user properties. 
+
+** The Triumph of the WIMP Interface (p260)
+** Don't build one to Throw Away- The Waterfall Model is Wrong
+- a project goes through the process once, that the architecture is excellent and easy to use, the implementation design is sound, and the realization is fixable as testing proceeds. 
+  + the waterfall model puts system test, and therefore by implication user testing, at the end of the construction process. Thus one can find impossible awkwardnesses for users, or unacceptable performance, or dangerous, susceptibility to user error or malice, only after investing in full construction. The Alpha test scrutiny of the specifications aims to find such flaws early, but there is no substitute for hands-on users.
+- it assumes one builds a whole system at once, combining the pieces for an end-to-end system test after all of the implementation design.
+
+** An Incremental-Build Model is Better - Progressive Refinement
+*** Building an end-to-end skeleton system*:
+Harlan Mills advocated that we should build the basic polling loop of a real time system, with subroutine calls (stubs) for all the function, but only null subroutines. Compile it, test it. It goes round and round, doing literally nothing, but doing it correctly.
+Next we flesh out a input modules and an output module. A running system that does something, however dull. Now function by function, we incrementally build and add modules. /At every stage we have a running system/
+We can
+  + begin user testing very early
+  + adopt a build-to-budget strategy that protects absolutely against schedule or budget overruns
+
+*** Parnas Families
+Parnas's concept of designing a software product as a /family/ of related products
+
+*** Microsoft's "Build Every Night" Approach
+- James McCarthy @ Microsoft build and test the system every night.
+
+*** Incremental-Build and Rapid Prototyping
+a prototype: "A version of a program that reflects only the design decisions made in the process of preparing the conceptual model, and not decisions driven by implementation concerns".
+
+*** Parnas Was Right, and I Was Wrong about Information Hiding
+Programmers are most effective if shielded from, not exposed to, the innards of modules onot their own.
+
+*** How Mythical Is the Man-Month? Boehm's Model and Data
+- There is a cost-optimum schedule time to first shipment, l = 2.5(MM)^1/3. That is, the optimum time in months goes as cube root of the expected effort in man-months
+  + The cost curve rises slowly as the planned schedule gets longer than the optimum. People with more time take more time.
+  + The cost curve rises sharply as the planned schedule gets shorter than the optimum
+- Hardly any projects succeed in less than 3/4 of the calculated optinum schedule, regardless of the number of people applied.
+
+- *How true is Brooks' Law?*: Adding more people to a late project always make it more costly, but it does not always cause it to be completed later. In particular, adding extra manpower early in the schedule is a much safer maneuver than adding it later, since the new people always have an immediate negative effect, which takes weeks to compensate. 
+
+*** People Are Everything (Well, Almost Everything)
+- *Peopleware*: 
+  + The manager's function is not to make people work, it is to make it possible for people to work"
+  + the top performers' space is quieter, more private, better protected against interruption, and ther is more of it...Does it really matter to you ... Whether quiet, space and privacy help your current people to do better work or help you to attract and keep better people. 
+- *Moving projects*: 
+
+*** The Power of Giving Up Power
+- Creativity comes from individuals and not from structures or processes, then a central question facing the software manager is how to design structure and process so as to enhance rather than inhibit, creativity and initative.
+- The Principle of Subsidiary Function teaches us that the centre will gain in authority and effectiveness if the freedom and responsibility of the lower formations are carefully preserved, with the result that the organization as a whole will be "happier and more prosperous"
+  How can such a structure be achieved? ... The large organization will consist of many semi-autonomous unis, which we may call *quasi-firms*. Each of them will have a large amount of freedom, to give the greatest possible chance to creativity and *entrepreneurship*... Each quasi-firm must have both a profit and loss account, and a balance sheet.
