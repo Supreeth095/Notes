@@ -490,7 +490,6 @@ Algorithm Speed
 - Ubiquitous Automation
 - It's All Writing
     
-
 ** Shell Games
 - *Use the Power of Command Shells*
 ** Power Editing
@@ -511,7 +510,91 @@ Algorithm Speed
 - auto-indenting
 
 ** Where to Go from here
-* Source Code Control
+** Source Code Control
 Progress, far from consisting in change, depends on retentiveness. Those who cannot remember the past are condemned to repeat it
+
 - *Always Use Source Code Control*
+
+- Make sure that everything is under source code control - documentation, phone number, lists, memos to vendors, makefiles, build and release procedures, little shell script that burns the CD master - everything.
+
+*** Source Code Control and Builds
+- benefit in having an entire project under the umbrella of a source code control system you can have a product builds that are:
+  + automatic
+  + repeatable
+
+** Debugging
+It is a painful thing
+To look at your own trouble and know
+That you yourself and no one else has made it
+*** Psychology of Debugging
+- Debugging itself is a sensitive, emotional subject for many developers
+- *Fix the Problem, Not the Blame*
+
+*** A Debugging Mindset
+The easiest person to deceive is one's self
+- *Don't panic*
+- Don't waste a single neuron on the train of thought that begins "but that can't happen"
+- Always try to discover the root cause of a problem, not just this particular appearance of it.
+
+*** Where to Start
+- Working on code that compiled cleanly - w/o warnings
+- accurate in observations / gather all the relevant data
+- 2 points:
+  + interview the user who reported the bug in order to gather more data than you were initially given
+  + Artificial test don't exercise enough of an application.
+
+*** Debugging Strategies
+- reproduce bug
+- visualize your data
+- tracing
+  + watch the state of a program or a data structure overtime
+  + tracing statements are effective in systems where time itself is a factor: concurent processes, real-time systems, and event-based applications
+- Rubber Ducking: explain the problem to someone else
+- Process of Elimination
+  + always assume that problem is in your code. Eliminate your code before submitting the bug report
+
+- *"select" Isn't Broken"
+
+*** The Element of Surprise
+- *Don't Assume It - Prove It*
+
+*** Releated sections include:
+- Assertive Programming
+- Programming by Coincidence
+- Ubiquitous Automation
+- Ruthless Testing
+
+** Text Manipulation
+- *Learn a Text Manipulation Language*
+- applicability of text manipulation languages:
+  + Database schema maintenance*
+  + Java property access
+  + Test data generation
+  + Book writing
+  + C to Object Pascal interface
+  + Generating Web documentation
+*** Related sections include:
+- The Evils of Duplication    
+
+** Code Generators
+- *Write code that writes code*
+- 2 main types of code generators:
+  + Passive code generators: are run once to produce a result
+  + Active code generators
+
+*** Passive Code Generators
+- Passive Code generators save typing
+- many uses:
+  + Creating new source files
+  + Performing one-off conversions
+  + Producing lookup tables and other resources
+
+*** Active code Generators
+*** Code generators needn't be complex
+*** Code Generators Needn't Generate Code
+*** Related sections include:
+- The Evils of Duplication
+- The Power of Plain Text
+- Evil Wizards
+- Ubiquitous Automation
 
