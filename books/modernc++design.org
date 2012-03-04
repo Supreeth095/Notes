@@ -1,0 +1,4 @@
+* Policy-Based Class Design
+- policy-based class design fosters assembling a class with complex behavior out of many little classes (called /policies/), each of which takes care only one behavioral or structural aspect
+- a policy establishes an interface pertaining to a specific issue
+- This chapter explains the problem that policies are intended to solve, provides details of policy-based class design, and gives advice on decomposing a class into policies.
