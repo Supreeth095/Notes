@@ -598,3 +598,71 @@ The easiest person to deceive is one's self
 - Evil Wizards
 - Ubiquitous Automation
 
+* Pragmatic Paranoia
+- *You can't write perfect software* <- accept it as an axiom of life
+- Pragmatic Programmers: don't trust themselves. 
+- In a world of imperfect systems, ridiculous time scales, laughable tools, and impossible requirements, let's play it safe.
+
+When everybody actually is out to get you, paranoia is just good thinking
+
+** Design by Contract
+- Nothing astonishes men so much as common sense and plain dealing
+- One of the best solutions for ensuring plain dealing is the contract
+
+*** DBC (Design By Contract)
+- DBC: powerful technique that focuses on documenting the rights and responsibilities of software modules to ensure program correctness. 
+- before a software system does something, it may have some expectation of the state of the world, and it may be able to make a statement about the state of the world when it concludes.
+  + Preconditions: what must be true in order for the routine to be called; the routine's requirements
+  + Postconditions: the state of the world when the routine is done
+  + Slass invariants: a class ensures that this condition is always true from the perspective of a caller
+- DBC's emphasis is on "lazy" code
+- W/o a contract, all the compiler can do is ensure that a subclass conforms a particular method signature
+
+*** Implementing DBC
+- The greatest benefit of using DBC may be that it forces the issue of requirements and guarantees to the forefront. 
+- Enumerate at design time:
+  + the input domain range
+  + the boundary conditions
+  + what the routines promise to deliver
+
+*** Assertions
+- You can get much benefic by having the compiler check your contract for you. You can partially emulate this in some languages by using assertions. Why only partially?  
+  + no support for propagating assertions down an inheritance hierarchy.
+  + There is no built-in concept of old values:
+  + the runtime system and libraries are not designed to support contracts
+
+*** Language Support
+*** DBC and Crashing Early
+*** Other Uses of Invariants
+- A loop invariant is a statement of the eventual goal of a loop, but is generalized so that it is also valid before the loop executes and on each iteration through the loop.
+*** Semantic Invariants
+- You can use semantic invariants to express inviolate requirements, a kind of "philosophical contract"
+- When you find a requirement that qualifies, make sure it become a well-known part of whatever documentation you are producing
+
+*** Dynamic Contracts and Agents
+- Contracts as fixed, immutable specifications, but in the landscape of autonomous agents, this doesn't need to be the case.
+- Certainly any system that relies on agent technology has a critical dependence on contractual arrangements - even if they are dynamically generated.
+
+*** Related sections include:
+- Orthogonality
+- Dead Programs Tell No Lies
+- Assertive Programming
+- How to Balance Resources
+- Decoupling and the law of demeter
+- Temporal Coupling
+- Programming by Coincidence
+- Code that's Easy to Test
+- Pragmatic Teams
+
+
+** Dead Programs Tell No Lies
+- All errors give you information. Pragmatic Programmers tell themselves that if there is an error, something very, very bad has happened.
+- *Crash Early*
+
+*** Crash, Don't Trash
+- One of the Benefits of detecting problems as soon as you can is that you can crash earlier.
+- The basic principle stays the same - when your code discovers that something that was supposed to be impossible just happened, your program is no longer viable. Anything it does from this point forward becomes suspect, so terminate it as soon as possible. A dead program normally does a lot less damage than a crippled one.
+
+*** Related sections include:
+- Design By Contract
+- When to Use Exceptions    
