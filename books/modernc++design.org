@@ -2,3 +2,12 @@
 - policy-based class design fosters assembling a class with complex behavior out of many little classes (called /policies/), each of which takes care only one behavioral or structural aspect
 - a policy establishes an interface pertaining to a specific issue
 - This chapter explains the problem that policies are intended to solve, provides details of policy-based class design, and gives advice on decomposing a class into policies.
+
+** The Multiplicity of Software Design
+- SE exhibits a rich multiplicity: you can do the same thing in many correct ways, and there are infinite nuances between right and wrong.
+- The most important difference between an expert software architect and a beginner is the knowledge of /what works and what doesn't/
+
+** The Failure of the Do-It-All Interface
+- Implementing everything under the umbrella of a do-it-all interface is not a good solution
+  + negative consequences are intellectual overhead, sheer size, and inefficiency
+  + loss of static type safety. One essential purpose of the architecture of a system is to enforce certain axioms "by design". Ideally, a design should enforce most constraints at compile time.
