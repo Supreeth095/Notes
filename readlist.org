@@ -16,8 +16,8 @@
 ** Technical
 *** C++
 [Mey96] Scott Meyers. More Effective C++: 35 New Ways to Improve Your Programs and Designs. Addison-Wesley, Reading, MA, 1996.
-
 [Mey97a] Scott Meyers. Effective C++: 50 Specific Ways to Improve Your Programs and Designs. Addison Wesley Longman, Reading, MA, second edition, 1997.
+
 
 *** Javascript
 - Pro javascript techniques - John Resig

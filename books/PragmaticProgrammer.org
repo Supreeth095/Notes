@@ -654,7 +654,6 @@ When everybody actually is out to get you, paranoia is just good thinking
 - Code that's Easy to Test
 - Pragmatic Teams
 
-
 ** Dead Programs Tell No Lies
 - All errors give you information. Pragmatic Programmers tell themselves that if there is an error, something very, very bad has happened.
 - *Crash Early*
@@ -666,3 +665,233 @@ When everybody actually is out to get you, paranoia is just good thinking
 *** Related sections include:
 - Design By Contract
 - When to Use Exceptions    
+
+
+** Assertive Programming
+/There is a luxury in self-reproach. When we blame ourselves we feel no one else has a right to blame us/
+
+*** Oscar Wilde, The Picture of Dorian Gray
+- It seems that there's a mantra that every programmer must memorize early in his career. It is a core belief that we learn to apply to requirements, designs, code, comments, just about everything we do. 
+  
+  "This can never happen"
+
+- *If it can't happen, use assertions to ensure that it won't*
+
+- the condition passed to an assertion should not have a side effect
+  assertions may be turned off at compile time - never put code that must be executed into an assert
+
+*** Leave Assertions Turned On
+- Turning off assertiongs when you deliver a program to production is like crossing a high wire without a net because you once made it accross in practice. There's dramatic value, but it's hard to get life insurance.
+- IF you do have performance issues, turn off only those assertions that really hit you.
+
+*** Related sections include
+- Debugging
+- Design by Contract
+- How to Balance Resources
+- Programming by Coincidence
+
+
+** When to Use Exceptions
+*** What is Exceptional
+- One of the problems with exceptions is knowing when to use them. Exceptions should rarely be used as part of a program's normal flow
+- *Use Exceptions for Exceptional Problems*
+- An exception represents an immediate, nonlocal transfer of control - It's a kind of cascading goto. Programs that use exceptions as part of their normal processing suffer from all the readability and maintainability problems of classic spaghetti code. These programs break encapsulation: routines and their callers are more tightly coupled via exception handling.
+
+*** Error Handlers are an Alternative
+- An error handler is a routine that is called when an error is detected. You can register a routine to handle a specific category of errors. When one of these errors occurs, the handler
+- There are times when you may want to use error handlers, either instead of or alongside exceptions. 
+- Example: the implementation of a client-server application, using Java's Remote Method Invocation (RMI) facility. Every call to a remote routine must be prepared to handle a RemoteException. Adding code to handle these exceptions can become tedious. A possible work-around is to wrap your remote objects in a class that is not remote. This class then implements an error handler interface.
+
+*** Related sections include:
+- Dead Programs Tell No Lies
+
+*** Challenges
+** How to Balance Resources
+"I brought you into this world", my father would say, "and I can take you out. it don't make no difference to me. I'll just make another one like you".
+- *Finish What you Start*
+
+*** Nest Allocations
+- The base pattern for resource allocation can be extended for routines that need more than one resource at a time. There are just 2 more suggestions:
+  + Deallocate resources in the opposite order to that in which you allocate them. That way you won't orphan resources if one resource contains references to another.
+  + When allocating the same set of resources in different places in your code, always allocate them in the same order.
+
+** Objects and Exceptions
+- The equilibrium between allocations and deallocations is reminiscent of a class's constructor and destructor.
+
+** Balancing and Exceptions
+- Language that support exceptions can make resource deallocation tricky. If an exception is thrown, how do you guarantee that everything allocated prior to the exception is tidied up. The answer depends to some extent on the language
+
+*** Balancing Resources with C++ Exceptions
+- wrap resource in an object (smart_ptr)
+*** Balancing Resources with Java Exceptions
+- use "finally"
+
+** When you can't Balance Resources
+- there are times when the basic resource allocation pattern isn't appropriate. Commonly this is found in programs that use dynamic data structures.
+- The trick here is to establish a semantic invariant for memory allocation. You need to decide who is responsible for data in an aggregate data structure. What happens when you deallocate the top-level structure? You have 3 main options:
+  + The top-level structure is also responsible for freeing any substructures that it contains. These structures then recursively delete data they contai
+  + The top-level structure is simply deallocated. Any structures that it pointed to (that are not referenced elsewhere) are orphaned
+  + The top-level structure refuses to deallocate itself if it contains any substructures
+- You can write your own form of limited automatic garbage collection by implementing a reference counting sheme on your dynamically allocated objects.
+
+** Checking the Balance
+- Pragmatic Programmers trust no one, we feel it is always a good idea to build code that actually checks that resources are indeed freed appropriately. For most applications, this normally means producing wrappers for each type of resource, and using these wrappers to keep track of all allocations and deallocations.
+- invest in tools that check your running programs for memory leaks
+
+*** Related sections include
+- Design by Contract
+- Assertive Programming
+- Decoupling and the Law of Demeter
+
+
+
+* Bend or Break
+- We need to make every effort to write code that's as loose - as flexible - as possible
+- In this chapter, we'll tell you how to make reversible decisions
+- First we need to look at /coupling/ - the dependencies among modules of code. In /Decoupling and the Law of Demeter/, we'll show how to keep separate concepts separate, and decrease coupling
+- /Metaprogramming/ will explain how to move details out of the code completely, where they can be changed more safely and easily.
+- In /Temporal Coupling/ we'll look at 2 aspects of time as they relate to coupling.
+- A key concept in creating flexible code is the separation of a data /model/ from a /view/. We'll decouple models from view in /It's just a View/
+- Finally, there's a technique for decoupling modules even further by providing a meeting place where modules can exchange data anonymously and asynchronously. This is the topic of /Blackboards/
+
+** Decoupling and the Law of Demeter
+- /Good fences make good neighbors/
+- spies, dissidents, revolutionaries and such are often organized into small groups of people called /cells/. Although individuals in each cell may know each other, they have no knowledge of those in other cells.
+
+*** Minimize Coupling
+- Traversing relationships between objects directly and quickly lead to a combinatorial explosion of dependency relationships. You can see symptoms of this phenomenon in a number of ways:
+  + Large C or C++ projects where the command to link a unit test is longer than the test program itself
+  + "Simple" changes to one module that propagate through unrelated modules in the system
+  + Developers who are afraid to change code because they aren't sure what might be affected.
+
+*** The Law of Demeter for Functions
+- The Law of Demeter for functions attempts to minimize coupling between modules in any given program. It tries to prevent you from reaching into an object to gain access to a third object's methods
+- The Law of Demeter for functions states that any method of an object should call only methods belong to itself
+- *Minimize Coupling Between Modules*
+
+*** Does it Really Make a Difference?
+- classes in C++ with larger response sets are more prone to error than classes with smaller response sets
+- cost of the Law of Demeter: as a "general contractor" your module must delegate and manage any and all subcontractors directly, w/o involving clients of your module. In practice, this means that you will be writing a large number of wrapper methods that simply forward the request on to a delegate.
+- As with any technique, you must balance the pros and cons for your particular application. In database schema design it is common practice to "denormalize" the schema for a performance improvement; to violate the rules of normalization in exchange for speed
+- Read "Large-scale C++ software Design"
+
+*** Related sections include
+- Orthogonality
+- Reversibility
+- Design by Contract
+- How to Balance Resources
+- It's just a view
+- Pragmatic Teams
+- Ruthless Testing
+
+
+
+** Metaprogramming
+- /No amount of genius can overcome a preoccupation with detail/ Levy's Eighth Law
+
+*** Dynamic Configuration
+- We want to make our systems highly configurable: deeply ingrained items as the choice of algorithms, database products, middleware technology, and user-interface style. These items should be implemented as configuration options, not through integration or engineering.
+- *Configure. Don't Integrate*
+- Use /metadata/ to describe configuration options for an application: tuning parameters, user preferences, the installation directory
+
+*** Metadata-Driven Applications
+- Our goal is to think declaratively and create highly dynamic and adaptable programs. We do this by adopting a general rule: program for the general case, and put the specifics somewhere else - outside the compiled code base
+- *Put Abstractions in Code Details in Metadata*
+- There are several benefits to this approach:
+  + It forces you to decouple your design, which results in a more flexible and adaptable program
+  + It forces you to create a more robust, abstract design by deferring details - deferring them all the way out of the program.
+  + You can customize the application w/o recompiling it. You can also use this level of customization to provide easy work-arounds for critical bugs in live production systems
+  + Metadata can be expressed in a manner that's much closer to the problem domain than a general-purpose programming language 
+  + You may even be able to implement several different projects using the same application engine, but with different metadata.
+
+*** Business Logic
+- Becaues business policy and rules are more likely to change than any other aspect of the project, it makes sense to maintain them in a very flexible format.
+- Example: EJB
+
+*** Related sections include
+- Orthogonality
+- Reversibility
+- Domain Languages
+- The Power of Plain Text
+
+** Temporal Coupling
+- What is /temporal coupling/ all about, you may ask. It's about time.
+- Time is an often ignored aspect of software architectures. There are 2 aspects of time that are important to us: concurrency (things happening at the same time) and ordering (the relative positions of things in time).
+- We don't usually approach programming with either of these aspects in mind. When people first sit down to design an architecture or write a program, things tend to be linear. That's the way most people think - do this and then always do that. But thinking this way leads to /temporal coupling/: coupling in time.
+
+*** Workflow
+- capture description of workflow using a notation such as the UML activity diagram
+- An activity diagram consists of a set of actions drawn as rounded boxes. The arrow leaving an action leads to either another action or to a thick line called a /synchronization bar/. Once all the actions leading into a synchronization bar are complete, you can then proceed along any arrows leaving the bar. An action with no arrows leading into it can be started at any time.
+- You can use activity diagrams to maximize parallelism by identifying activities that could be performed in parallel.
+
+*** Architecture
+- Case study: OLTP system - multiprocessing distributed application
+- The design addresses the following constraints:
+  + Database operations take a relatively long time to complete.
+  + For each transaction, we must not block communication services while a database is being processed.
+  + Database performance suffers with too many concurrent sessions.
+  + Multiple transactions are in progress concurrently on each data line.
+- TIP: *Design Using Services*
+- OLTP systems: instead of components, we have really created /services/ -- independent, concurrent objects behind well-defined consistent interfaces.
+
+*** Design for Concurrency
+- Programming with threads imposes some design constraints. Concurrency forces you to think through things a bit more carefully
+
+*** Cleaner Interfaces
+- Thinking about concurrency and time-ordered dependencies can lead you to design cleaner interfaces as well. 
+- Example: strtok and StringTokenizer
+- TIP: *Always Design for Concurrency*
+
+*** Deployment
+- Once you've designed an architecture with an element of concurrency, it becomes easier to think about handling /many/ concurrent services: the model becomes pervasive.
+- You can be flexible as to how the application is deployed: standalone, client-server, or n-tier.
+- Add concurrency to a nonconcurrent application is much harder. If we design to allow for concurrency, we can more easily meet scalability or performance requirements when the time come -- and if the time never comes, we stil have the benefit of a cleaner design.
+
+*** Related sections include
+- Design by Contract
+- Programming by Coincidence
+
+
+** It's just a View
+- Once you separate a program into modules based on responsibility, you have a new problem. 
+  + At runtime, how do the objects talk to each other?
+  + how do you manage the logical dependencies between them?
+  + How do you synchronize changes in state in these different objects
+- An event is simply a special message that says "something interesting just happened". We use events to signal changes in one object that some other object may be interested in.
+
+*** Publish/Subscribe
+*** Model-View-Controller
+- TIP: *Separate Views from Models*
+- By loosening the coupling between the model and the view/controller, you buy yourself a lot of flexibility at low cost.
+- Case study: Java Tree View
+*** Beyond GUIs
+- MVC is a general-purpose programming technique. The view is an interpretation of the model. The model is more of a coordination mechanism
+
+*** Still Coupled
+- Despite the decrease in coupling we have achieved, listeners and event generators still have some knowledge of each other. In Java, for instance, they must agree on common interface definitions and calling conventions.
+
+*** Related sections include
+- Orthogonality
+- Reversibility
+- Decoupling and the Law of Demeter
+- Blackboards
+- It's All Writing
+
+** Blackboards
+- /The writing is on the wall.../
+- Some key features of the blackboard approach are:
+  + None of the detectives needs to know of the existence of any other detective -- they watch the board for new information and add their findings
+  + The detectives may be trained in different disciplines, may have different levels of education and expertise, and may not even work in the same precinct. They share a desire to solve the case, and that's all.
+  + Different detectives may come and go during the course of the process, and may work different shifts
+  + There are no restrictions on what may be placed on the blackboard. It may be pictures, sentences, physical evidence and so on.
+
+*** Blackboard Implementations
+- originally invented for use in artificial intelligence applications where the problems to be solved were large and complex.
+- Case study: JavaSpaces and TSpaces
+- Organizing Your Blackboard
+  + partition the blackboard and start to organize the data on the blackboard
+  + different systems handle this partitioning in different ways
+- TIP: *Use Blackboards to Coordinate Workflow*
+*** Related sections include
+- The Power of Plain Text
+- It's Just a View

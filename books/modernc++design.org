@@ -11,3 +11,4 @@
 - Implementing everything under the umbrella of a do-it-all interface is not a good solution
   + negative consequences are intellectual overhead, sheer size, and inefficiency
   + loss of static type safety. One essential purpose of the architecture of a system is to enforce certain axioms "by design". Ideally, a design should enforce most constraints at compile time.
+- In a large, all-encompassing interface, it is very hard to enforce such constraints. Typically once you have chosen a certain set of design constraints, only certain subsets of the large interface remain semantically.
