@@ -895,3 +895,437 @@ When everybody actually is out to get you, paranoia is just good thinking
 *** Related sections include
 - The Power of Plain Text
 - It's Just a View
+
+* While you are coding
+- Conventional wisdom says that once a project is in the coding phase, the work is mostly mechanical, transcribing the design into executable statements. This attitude is the single biggest reason that many programs are ugly, inefficient, poorly structured, unmaintainable, and just plain wrong.
+- Developers who don't actively think about their code are programming by coincidence
+
+** Programming by Coincidence
+- we should be wary of drawing false conclusions. We should avoid programming by coincidence - relying on luck and accidental successes - in favor of programming deliberately
+
+*** How to Program by Coincidence
+- *Accidents of Implementation*
+- Accidents of implementation are things that happen simply because that's the way the code is currently written. You end up relying on undocumented error or boundary conditions.
+- It's easy to be fooled in this line of thought: "It works now, better leave well enough alone...". Why should you take the risk of messing with something that's working
+  + It may not really be working -- It might just look like it is
+  + The boundary condition you rely on may be just an accident. In different circumstances, it might behave differently.
+  + Undocumented behavior may change with the next release of the library.
+  + Additional and unnecessary calls make your code slower
+  + Additional calls also increase the risk of introducing new bugs of their own.
+- For code you write that others will call, the basic principle of good modularization and of hiding implementation behind small, well-documented interfaces can all help. A well-specified contract can help eliminate misunderstandings.
+- For routines you call, rely only on documented behavior. If you can't, for whatever reason, then document your assumption well
+
+- *Accidents of Context*
+- *Implicit Assumptions*
+  + Coincidences can mislead at all levels -- from generating requirements through to testing. Testing is particularly fraught with false causalities and coincidental outcomes.
+  + At all level people operate with many assumptions in mind -- but these assumptions are rarely documented and are often in conflict between different developers. Assumptions that aren't based on well-established facts are the bane of all projects.
+
+- TIP: *Don't program by Coincidence*
+
+*** how to Program Deliberately
+- We want to spend less time churning out code, catch and fix errors as early in the development cycle as possible, and create fewer errors to begin with. It helps if we can program deliberately:
+  + Always be aware of what you are doing. 
+  + Don't code blindfolded. Attempting to build an application you don't fully understand, or to use a technology you aren't familiar with, is an invitation to be misled by coincidences.
+  + Proceed from a plan, whether that plan is in your head, on the back of a cocktail napkin, or on a wall-sized printout from a CASE tool.
+  + Rely only on reliable things. Don't depend on accidents or assumptions. If you can't tell the difference in particular circumstances, assume the worst. 
+  + Document your assumptions. Design by Contract can help clarify your assumptions in your own mind, as well as help communicate them to others.
+  + Don't just test your code, but test your assumptions as well. Don't guess: actually try it.
+  + Prioritize your effort. Spend time on the important aspects; more than likely, these are the hard parts. if you don't have fundamentals or infrastructure correct, brilliant bells and whistles will be irrelevant.
+  + Don't be a slave to history. Don't let existing code dictate future code. All code can be replaced if it is no longer appropriate. Even within one program, don't let what you've already done constraint what you do next
+
+*** Related sections include
+- Stone Soup and Boiled Frogs
+- Debugging
+- Design by Contract
+- Assertive Programming
+- Temporal Coupling
+- Refactoring
+- It's All Writing
+
+
+
+** Algorithm Speed
+- There is another kind of estimating that Pragmatic Programmers use almost daily: estimating the resources that algorithms use -- time, processor, memory, and so on. It turns out that these questions can often be answered using common sense, some analysis, and a way of writing approximations called the "big O" notation.
+
+*** What Do We mean by Estimating Algorithms?
+- We find that whenever we write anything containing loops or recursive calls, we subconsciously check the runtime and memory requirements. 
+
+*** The O() notation
+*** Common Sense Estimation
+- You can estimate the order of many basic algorithms using common sense
+  + Simple loops: if a simple loop runs from 1 to n, then the algorithm is likely to be O(n)
+  + Nested loops: If you nest a loop inside another, then your algorithm becomes O(m x n)
+  + Binary Chop: If your algorithm halves the set of things it considers each time around the loop, then it is likely to be logarithmic, O(lg(n))
+  + Divide and Conquer: Algorithms that partition their input, work on the two halves independently, and then combine the result can be O(nlg(n))
+  + Combinatoric: Whenever algorithms start looking at the permutations of things, their running time may get out of hand. This is because permutations involve factorials. Often heuristics are used to reduce the running time of these types of algorithms in particular problem domains.
+
+*** Algorithm Speed in Practice
+- TIP: *Estimate the Order of Your algorithms*
+- There are some approaches you can take to address potential problems:
+  + If you have an algorithm that is O(n^2), try to find a divide and conquer approach that will take you down to O(nlg(n))
+- TIP: *Test Your Estimates*
+- If it's tricky getting accurate timings, use code profilers to count the number of times the different steps in your algorithm get executed, and plot these figures against the size of the input
+
+*** Best isn't Always Best
+- Be wary of /premature optimizatioin/. It's always a good idea to make sure an algorithm really is a bottleneck before investing your precious time trying to improve it
+
+*** Related sections included
+- Estimating
+
+
+** Refactoring
+- /Change and decay in all around I see/ H.F.Lyte, "Abide With Me"
+- As a program evolves, it will become necessary to rethink earlier decisions and rework portions of the code. This process is perfectly natural. Code needs to evolve. it's not a static thing. Unfortunately, the most common metaphor for software development is building construction. But using construction as the guiding metaphor implies:
+  + An architect draws up blueprints
+  + Contractor dig the foundation, build the superstructure, wire and plumb, and apply finishing touches
+  + The tenants move in and live happily ever after, calling building maintenance to fix any problems
+--> Software doesn't quite work that way. Software is more like /gardening/
+- Rewriting, reworking, and re-architecting code is collectively known as /refactoring/
+
+*** When should you Refactor?
+- When you come across a stumbling block because the code doesn't quite fit anymore, or you notice 2 things that should really be merged, or anything else at all strikes you as being "wrong", don't hesitate to change it. 
+- Any number of things may cause code to qualify for refactoring:
+  + Duplication
+  + Nonorthogonal design
+  + Outdated knowledge: things change, requirements drift, and your knowledge of the problem increases
+  + Performance
+
+*** Real-world complications
+- TIP: Refactor Early, Refactor Often
+- Keep track of the things that need to be refactored. If you can't refactor something immediately, make sure that it gets placed on the schedule.
+
+*** How Do You Refactor
+- Refactoring is an activity that needs to be undertaken slowly, deliberately, and carefully. Martin Fowler offers the following simple tips on how to refactor without doing more harm than good:
+  + Don't try to refactor and add functionality at the same time
+  + Make sure you have good tests before you begin refactoring.
+
+*** Related sections include
+- The Cat Ate My Source Code
+- Software Entropy
+- Stone Soup and Boiled Frogs
+- The Evils of Duplication
+- Orthogonality
+- Programming by Coincidence
+- Code that's easy to test
+- Ruthless Testing
+
+
+** Code That's Easy to Test
+- The Software IC is a metaphor that people like to toos around when discussing reusability and component based development. The idea is that software components should be combined just as integrated circuit chips are combined. This works only if the components you are using are known to be reliable.
+- We need to build testability into the software from the beginning, and test piece thoroughly before trying to wire them together.
+
+*** Unit Testing
+- testing done on each module, in isolation, to verify its behavior. 
+- a software unit test is code that exercises a module. 
+- when we assemble oru "software IC's" into a complete system, we'll have confidence that the individual parts work as expected, and then we can use the same unit test facilities to test the system as a whole.
+- decide what to test at the unit level using "design by contract"
+
+*** Testing Against Contract
+- think of unit testing as /testing against contract/. This will tell us 2 things:
+  + whether the code meet the contract
+  + whether the contract means what we think it means.
+- we want to test that the module delivers the functionality it promises, over a wide range of test cases and boundary conditions.
+- Suppose we have a module A that uses a LinkedList and a Sort. in order, we would test:
+  + LinkedList's contract, in full
+  + Sort's contract, in full
+  + A's contract, which relies on the other contracts but does not directly expose them
+- TIP: *Design to Test*
+- When you design a module, or even a single routine, you should design both its contract and the code to test that contract.
+
+*** Writing Unit Tests
+- The Unit tests for a module shouldn't be shoved in some far-away corner
+- making the test code readily accessible provides developers 2 invaluable resources:
+  + examples of how to use all the functionality of your module
+  + a means to build regression tests to validate any future changes to the code
+
+*** Using Test harnesses
+- Regardless of the technology you decide to use, test harnesses should include the following capabilities:
+  + A standard way to specify setup and cleanup
+  + A method for selecting individual tests or all available tests
+  + A means of analyzing output for expected (or unexpected) results
+  + A standardized form of failure reporting
+*** Build a Test Window
+- You'll need to test a piece of software once it has been deployed. 
+  + Log files containing trace messages are one such mechanism
+  + "hot-key" sequence: a particular combination of keys is pressed -> a diagnostic control window pops up with status messages
+  + point a web browser to the application's HTTP port and see internal status, log entries, some sort of debug control panel
+
+*** A Culture of Testing
+- All software you write will be tested, so you might as well plan on testing it thoroughly
+- Testing is more cultural than technical 
+- *TIP*: Test your software, or your users will
+
+*** Related sections include:
+- The Cat Ate my source code
+- Orthogonality
+- Design by Contract
+- Refactoring
+- Ruthless Testing
+
+
+
+** Evil Wizards
+- applications are getting harder and harder to write
+- all the time the applications themselves are getting more complex. Most developments now use a multitier model, possibly with some middleware layer or a transaction monitor.
+- Developers are struggling to keep up --> tool makers and infrastructure vendors have come up with a magic bullet, the /wizard/
+- But using a wizard designed by a guru does not automatically make Joe developer equally expert.
+- *TIP*: Don't use Wizard Code you don't understand
+
+*** Related sections include
+- Orthogonality
+- Code Generators
+
+*** Challenges
+
+* Before the Project
+- At the very beginning of a project, you'll need to determine the requirements. Simply listening to users is not enough: read /The Requirements Pit/
+- Conventional wisdom and constraint management are the topics of /Solving impossible Puzzles/
+- When you think you've got the problems solved, you may still not feel comfortable with jumping in and starting. Is it simple procrastination, or is it something more?
+- Starting too soon is one problem, but waiting too long may be even worse. In /The Specification Trap/ we'll discuss the advantages of specification by example.
+- No matter how well thought out it is, and regardless of which "best practices" it includes, no method can replace /thinking/
+
+** The Requirements Pit
+/Perfection is achieved, not when there is nothing left to add, but when there is nothing left to take away.../
+- Requirements rarely lie on the surface. Normally, they're buried deep beneath layers of assumptions, misconceptions, and politics.
+- *TIP*: Don't Gather Requrements -- Dig for Them
+
+*** Digging for Requirements
+- Document the business policies separately from the requirement, and hyperlink the two. Policy may end up as metadata in the app.
+- It's important to discover the underlying reason /why/ users do a particular thing, rather than just /the way/ they currently do. At the end of the day, your development has to solve their /business problem/, not just meet their stated requirements. Documenting the reasons behind requirements would give your team invaluable information when making daily implementation decisions.
+- *TIP*: Work with a User to Think Like a User
+
+*** Documenting Requirements
+- use the "use cases" to capture the requirements.
+- One way of looking at use cases is to emphasize their goal-driven nature
+
+*** Overspecifying
+- A big danger in producing a requirements document is being too specific. Good requirements documents remain abstract.
+- Requirements are not architecture. Requirements are not design, nor are they the user interface. Requirements are /need/
+
+*** Seeing Further
+- *TIP*: Abstractions Live Longer than Details
+- The key to managing growth of requirements is to point out each new feature's impact on the schedule to the project sponsors.
+
+*** Maintain a Glossary
+- Create and maintain a project glossary
+
+*** Get the Word Out
+- If it's on the Web, the programmers may even read it
+
+*** Related sections include
+- Stone Soup and Boiled Frogs
+- Good-Enough Software
+- Circles and Arrows
+- It's All Writing
+- Great Expectations
+
+** Solving Impossible Puzzles
+- The secret to solving the puzzle is to identify the real constraints, and find a solution therein. Some constraints are /absolute/, others are merely /preconceived notions/
+
+*** Degrees of Freedom
+- The popular buzz-phrase "thinking outside the box" encourages us to recognize constraints that might not be applicable and to ignore them. But this phrase isn't entirely accurate. If the "box" is the boundary of constraints and conditions, then the trick is to /find/ the box, which may be considerably larger than you think.
+- The key to solving puzzles is both to recognize the constraints placed on you and to recognize the degrees of freedom you do have.
+- You must challenge any preconceived notions and evaluate whether or not they are real, hard-and-fast constraints
+- It's not whether you think inside or outside the box. The problem lies in /finding/ the box - identifying the real constraints
+- *TIP*: Don't think outside the Box -- Find the Box
+- When faced with an intractable problem, enumerate all the possible avenues you have before you. Don't dismiss anything, no matter how unusable or stupid it sounds. Now go through the list and explain why a certain path cannot be taken.
+  + Example: the Trajon horse
+- Categorize and prioritize your constraints
+
+*** There must be an Easier Way
+- Step back a pace and ask yourself these questions:
+  + Is there an easier way?
+  + Are you trying to solve the right problem, or have you been distracted by a peripheral technicality
+  + Why is this thing a problem?
+  + What is it that's making it so hard to solve?
+  + Does it have to be done this way?
+  + Does it have to be done at all?
+
+** Not Until You're Ready
+/He who hesitates is sometimes saved/
+- Great performers share a trait: they know when to start and when to wait.
+- *TIP*: Listen to Nagging Doubts -- Start When You're Ready
+- Software development is still not a science. Let your instincts contribute to your performance
+
+*** Good Judgment or Procrastination?
+- How can you tell when you're simply procrastinating, rather than responsibly waiting for all the pieces to fall into place?
+- A technique that has worked for us in these circumstances is to start prototyping. Choose an area that you find difficult and begin producing some kind of proof of concept
+- One of two things will happen:
+  + you may feel you're wasting your time. This boredom is probably a good indication that your initial reluctance was just a desire to put off the commitment to start. Give up the prototype and hack into the real development
+  + you suddenly realize that some basic premise was wrong. You'll feel comfortable abandoning the prototype and launching into the project proper.
+
+** The Specification Trap
+- Program specification is the process of taking a requirement and reducing it down to the point where a programmer's skill can take over. It is an act of communication, explaining and clarifying the world in such a way as to remove major ambiguities
+- Writing a specification is quite a responsibility
+- The problem is that many designers find it difficult to stop. They feel that unless every detail is pinned down in excruciating detail they haven't earned their daily dollar. It's a mistake:
+  + It's naive to assume that a specification will ever capture every detail and nuance of a system or its requirement.
+  + there is a problem with the expressive power of language itself.
+
+- *TIP*: Some things are better done than described
+- A design that leaves the coder no room for interpretation robs the programming effort of any skill and art
+- As a Pragmatic Programmer, you should tend to view requirements gathering, design, and implementation as different facets of the same process - the delivery of a quality system.
+
+*** Related sections include
+- Tracer Bullets
+  
+
+** Circles and Arrows
+- We like formal techniques and methods. But we believe that blindly adopting any technique without putting it into the context of your development practices and capabilities is a recipe of disappointment
+- *TIP*: Don't be a Slave to Formal Methods
+- Formal methods have some serious shortcomings:
+  + Formal methods capture requirements using a combination of diagrams and some supporting words. We prefer to show the user a prototype and let them play with it.
+  + Formal methods seem to encourage specialization. 
+  + 
+
+*** Do Methods Pay Off?
+- Never underestimate the cost of adopting new tools and methods. Be prepared to treat the first projects using these techniques as a learning experience.
+
+*** Should we use formal methods
+- Absolutely! But always remember that formal development methods are just one more tool in your toolbox.
+- *TIP*: Expensive Too Do Not Produce Better Designs
+
+*** Related sections include:
+- The Requirements Pit
+
+* Pragmatic Projects
+** Pragmatic Teams
+- how pragmatic techniques can be applied to teams as a whole
+*** No Broken Windows
+- Teams as a whole should not tolerate broken windows - those small imperfections that no one fixes. 
+- Some team methodologies have a quality officer - someone to whom the team delegates the responsibility for the quality of the deliverable. This is clearly ridiculous: quality can come only from individual contributions of /all/ team members.
+
+*** Boiled Frogs
+- Make sure everyone actively monitors the environment for changes. May be appoint a chief water tester.
+
+*** Communicate
+- Great project teams have a distinct personality. People look forward to meetings with them because they know that they'll see a well-prepared performance that makes everyone feel good.
+
+*** Don't Repeat Yourself
+*** Orthogonality
+- *TIP*: organize Around Functionality, Not Job Functions
+- We favor splitting teams functionally. Divide your people into small teams, each responsible for a particular functional aspect of the final system.
+
+*** Automation
+- A great way to ensure both consistency and accuracy is to automate everything the team does.
+- Automation is an essential component of every project team. 
+
+*** Knowing When to Stop Adding Paint
+- Remember that teams are made up of individuals. Give each member the ability to shine in his or her own way. Give them just enough structure to support them and to ensure that the project delivers against its requirements.
+
+*** Related sections include
+- Software Entropy
+- Stone Soup and Boiled Frogs
+- Good-Enough Software
+- Communicate
+- The Evils of Duplication
+- Orthogonality
+- Design by Contract
+- Decoupling and the Law of Demeter
+- Ubiquitous Automation
+
+** Ubiquitous Automation
+- Civilization advances by extending the number of important operations we can perform without thinking - Alfred North Whitehead
+
+*** All on Automatic
+- *TIP*: Don't Use manual Procedures
+- Use /cron/ for automatic tasks
+
+*** Compiling the Project
+
+** Ruthless Testing
+- Pragmatic Programmers are different. We are driven to find our bugs now, so we don't have to endure the shame of others finding our bugs later.
+- *TIP*: test early, test often. Test automatically.
+  Coding Ain't Done 'Til All the Tests Run
+- We need to look at three main aspects of project-wide testing: what to test, how to test and when to test
+
+*** What to Test
+- There are several major types of software testing that you need to perform
+  + Unit testing
+  + integration testing
+  + validation and verification
+  + resource exhaustion, errors, and recovery
+  + performance testing
+  + usability testing
+
+**** Unit Testing
+- A /unit test/ is code that exercises a module. 
+
+**** Integration Testing
+- /Integration testing/ shows that the major subsystems that make up the project work and play well with each other.
+
+**** Validation and Verification
+- As soon as you have an executable user interace or prototype, you need to answer an all important question: the users told you what they wanted, but is it what they need?
+- Does it meet the functional requirements of the system? This too need to be tested. A bug-free system that answers the wrong question isn't very useful.
+
+**** Resource Exhaustion, Errors, and Recovery
+- Now that you have a pretty good idea that the system will behave correctly under ideal conditions, you need to discover how it will behave under /real-world/ conditions.
+- In real world, you programs don't have limitless resources:
+  + Memory
+  + Disk space
+  + CPU bandwidth
+  + Wall-clock time
+  + Disk bandwidth
+  + Network bandwidth
+  + Color palette
+  + Video resolution
+
+**** Performance Testing
+- For some applications, you may need specialized testing hardware or software to stimulate the load realistically
+
+**** Usability Testing
+- Usability testing is different from the types of testing dicussed so far. It is performed with real users, under real environmental conditions.
+- Failure to meet usability criteria is just as big a bug as dividing by zero
+
+*** How to test
+- We've looked at /what/ to test. Now we'll turn out attention to /how/ to test, including:
+  + Regression testing
+  + Test data
+  + Exercising GUI systems
+  + Testing the tests
+  + Testing thoroughly
+
+** It's all writing
+/The palest ink is bettern than the best memory/
+- Pragmatic Programmers embrace documentation as an integral part of the overall development process
+- *TIP*: Treat English as Just Another Programming Language
+- 2 kinds of documentation produced for a project: internal and external
+  + internal: source code comments, design and test documents.
+  + external: anything shipped or published
+
+*** Comments in Code
+- Code should have comments, but too many comments can be just as bad as few
+- Comments should discuss /why/ something is done, its purpose and its goal. Comment how code is done is a violation of the DRY principle.
+- Comments: engineering trade-offs, why decisions were made, what other alternatives were discarded
+  + simple module-level header comment
+  + comments for significant data, type declarations
+*** Executable Documents
+*** Technical Writers
+*** Print it or Weave IT
+*** Markup Languages
+- For large-scale documentation projects, we recommend looking at some of the modern schemes for making up documentation
+- Documentation and code are different views of the same underlying model, but the view is /all/ that should be different. Don't let documentation become a second-class citizen banished from the main project workflow. Treat documentation with the same care you treat code, and the users will sing your praises.
+
+*** Related sections include
+- The Evils of duplication
+- Orthogonality
+- The power of Plain text
+- Source Code Control
+- It's Just a View
+- Programming by Coincidence
+- The requirements pit
+
+** Great Expectations
+- *TIP*: Gently Exceed your users' Expectations
+
+*** Communicating Expectations
+- work with users so that their understanding of what you'll be delivering is accurate. 
+
+*** The Extra Mile
+*** Related sections include:
+- Good-enough software
+- Tracer Bullets
+- Prototypes and post-it note
+- The requirements pit
+
+** Pride and Prejudice
+
