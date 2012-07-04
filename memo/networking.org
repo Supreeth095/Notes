@@ -95,4 +95,29 @@
 | TCP out-of-band data                      |           |           | ●          |
 |                                           |           |           |            |                                          |           |           |            |
 
-** 
+** Batch input and buffering problems
+   - *select* knows nothing of the buffers used by stdio => mixing *stdio* and 
+     *select* is considered very error-prone
+
+** Shutdown function
+   - The normal way to terminate a network connection is to call the *close* 
+     function (with 2 limitations)
+     + *close* decrements the descriptor's reference count and closes the 
+       socket only if the count reaches 0. With *shutdown*, we can initiate 
+       TCP's normal connection termination sequence (the four segments 
+       beginning with a FIN), regardless of the reference count.
+     + *close* terminates both directions of data transfer.
+   - SYNOPSIS
+     #include<sys/socket.h>
+     int shutdown(int sockfd, int howto);
+   - The action of the function depends on the value of the argument
+     + SHUT_RD: The read half of the connection is closed. any data currently 
+       in the socket receive buffer is discarded. Any data received after this 
+       call for a TCP socket is acknowledged and silently discarded.
+     + SHUT_WR: the write half of the connection is closed. Any data currently 
+       in the socket send buffer will be sent, followed by TCP's normal 
+       connection termination sequence.
+     + SHUT_RDWR: The read half and the write half of the connection are both 
+       closed; This is equivalent to calling *shutdown* twice.
+   - the operation of *close* depends on the value of the *SO_LINGER* socket 
+     option
