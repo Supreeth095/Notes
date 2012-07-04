@@ -93,7 +93,6 @@
 | write half of the connection closed       |           | ●         |            |
 | Pending error                             | ●         | ●         |            |
 | TCP out-of-band data                      |           |           | ●          |
-|                                           |           |           |            |                                          |           |           |            |
 
 ** Batch input and buffering problems
    - *select* knows nothing of the buffers used by stdio => mixing *stdio* and 
