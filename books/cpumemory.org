@@ -1,0 +1,85 @@
+*What every programmer should know about Memory*
+
+* Abstract
+- Explain the structure of memory subsystems in use on modern commodity hardware
+- Illustrating why CPU caches were developed, how they work
+- What programs should do to achieve optimal performance by utilizing them
+
+* Introduction
+- CPU, memory, mass storage, and network interfaces were developed together => quite balanced in their performance. This situation changed once the basic structure of computers stabilized and hardware developers concentrated on optimizing individual subsystems.
+- the slowness mass storage has been dealt with using software techniques: operating systems keep most often used data in main memory. Cache storage was added to the storage devices themselves.
+- removing the main memory as a bottleneck has proven more difficult. All solutions require changes to hardware:
+  + RAM hardware design ( speed and parallelism )
+  + Memory controller designs
+  + CPU caches
+  + Direct Memory Access (DMA) for devices
+- This paper deals with *CPU caches* and *some effects of memory controller design*
+- The proces of exploring: 
+  + overview of the design for today's commodity hardware.
+  + exploring DMA
+  + learn about the different types of RAM
+
+* Commodity Hardware Today
+- Scaling these days is often achieved horizontally instead of vertically, meaning today it is more cost-effective to use many smaller, connected commodity computers instead of a few really large and exceptionally fast system.
+- the "standard building blocks" for most data centers will be a computer with up to 4 sockets, each filled with a quad core CPU (hyper-threaded Intel). The standard system in the data center will have up to 64 virtual processors. 
+- personal computers and smaller servers standardized on a chipset with 2 parts: the Northbridge and Southbridge. /All CPUs are connected via a common bus (the Front Side Bus, FSB) to the Northbridge. The Northbridge contains: the memory controller, and its implementation determines the type of RAM chips used for the computer. Different types of RAM: DRAM, Rambus, SDRAM require different memory controllers/.
+- To reach all other system devices, the Northbridge must communicate with the Southbridge. The southbridge often referred to as the I/O bridge, handles communication with devices through a varieties of different buses (PCI, PCI Express, SATA, USB) 
+- Such a system structure has noteworthy consequences:
+  + All data communication from one CPU to another must travel over the same bus used to communicate with the Northbridge
+  + All communication with RAM must pass through the Northbridge
+  + The RAM has only a single port
+  + Communication between a CPU and a device attached to the Southbridge is routed through the Northbridge
+- a number of bottlenecks:
+  + contention for the bandwidth of the Northbridge as DMA requests compete with RAM access from the CPUs.
+  + the bus from the Northbridge to the RAM.
+
+- There are more to accessing memory than concurrency. Access patterns themselves also greatly influence the performance of the memory subsystem, especially w/ multiple memory channels
+
+- Solution 1: Northbridge can be connected to a number of external memory controllers. The primary limitation is the internal bandwidth of the Northbridge, which is phenomenal for this architecture.
+- Solution 2: Attach memory controllers into the CPUs and attach memory to each CPU.
+- Disadvantages of these architecture:
+  the memory is not uniform anymore => NUMA Non-Uniform Memory Architecture. NUMA factors: the extra time we need to access remote memory.
+
+** RAM Types
+- Why are there different types of RAM in the same machine? Why are there both static RAM (SRAM) and dynamic RAM (DRAM). SRAM is much faster and provides the same functionality. Why is not all RAM in a machine SRAM? The answer is: *cost*.
+
+*** Static RAM
+- Important RAM design:
+  + one cell requires 6 transitors. there are variants with 4 transitors but they have disadvantages
+  + maintaining the state of the cell requires constant power
+  + the cell state is available for reading almost immediately once the word access line *WL* is raised. The signal is as rectangular (changing quickly between the 2 binary states) as other transitor controlled signals
+  + the cell state is stable, no refresh cycles are needed.
+
+*** Dynamic RAM
+- a dynamic RAM cell keeps its state in a capacitor C.
+- complications with the design of dynamic RAM: 
+  + reading the cell discharges the capacitor. Even though the resitance of the capacitor is high, it takes a short time for the capacity to dissipate. This problem is called "leakage". This leakage is why a DRAM cell must be constantly refreshed. For most DRAM chips these days this refresh must happen every 64ms. During the refresh cycle no access to the memory is possible since a refress is simply a memory read operation where the result is discarded.
+  + the information read from the cell is not directly usable. The data line must be connected to a sense amplifier which can distinguish between a stored 0 or 1 over the whole range of charges which still have to count as 1.
+  + reading a cell causes the charge of the capacitor to be depleted. This means every read operation must be followed by an operation to recharge the capacitor. It does mean the reading memory content requires additional energy and time.
+  + charging and draining a capacitor is not instantaneous. 
+- advantages over SRAM: 
+  + DRAM cell is smaller than that of an SRAM
+  + cost win
+
+*** DRAM access
+
+*** Conclusions
+- The important things to take away from this section:
+  + there are reasons why not all memory is SRAM
+  + memory cells need to be individually selected to be used
+  + the number of address lines is directly responsible for the cost of memory controller, mother boards, DRAM module and DRAM chip
+  + it takes a while before the results of the read or write operation are available.
+
+** DRAM Access Technical Details
+- Synchronous DRAM (SDRAM) and Double Data Rate DRAM (DDR)
+- Synchronous DRAM works relative to a time source. The memory controller provides a clock, the frequency of which determines the speed of the Front Side Bus (FSB) - the memory controller interface used by the DRAM chips. 
+  + Frequencies of 800MHz, 1066MHz, or even 1333MHz are available
+  + For SDRAM, each data transfer consists of 64 bits - 8 bytes
+  + the protocol for talking to the RAM modules has a lot of downtime when no data can be transmitted. It is this downtime which we must understand and minimize to achieve the best performance.
+
+*** Read Access Protocol
+- The CAS signal can be sent after t_RCD (RAS to CAS delay) 
+- The RAM chip needs sometime to prepare for data transmission. The delay is called CAS Latency
+
+*** Precharge and Activation
+

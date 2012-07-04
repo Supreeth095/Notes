@@ -1,0 +1,16 @@
+* handle/body class idiom
+The handle/body class idiom may be used to decompose a complex abstraction into smaller more manageable classes. The idiom may reflect the sharing of a single resource by multiple classes that control access to it. Its most common use is for reference counting
+
+* Reference counting idiom
+Use reference counted objects for classes whose instances are often copied through assignment or parameter passing, particularly if the objects are so large and complex that copying is expensive. Use it when multiple logical copies of an object may exist, through the data themselves may not be copied -- for example, a computer screen object that is to be passed between functions, or memory locations shared between processors, where each user wishes to hold their own copy of an object for access to that resource
+
+* Counted pointers idiom
+Use for relief from the burden of manually disposing of dynamically allocated memory. They can also be used when prototyping to relieve the burden of duplicating changes to the signature of a body class in its handle class. Use of counted pointers is determined largely by style and taste, though it is an important component of the symbolic idioms
+
+* Envelope/letter idiom
+Use singleton letter classes when envelope/letter pairs are used for reference counting or whenever the interface of the letter should be visible only to the envelope 
+
+* Q&A: Describe the difference between structs, classes, abstract data types, concrete data types.
+- abstract data types (ADTs) which define the interface to a data abstraction without specifying implementation detail. An abstract data type may have different implementations to suit different needs or to work well in different environment.
+- concrete data types are types that a programmer can create. You can define the data representation of these types in terms of primitive C types, and in terms of other abstract or concrete data types you have created. Concrete types are well behaved anywhere a built-in C type is well behaved. Concrete data types follow a specific form using class members to augment the C++ compiler's type system so that the compiler can generate efficient and safe code for arbitrarily complex abstractions.
+- Classes: are implementations of abstract data types. Class is used to emphasize that a structure is being used as a user defined type, not simply an aggregation of data. 

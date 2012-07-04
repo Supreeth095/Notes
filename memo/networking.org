@@ -1,0 +1,98 @@
+* I/O Multiplexing
+** I/O Models
+    - blocking I/O
+    - nonblocking I/O
+    - I/O multiplexing (select and poll)
+    - signal driven I/O (SIGIO)
+    - asynchronous I/O (the POSIX asio_ functions)
+    - 2 phases for an input operation:
+      + waiting for the data to be ready
+      + copying the data from the kernel to the process
+        
+*** TODO Fill the table
+    :DEADLINE: <2012-07-06 Fri>
+        
+        | blocking | nonblocking | I/O multiplexing | signal-driven I/O | asynchronous I/O |
+        |----------+-------------+------------------+-------------------+------------------|
+        | initiate | check       | check            |                   |                  |
+        | 　　↓    | check       |                  |                   |                  |
+        |          | ↓           |                  |                   |                  |
+        |          |             |                  |                   |                  |
+        | complete | complete    |                  |                   |                  |
+        |          |             |                  |                   |                  |
+
+** select function
+   SYNOPSIS:
+   #include <sys/select.h>
+   #include <sys/time.h>
+   int select(int maxfdp1, fd_set *readset, fd_set *writeset, fd_set 
+   *exceptset, const struct timeval *timeout);
+    
+   struct timeval {
+        long tv_sec;    // seconds
+        long tv_usec;   // microseconds
+   };
+
+*** 3 posibilities 
+    :Important
+    - Wait forever: return only when one of the specified descriptors is ready 
+      for I/O. For this, we specify the /timeout/ argument as a null pointer.
+    - Wait up to a fixed amount of time: return when one of the specified 
+      descriptor is ready for I/O, but do not wait beyond the number of 
+      seconds and microseconds specfied in the /timeval/ structure pointed to 
+      by the /timeout/ argument
+    - Do not wait at all - Return immediately after checking the descriptor. 
+      This is called /polling/. To specify this, the /timeout/ argument must 
+      point to a /timeval/ structure and the time value must be 0
+
+    - the actual resolution supported by the kernel is more coarse (Unix 
+      kernels: 10ms). There's also a scheduling latency involved, meaning it 
+      takes some time after the timer expires before the kernel schedules this 
+      process to run.
+
+*** Under what conditions is a descriptor ready?
+    1. A socket is ready for reading
+       - The number of bytes of data in the socket receive buffer is greater 
+         than or equal to the current size of the low-water mark for the 
+         socket receive buffer. Set low-water mark using the *SO_RCVLOWAT* 
+         socket option. It defaults to 1 for TCP and UDP sockets.
+       - The read half of the connectoin is closed (TCP receive FIN). A read 
+         operation on the socket will not block and will return 0
+       - The socket is a listening socket and the number of completed 
+         connections is nonzero.
+       - A socket error is pending. A read operation on the socket will not 
+         block and will return an error(-1) with errno set to the specific 
+         error condition. These pending errors can also be fetched and cleared 
+         by calling *getsockopt* and specifying the *SO_ERROR* socket option.
+    2. A socket is ready for writing
+       - The number of bytes of available space in the socket send buffer is 
+         greater than or equal to the current size of the low-water mark for 
+         the socket send buffer and either
+         + the socket is connected
+         + the socket doesn't require a connection
+         Set low-water mark = *SO_SNDLOWAT*. This low-water mark normally 
+         defaults to 2048 for TCP and UDP sockets.
+       - the write half of the connection is closed. A write operation on the 
+         socket will generate *SIGPIPE*
+       - a socket using a non-blocking *connect* has completed the connection, 
+         or the *connect* failed.
+       - A socket error is pending. A write operation on the socket will not 
+         block and will return an error (-1) with *errno* set to the specific 
+         error condition. These *pending errors* can also be fetched and 
+         cleared by calling *getsockopt* with the *SO_ERROR* socket option.
+    3. A socket has an exception condition pending if there is out-of-band 
+       data for the socket or the socket is still at the out-of-band mark.
+
+    
+| Condition                                 | Readable? | Writable? | Exception? |
+|-------------------------------------------+-----------+-----------+------------|
+| Data to read                              | ●         |           |            |
+| Read half of the connection closed        | ●         |           |            |
+| New connection ready for listening socket | ●         |           |            |
+| Space available for writing               |           | ●         |            |
+| write half of the connection closed       |           | ●         |            |
+| Pending error                             | ●         | ●         |            |
+| TCP out-of-band data                      |           |           | ●          |
+|                                           |           |           |            |                                          |           |           |            |
+
+** 
