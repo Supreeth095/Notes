@@ -1,0 +1,165 @@
+* Overview
+** Background on functions
+*** Definition
+   A function is defined by 2 sets X and Y and a rule /f/ which assigns to each 
+   element in X precisely one element in Y.
+   - X: /domain/. Y: /codomain/
+   - x is an element of X, the /image/ of x is element of Y ( y = f(x))
+   - if y \in Y, then a /preimage/ of y is an element x \in X
+   - The set of all elements in Y which have at least one preimage is called 
+     the image of f, denoted Im(f)
+**** 1 - 1 functions
+    - Def: 
+      + A func is 1 - 1 if each element is the image of at least one 
+      element in the domain.
+      + A function is onto if each element is the codomain Y is the image of at 
+      least one element in the domain. Equivalently, a function f: X -> Y is 
+      onto if Im(f) = Y.
+      + if a function f: X -> Y is 1 - 1 and Im(f) = Y then f is called 
+        *bijection*
+      + if f is a bijection from X -> Y, define g from Y => X: for each y \in 
+        Y define g(y) = x where x \in X. g is called /inverse function/
+**** One-way functions
+    - Def:
+      + A function f from a set X to a set Y is called a /one-way function/ if 
+        f(x) is "easy" to compute for all x \in X but for "essentially all" 
+        elements y \in Im(f) it is "computationally infeasible" to find any x 
+        \in X such that f(x) = y
+**** Trapdoor one-way functions
+    - Def:
+      + A /trapdoor one-way function/ is a one way function f: X -> Y with the 
+        additional property that given some extra information (called the 
+        trapdoor information) it becomes feasible to find for any given y \in 
+        Im(f) an x \in X such that f(x) = y
+** Permutations
+*** Definition:
+    - Let S be a finite set of elements. A /permutation/ p on S is a bijection 
+      from S to itself. 
+*** Problem 
+    Let X be the set of integers {0, 1, 2, ..., pq-1} where p and q 
+    are distinct large primes, and suppose that neither p-1 or q-1 is 
+    divisible by 3. Then the function p(x) = r_x where r_x is the remainder
+    when x^3 is divided by pq, can be shown to be a permutation.
+** Involutions
+*** Definition
+    Let S be a finite set and let f be a bijection from S to S. The function f 
+    is called an /involution/ if f = f^-1. An equivalent way of stating this 
+    is f(f(x)) = x for all x \in S.
+*** Example
+
+** Basic terminology and concepts
+*** Encryption domains and codomains
+    - *A* denotes a finite set called the /alphabet of definition/
+    - *M* denotes a set called the /message space/
+    - *C* denotes a set called the /cipher space/
+*** Encryption and decryption transformations
+    - *K* denotes a set called the /key space/
+    - Each element e \in K uniquely determines a bijection from M to C, 
+      denoted by E_e. E_e is called /encryption function/ or an /encryption 
+      transformation/
+    - for each d \in K, D_d denotes a bijection from C to M. D_d is called a 
+      /decryption function/ or /decryption transformation/
+    - The process of applying the transformation E_e to a message m \in M is 
+      referred to as /encrypting m/ or the /encryption of m/.
+    - The process of applying the transformation D_d to a message c \in C is 
+      referred to as /decrypting c/ or the /decryption of c/.
+    - An /encryption scheme/ consists of a set {E_e: e \in K} of encryption 
+      transformation and a corresponding set {D_d: d \in K} of decryption 
+      transformation with the property that for each e \in K there is a unique 
+      key d \in K such that D_d = E_e^-1
+    - (e, d) is called key pair
+    - 
+*** Achieving confidentiality
+*** Communication participants
+    - An /entity/ or /party/ is someone or something which sends, receives or 
+      manipulates information.
+    - A /sender/ is an entity in a two-party communication which is the 
+      legitimate transmitter of information.
+    - A /receiver/ is an entity in a two-party communication which is the 
+      intended recipient of information.
+    - A /adversary/ is an entity in a two-party communication which is neither 
+      the sender nor receiver, and which tries to defeat the information 
+      security service being provided between the sender and receiver.
+*** Channels
+    - A /channel/ is a means of conveying information from one entity to 
+      another.
+    - A /physically secure channel/ or /secure channel/ is one which is not 
+      physically accessible to the adversary.
+    - An /unsecured channel/ is one from which parties other than those for 
+      which the information is intended can reorder, delete, insert or read.
+    - A /secured channel/ is one from which an adversary does not have the 
+      ability to reorder, delete, insert, or read.  
+
+*** Security
+    A fundamental premise in cryptography is that the sets M, C, K are public 
+    knowledge. The only thing that they keep secret is the particular key 
+    pair (e, d)
+
+*** Definition
+    - An encryption scheme is said to be /breakable/ if a third party, w/o prior 
+    knowledge of the key pair (e, d) can systematically recover plaintext from 
+    corresponding ciphertext w/o some appropriate time frame.
+    - Frequently cited in the literatur are /Kerckhoffs's desiderata/, a set 
+      of requirements for cipher systems.
+      + The system should be, if not theoretically unbreakable, unbreakable in 
+        practice
+      + Compromise of the system details should not inconvenience the 
+        correspondents.
+      + the key should be rememberable w/o notes and easily changed.
+      + the cryptogram should be transmissible by telegraphy
+      + the encryption apparatus should be portable and operable by a single 
+        person
+      + the system should be easy, requiring neither the knowledge of long 
+        list of rules nor mental strain.
+
+*** Information security in general
+    - An /information security service/ is a method to provide some specific 
+      aspect of security.
+    - Breaking an information security service implies defeating the objective 
+      of the intended service.
+    - A /passive adversary/ is an adversary who is capable only of reading 
+      information from an unsecured channel.
+    - An /active adversary/ is an adversary who may also transmit, alter or 
+      delete information on an unsecured channel.
+      
+*** Cryptology
+    - /Cryptanalysis/ is the study of mathematical techniques for attempting 
+      to defeat cryptographic techniques, and, more generally, information 
+      security services.
+    - A /Cryptanalyst/ is the study of cryptography and cryptanalysis.
+    - A /cryptosystem/ is a general term referring to a set of cryptographic 
+      primitives used to provide information security services.
+
+
+** Symmetri-key encryption
+*** Overview of block ciphers and stream ciphers
+    - *Definition*: The encryption scheme is said to be /symmetric-key/ if for 
+      each associated encryption/decryption key pair (e, d), it is 
+      computationally "easy" to determine d knowing only e, and to determine e 
+      from d.
+      Other terms: /single-key/, /one-key/, /private-key/, /conventional 
+      encryption/
+    - Example:
+    + The key e is chosen to be a permutation on A = {A, B, C, ..., Z}
+    - 2 classes of symmetric-key encryption schemes: /block ciphers/ and 
+      /stream ciphers/
+    - *Definition*: 
+      + A /block cipher/ is an encryption scheme which breaks up the plaintext 
+        messages to be transmitted into strings (called blocks) of a fixed 
+        length t over an alphabet A and encrypts one block at a time.
+        > most well-known symmetric key encryption are block ciphers
+        > 2 classes of block ciphers are: /substitution ciphers/ and 
+        /transposition ciphers/
+      + *Simple substitution ciphers*
+        > Let A be an alphabet of q symbols and M be the set of all strings at 
+        length t over A. Let K be the set of all permutations on the set A. 
+        Define for each e \in K an encryption transformation E_e as:
+            E_e(m) = (e(m1)e(m2)...e(mt)) = (c1c2..ct) = c
+        where m = (m1m2...mt) \in M
+      + *Homophonic substitution ciphers*
+        > Definition: To each symbol a \in A, associate a set H(a) of strings 
+        t symbols, with the restriction that the sets H(a), a \in A, be 
+        pairwise disjoin. A /homophonic substitution cipher/ replaces each 
+        symbol a in a plaintext message block with a randomly chosen string 
+        from H(a). To decrypt a string c of t symbols, one must determine a 
+        \in A such that c \in H(a)
